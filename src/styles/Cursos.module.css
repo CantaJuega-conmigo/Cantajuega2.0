@@ -1,0 +1,106 @@
+.Container h1{
+    font-family:'Kristen ITC'
+}
+.Image1{
+    height: 10rem;
+    width: auto;
+    position: absolute;
+    left:0;
+
+}
+.Image2{
+    position: absolute;
+    height: 10rem;
+    width: auto;
+    right: 0;
+    bottom: 0;
+}
+.Imageblue{
+    display: none;
+    position: absolute;
+    height: 7rem;
+    width: 14rem;
+    right: 28%;
+    top: 5%;
+}
+.Container p{
+    font-family:'Kristen ITC';
+    font-size: 15px;
+    line-height: 24px;
+    font-weight: 400;
+    font-style: normal;
+/* or 160% */
+
+display: flex;
+align-items: center;
+text-align: center
+}
+.Container span{
+    font-family:'Kristen ITC';
+    font-weight: 400;
+}
+
+.CoursesSection article{
+border-radius: 10px;
+margin-top: 5px;
+margin-bottom: 5px;
+cursor: pointer;
+}
+.CoursesSection section:hover{
+    border: 1px dashed orange;    
+    border-radius: 10px;
+}
+
+@media(min-width:570px){
+    .Imageblue{
+    display: block;
+    position: absolute;
+    height: 7rem;
+    width: 14rem;
+    right: 15%;
+    top: 5%;
+    }
+    .Image1{
+        height: 10rem;
+        left:12%;
+    }
+    .Image2{
+        height: 13rem;
+    }
+}
+
+@media(min-width:730px){
+    .Imageblue{
+    display: block;
+    position: absolute;
+    height: 7rem;
+    width: 14rem;
+    right: 20%;
+    top: 5%;
+    }
+    .Image1{
+       left: 18%;
+    }
+    .Image2{
+        height: 14rem;
+    }
+}
+
+@media(min-width:1000px){
+    .Imageblue{
+    display: block;
+    position: absolute;
+    height: 7rem;
+    width: 14rem;
+    right: 28%;
+    top: 5%;
+    }
+    .Image1{
+       left: 23%;
+       height: 10rem;
+    }
+    .Image2{
+ 
+        height: 15rem;     
+    }
+}

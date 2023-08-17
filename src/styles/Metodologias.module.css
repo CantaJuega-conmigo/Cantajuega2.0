@@ -1,0 +1,13 @@
+@font-face {
+    font-family: 'Schoolbell';
+    src: url('../../public/fonts/Schoolbell/Schoolbell-Regular.ttf') format('truetype');
+  }
+.Container{
+background-color: rgba(255, 227, 179, 0.25);
+}
+.Container h1{
+    font-family: 'Kristen ITC';
+}
+.Container span{
+    font-family: 'Schoolbell';
+}

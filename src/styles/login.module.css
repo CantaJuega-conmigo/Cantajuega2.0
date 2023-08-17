@@ -1,0 +1,235 @@
+.FormContainer{
+    width: 25rem;
+    height: 30rem;
+}
+.Form input{
+ padding: 5px;
+}
+.Form input[type="password"]::-ms-reveal {/* para desactivar el icono de mostrar contraseña por defecto del navegador microsoft edge */
+  display: none;
+}
+
+.FormContainer > :nth-child(1)  {
+  /* Estilos para el cuarto hijo */
+ height: 5%;
+}
+.FormContainer > :nth-child(2) {
+  /* Estilos para el cuarto hijo */
+ height: 10%;
+}
+.FormContainer > :nth-child(3) {
+  /* Estilos para el cuarto hijo */
+
+ height: 58%;
+}
+.FormContainer > :nth-child(4) {
+  /* Estilos para el cuarto hijo */
+height: 2%;
+}
+.FormContainer > :nth-child(5) {
+  /* Estilos para el cuarto hijo */
+
+  height: 15%;
+}
+.FormContainer > :nth-child(6) {
+  /* Estilos para el cuarto hijo */
+
+  height: 10%;
+}
+
+/* Estilos para pantallas  en modo vertical */
+@media (max-width: 915px) and (orientation: portrait) {
+  /* Estilos para modo vertical */
+  .FormContainer{
+  width: 20rem;
+  height: 25rem;
+  }
+}
+
+/* Estilos para pantallas con ancho máximo de 915px en modo horizontal */
+@media (max-width: 915px) and (orientation: landscape) {
+  /* Estilos para modo horizontal */
+  .FormContainer{
+      width: 20rem;
+      height: 25rem;
+      }
+      .pwforgot {
+        font-size: 0.9rem;
+      }
+  
+}
+/* Estilos para pantallas  en modo vertical */
+@media (max-width: 900px) and (orientation: portrait) {
+  /* Estilos para modo vertical */
+  .FormContainer{
+  width: 20rem;
+  height: 25rem;
+  }
+}
+
+/* Estilos para pantallas con ancho máximo de 900px en modo horizontal */
+@media (max-width: 900px) and (orientation: landscape) {
+  /* Estilos para modo horizontal */
+  .FormContainer{
+      width: 20rem;
+      height: 25rem;
+
+      }
+      .pwforgot {
+        font-size: 0.9rem;
+      }
+  
+}
+
+/*----------------------------------------------------------------------------*/
+
+/* Estilos para pantallas  en modo vertical */
+@media (max-width: 768px) and (orientation: portrait) {
+    /* Estilos para modo vertical */
+    .FormContainer{
+    width: 20rem;
+    height: 25rem;
+  
+    }
+  }
+  
+  /* Estilos para pantallas  en modo horizontal */
+  @media (max-width: 768px) and (orientation: landscape) {
+    /* Estilos para modo horizontal */
+    /* .FormContainer{
+        width: 20rem;
+        height: 17rem;
+        color: rgb(9, 51, 0);
+        } */
+  }
+/* Estilos para pantallas  en modo vertical */
+@media (max-width: 740px) and (orientation: portrait) {
+    /* Estilos para modo vertical */
+    .FormContainer{
+    
+    width: 20rem;
+    height: 25rem;
+  
+    }
+  }
+  
+  /* Estilos para pantallas con ancho máximo de 740px en modo horizontal */
+  @media (max-width: 740px) and (orientation: landscape) {
+    /* Estilos para modo horizontal */
+    .FormContainer{
+      margin-top: 7%;
+        width: 20rem;
+        height: 28rem;
+
+        }
+    .Container{
+          padding-bottom:2% ;
+     }
+  }
+  
+/*----------------------------------------------------------------------------*/
+  @media (max-width: 668px) and (orientation: portrait) {
+  
+   .Form input{
+    padding: 5px;
+   }
+   
+  }
+
+  @media (max-width: 668px) and (orientation: landscape) {
+   
+    .FormContainer{
+       margin-top: 150px;
+    }
+    .Form input{
+      padding: 3px;
+     }
+     .pwforgot {
+      font-size: 0.9rem;
+    }
+    
+  }
+/*----------------------------------------------------------------------------*/
+  /* @media (max-width: 653px) and (orientation: portrait) {
+
+  } */
+
+  @media (max-width: 653px) and (orientation: landscape) {
+    .FormContainer{
+      margin-top: 150px;
+      overflow: scroll;
+        height: 25rem;
+    }
+    .Form input{
+      padding: 1px;
+    }
+  }
+/*----------------------------------------------------------------------------*/
+  @media (max-width: 540px) and (orientation: portrait) {
+   /* .FormContainer{
+     
+   } */
+   .pwforgot{
+    font-size: 0.9rem;
+  }
+  }
+
+  /* @media (max-width: 540px) and (orientation: landscape) {
+    .FormContainer{
+        height: 17rem;
+        color:  rgb(255, 80, 176);
+    }
+    .pwforgot{
+      background-color: black;
+    }
+  } */
+/*----------------------------------------------------------------------------*/
+  @media (max-width: 415px) and (orientation: portrait) {
+   .FormContainer{
+  
+     height: 28rem;
+     
+   }
+   .Form input{
+    padding: 2px;
+   }
+  
+   .pwforgot{
+    font-size: 0.8rem;
+  }
+  .googleButtonSection{
+    height: 20%;
+  }
+  .googleButtonSection button{
+    width: 70%;
+  }
+  }
+  @media (max-width: 300px) and (orientation: portrait) {
+   .FormContainer{
+    margin-top: -35%;
+     height: 24rem;
+     width: 90%;
+   }
+   .Form input{
+    padding: 2px;
+   }
+  
+   .pwforgot{
+    font-size: 0.8rem;
+  }
+  .googleButtonSection{
+    height: 20%;
+  }
+  .googleButtonSection button{
+    width: 70%;
+  }
+  }
+
+  /* @media (max-width: 300px) and (orientation: landscape) {
+    .FormContainer{
+      
+    }
+    .pwforgot{
+  
+    }
+  } */

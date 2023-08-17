@@ -1,0 +1,29 @@
+/* .Footer{
+  
+} */
+
+@media (max-width:680px){
+ .Footer{
+    flex-direction: column;
+    padding-top: 15px;
+    padding-bottom: 0;
+ }
+ .Footer section{
+    margin-bottom: 15px;
+    width: 100%;
+
+ }
+ .Footer > :nth-child(1)  {
+    /* Estilos para el primer hijo */
+   display: flex;
+   justify-content: center;
+  }
+  .Footer > :nth-child(2) {
+    /* Estilos para el segundo hijo */
+   justify-content: space-evenly;
+  
+  }
+  .Footer > :nth-child(3) {
+   justify-content: space-evenly;
+  }
+ }

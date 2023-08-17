@@ -1,0 +1,187 @@
+@font-face {
+    font-family: "My Font";
+    src: url("../../public/fonts/OpenType-TT/Kidz.ttf");
+  }
+.PrincipalContainer{
+background-color: white;
+display: flex;
+flex-direction: column;
+justify-content: space-between;
+}
+.FirstSection{
+    background-color: #fada4d;
+    display: flex;
+    justify-content: center;
+    align-items:center;
+    height: 15em;
+}
+.FirstSection h1{
+    font-size: 3.1em;
+    font-weight: 700;
+    color: white;
+}
+.SecondSection{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+}
+.SecondSection span{
+    width: 60%;
+}
+.ThirdSection{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.ThirdSectionTitle{
+    margin-bottom: 30px;
+}
+.TitleM{
+
+ width: fit-content;
+ margin-left: 8vw;
+ color: #26798e;
+ font-size: 3.5rem;
+font-family:"My font",sans-serif;
+
+}
+.Container2{
+    display: flex;
+   
+    justify-content:center;
+    
+}
+/* url("../../public/img/Untitled_Artwork\ 3.png") */
+.ImageContainer{
+    
+    background-color: #5e5d5d;
+    display: flex;
+    position:relative;
+    justify-content: right;
+    align-items: center;
+    left:0 ;
+    height: 0;
+   
+}
+.Image1{
+    position: absolute;
+    width: 35%;
+    height: fit-content;
+bottom: 0.25rem;
+right: 0;
+}
+.Image2{
+    position: absolute;
+    width: 35%;
+    height: fit-content;
+    bottom: 0.25em;
+    right: 0;
+   
+}
+.Image3{
+    position: absolute;
+    width: 9.5em;
+    height: fit-content;
+    bottom: 0.25em;
+    right: 0; 
+}
+
+.MembershipsContainers:nth-of-type(1) {
+    background:  #f08d0d ;
+}
+.MembershipsContainers:nth-of-type(2) {
+    background-color: #39a1bb;
+}
+.MembershipsContainers:nth-of-type(3) {
+    background-color: #5e139c
+}
+
+.MembershipsContainers{
+    display: flex;
+    flex-direction: column;
+    padding: 4px;
+    width: 22.5em;
+    border-radius:20px;
+    height: 400px;
+    margin: 15px;
+    
+}
+.MembershipsContainers header{
+    height: 18%;
+
+}
+.MembershipsContainers header h1{
+    font-size:3.14em;
+    color: rgb(255, 255, 255);
+    font-family: "My Font", sans-serif;
+    width: fit-content;
+    margin-left: 20px;
+    z-index: 500;
+}
+.MembershipsContainers article{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  background-color: rgb(255, 255, 255);
+  padding: 4px;
+  height: 90%;
+  border-radius: 0px 0px 15px 15px;
+}
+  
+.MembershipsContainers span{
+    font-size: 1.1em;
+    margin: 7px;
+    border-bottom: 1px solid;
+    border-style: dashed;
+    color:#5e5d5d;
+}
+.SelectButton{
+    background-color: #26798e;
+    width: 15rem;
+    margin: 0 auto;
+    font-size: 2vb;
+    font-weight: 600;
+    padding: 12px;
+    border-radius: 10px;
+    color: white;
+}
+
+.FourthSection{
+    margin-top: 3em;
+    background-color:#f08d0d;
+    height: 15em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.FourthSection span{
+    color: white;
+    font-size: 2em;
+    width: 90vb;
+    font-family: "My Font";
+}
+
+@media (max-width:935px){
+    .Image2{
+
+        width: 30%;
+        
+       
+    }
+}
+@media (max-width:767px){
+    .Image2{
+
+        width: 30%;
+    }
+    .Container2{
+        flex-direction: column;
+        align-items: center;
+    }
+   .FiveSection{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+   }
+}

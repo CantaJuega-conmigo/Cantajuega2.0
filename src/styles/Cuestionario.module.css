@@ -1,0 +1,49 @@
+/* .Cuestionario{
+
+} */
+@font-face {
+  font-family: 'Fredoka One';
+  src: url('../../public/fonts/Fredoka/Fredoka.ttf') format('truetype');
+}
+.Cuestionario h1{
+  font-family:'Fredoka One';
+  font-weight: 500;
+}
+.Cuestionario label{
+  font-family:'Fredoka One';
+  font-weight:500 ;
+}
+.Cuestionario select{
+    background-color: white;
+    padding: 5px;
+    margin: 0 auto;
+    width: 50%;
+    display: flex;
+    text-align: center;
+}
+
+.Cuestionario option:hover{
+    background-color: orangered;
+}
+
+.SecondContainer input[type='checkbox']{
+  display: none;
+}
+
+.CheckboxLabel::after{
+   content: '';
+   border: solid 1px orangered ;
+   width: 20px;
+   height:70%;
+   text-align: center;
+   position: absolute;
+   right: 0;
+   cursor: pointer;
+}
+.SecondContainer input[type='checkbox']:checked + .CheckboxLabel::after{
+
+  background-color: orangered;
+  color: white;
+  text-align: center;
+  content:'✓';
+}

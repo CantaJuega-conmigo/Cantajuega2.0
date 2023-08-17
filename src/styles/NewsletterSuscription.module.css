@@ -1,0 +1,30 @@
+@font-face {
+    font-family: 'Schoolbell';
+    src: url('../../public/fonts/Schoolbell/Schoolbell-Regular.ttf') format('truetype');
+  }
+.FormSection{
+    background-color: rgba(255, 227, 179, 0.81);
+}
+.Container h1{
+    font-family: 'Schoolbell';
+}
+.FormSection h1{
+    text-shadow: -1px -1px 0 rgb(255, 255, 255), 1px -1px 0 rgb(255, 255, 255), -1px 1px 0 rgb(255, 255, 255), 1px 1px 0 rgb(255, 255, 255);
+    font-family: 'Kristen ITC';
+}
+.FormSection input{  
+    background-color: white
+}
+.FormSection input::placeholder{
+color: #000000;
+opacity: 0.54;
+}
+.FormSection button{
+    background: #FFFFFF;
+border: 3px solid #FF3D00;
+box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+border-radius: 10px;
+}
+.Aux{
+    background-color: #FFE3B340;
+}

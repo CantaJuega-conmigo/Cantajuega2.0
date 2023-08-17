@@ -1,0 +1,20 @@
+@font-face {
+    font-family: 'Fredoka One';
+    src: url('../../public/fonts/Fredoka/Fredoka.ttf') format('truetype');
+  }
+  .Container{
+   height: 45rem;
+    
+  }
+  .Container h1{
+    font-family:'Fredoka One';
+    font-weight: 600;
+  }
+.Container li{
+    font-family:'Fredoka One';
+    font-weight: 500;
+}
+.Container button{
+    font-family:'Fredoka One';
+    font-weight: 500;
+}

@@ -1,0 +1,16 @@
+.Header{
+    background: linear-gradient(180deg, rgba(38, 121, 142, 0.58) 0%, rgba(99, 202, 167, 0.55) 86.98%);
+
+}
+.Statistics{
+    box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.25);
+     background-color: rgba(207, 216, 220, 0.51);
+}
+
+@media(max-width:640px){
+    .Statistics{
+        --tw-bg-opacity: 1;
+        background-color: rgb(245 245 245 / var(--tw-bg-opacity));
+        box-shadow: none;
+    }
+}

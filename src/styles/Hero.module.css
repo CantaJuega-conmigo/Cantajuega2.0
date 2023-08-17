@@ -1,0 +1,33 @@
+.Container{
+    background: linear-gradient(180deg, rgba(38, 121, 142, 0.58) 0%, rgba(99, 202, 167, 0.55) 86.98%);
+    color:#FFFFFF;
+}
+@keyframes Animacion {
+    from {
+        transform: translateX(200px);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+.Container h1{
+    font-family: 'Kristen ITC';
+    animation-name: Animacion;
+    animation-duration: 3s;
+    
+}
+.Container span{
+    font-family: 'Kristen ITC';
+    animation-name: Animacion;
+    animation-duration: 3s;
+}
+.Container button span{
+    animation: none;
+}
+  .Image {
+    animation-name: Animacion;
+    animation-duration: 3s;
+  }
+  
