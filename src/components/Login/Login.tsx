@@ -6,8 +6,6 @@ import { useEffect, useState } from "react";
 import { loginError } from "../../utils/FormsErrors";
 import { AUTH_MODAL_TYPE } from "../../utils/constants";
 import { IoMdEye, IoMdEyeOff } from "react-icons/io";
-import { signIn } from "next-auth/react";
-import { useLoginUserMutation } from "@/store/apis/CantajuegaApi";
 import { loginUser } from "@/libs/functions";
 
 interface LoginProps {
