@@ -8,6 +8,7 @@ import { AUTH_MODAL_TYPE } from "../../utils/constants";
 import { IoMdEye, IoMdEyeOff } from "react-icons/io";
 import { signIn } from "next-auth/react";
 import { useLoginUserMutation } from "@/store/apis/CantajuegaApi";
+import { loginUser } from "@/libs/functions";
 
 interface LoginProps {
   handleOpen: (name: AUTH_MODAL_TYPE) => void;
@@ -30,7 +31,7 @@ const Login: React.FC<LoginProps> = ({ handleOpen }) => {
     password: "",
   });
 
-  const [login, { data, isLoading }] = useLoginUserMutation();
+  // const [login, { data, isLoading }] = useLoginUserMutation();
   const [error, setError] = useState<ErrorProps>({
     global: "Todos los campos son obligatorios",
   });
@@ -58,13 +59,7 @@ const Login: React.FC<LoginProps> = ({ handleOpen }) => {
       error.global && alert(error.global);
       return setVisibleErrors(true);
     }
-    // signIn("credentials", { redirect: false, ...input })
-    // .then((response) => console.log(response))
-    // .catch((err) => console.log(err));
-    login(input)
-      .unwrap()
-      .then((res) => console.log('salio bien'))
-      .catch((err) => console.log(err));
+    loginUser(input)
   };
  
   function showPassword(): void {

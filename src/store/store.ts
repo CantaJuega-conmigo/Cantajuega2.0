@@ -3,7 +3,7 @@ import reducerSlice from './slice'
 import { CantajuegaService } from "./apis/CantajuegaApi";
 import { setupListeners } from "@reduxjs/toolkit/dist/query";
 import userReducer from "./userSlice";
-const rootReducer = {
+export const rootReducer = {
   reducerSlice,
   userReducer,
 };

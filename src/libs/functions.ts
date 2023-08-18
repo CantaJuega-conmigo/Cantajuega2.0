@@ -1,4 +1,9 @@
-import { useSession,signOut } from "next-auth/react";
+import { UserQueryResponse, loginBody } from "@/types";
+import axios from "./axios";
+import { setUser } from "@/store/userSlice";
+import { store } from "@/store/store";
+import Cookies from "js-cookie";
+// Crear la cookie con el token y la duración correspondiente
 
 export const getUsers = async () => {
   const get = await fetch("https://jsonplaceholder.typicode.com/users", {
@@ -8,25 +13,19 @@ export const getUsers = async () => {
   return data;
 }; ///pruebas
 
-export async function authUser(): Promise<void> {
-     const {data}=useSession()
-     console.log(data)
+export async function loginUser(body: loginBody): Promise<void> {
   try {
-    const token = "tu-token-aqui";
-    const query = await fetch("http://localhost:3001/api/user/auth", {
-      method: "GET",
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
+    const petition: UserQueryResponse = await axios.post("/user/login", body);
+    if ("error" in petition.data) throw new Error(petition.data.error);
+    localStorage.setItem("tkn", petition?.data.token);
+    Cookies.set("accessToken", petition?.data.token, {
+      expires:  86400,
     });
-    if(!query.ok){
-     // signOut({redirect:false})
-     console.log('me deslogueo');
-     
-    }
+    store.dispatch(setUser(petition?.data.user));
+    alert(`bienvenido ${petition.data.user.firstName}`);
     return;
   } catch (error) {
-    
     console.log(error);
+    throw new Error("algo salio mal :(");
   }
 }
