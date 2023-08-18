@@ -7,16 +7,15 @@ import image3 from '../../../public/img/Untitled_Artwork-3-1.png'
 import styles from '../../styles/Cancionero.module.css'
 import { IoMdDownload } from "react-icons/io";
 import MusicsPlayers from "../../components/MusicPlayer/MusicsPlayers";
-// // import { useAppSelector } from "@/context/store";
-// import { useSelector } from "react-redux";
+import { useAppSelector } from "@/store/hooks";
+
 
 
 export default function Cancionero(){
-    // const [isAuth,setLogin]= useState<boolean>(false)
-    const isAuth= true
+    const user=useAppSelector(state=>state.userReducer.user)
+    const isAuth= user
 
-    // const loginfalso=()=>setLogin(!isAuth)
-    // const actualuser=useSelector((state)=>state)
+
     const fakeaudios=[
         {cancion:'1',url:'https://res.cloudinary.com/daekdf1sh/video/upload/v1684967568/Wiz_Khalifa_Black_And_Yellow_GMix_ft_Snoop_Dogg_Juicy_J_TPain_ocicnm.mp3'},
         {cancion:'2',url:'https://res.cloudinary.com/daekdf1sh/video/upload/v1684982450/Drake_GODS_PLAN_rekoav.mp3'},

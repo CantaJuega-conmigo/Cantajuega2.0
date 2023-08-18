@@ -13,9 +13,9 @@ import { useAuthqQuery } from "@/store/apis/CantajuegaApi";
 export default function Miscursos() {
   const { data, isLoading, isError } = useAuthqQuery(null);
   if (isError) {
-    throw new Error("Auht falló");
+    console.log("Auht falló");
   }
-  const user = useAppSelector((state) => state.userReducer.user);
+
   const [actualProgress, setActualProgress] = useState<number>(0);
   const [actualVideo, setActualVideo] = useState<string>("");
   const [videoPlay, setvideoPlay] = useState<boolean>(false);
@@ -88,19 +88,9 @@ export default function Miscursos() {
     }, 10000);
   };
   const actualtitlecolor = { background: "#FFC172", borderRadius: "10px" };
-  const auth = true;
-  if (!auth) {
-    return (
-      <div className=" min-h-screen flex items-center justify-center">
-        <h1>Solo para usuarios registrados.</h1>
-      </div>
-    );
-  }
-
+ 
   return (
     <div id="MisCursosPage" className={`${styles.Container} flex bg-white `}>
-      <button onClick={() => console.log(user)}>Ver estato</button>
-
       {seeAlert.alert1 && (
         <Alerts
           close={closeAlert}

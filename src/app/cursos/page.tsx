@@ -7,7 +7,6 @@ import image4 from "../../../public/img/Rectangle 167.png";
 import styles from "../../styles/Cursos.module.css";
 import { stage } from "@/types/step.type";
 import Stages from "@/components/stages/Stages";
-import { getAllStages } from "@/libs/step";
 import { useGetStageQuery } from "@/store/apis/CantajuegaApi";
 import Loading from "../loading";
 interface state extends stage {

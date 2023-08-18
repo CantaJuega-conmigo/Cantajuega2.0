@@ -8,16 +8,18 @@ import Topnav from "./Topnav";
 import { TiArrowDown } from "react-icons/ti";
 import logo from "../../../public/img/Logo.png";
 import { HiOutlineMenu } from "react-icons/hi";
-// import { useAppSelector } from "@/context/store";
+import { useAppSelector } from "@/store/hooks";
+
 const Navbar = () => {
-  const auth = true
+  const user=useAppSelector(state=>state.userReducer.user)
+  const auth = user
   const items = [
     { name: "Nosotros", href: "/#Nosotros" },
     { name: "Metodología", href: "/#metodologia" },
     { name: "Contacto", href: "/#contacto" },
     { name: "cancionero", href: "/cancionero" },
     { name: "membresías", href: "/membresias" },
-    { name: "cursos", href: "/Cursos" },
+    { name: "cursos", href: "/cursos" },
   ];
   const itemsauth = auth
     ? [

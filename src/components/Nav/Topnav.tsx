@@ -5,28 +5,31 @@ import { IoMdMail } from "react-icons/io";
 import Login from "../Login/Login";
 import Resgister from "../Register/Register";
 import { AUTH_MODAL_TYPE } from "../../utils/constants";
-import { MouseEvent, useState } from "react";
-// import { useAppSelector } from "@/context/store";
-// import { logoutUser } from "@/functions/user.query";
+import { MouseEvent, Suspense, useState } from "react";
 import Alerts from "../alerts/Alerts";
 import { alertsState } from "../alerts/types";
 import Link from "next/link";
 import { AiOutlineUserSwitch } from "react-icons/ai";
-import { useSession, signOut } from "next-auth/react";
-
+import { useAppSelector } from "@/store/hooks";
+import { logoutUser } from "@/libs/functions";
+import { useRouter } from "next/navigation";
+import { useAuthqQuery } from "@/store/apis/CantajuegaApi";
 interface OpenInterface {
   LOGIN: boolean;
   REGISTER: boolean;
 }
 export default function Topnav() {
-  const { data: auth, status } = useSession();
+  const { isLoading, data } = useAuthqQuery(null);
 
+  const user = useAppSelector((state) => state.userReducer.user);
+  const auth = user;
+  const router = useRouter();
   const [seeAlert, setSeeAlerts] = useState<alertsState>({
     ///Traer la interface alertsState para tipar
     alert1: false,
   });
-  const user = "joakig6@gmail.com";
-  const isAdmin = user === "joakig6@gmail.com";
+
+  const isAdmin = user?.email === "joakig6@gmail.com";
   const [open, setOpen] = useState<OpenInterface>({
     LOGIN: false,
     REGISTER: false,
@@ -38,11 +41,7 @@ export default function Topnav() {
       [name]: !prevOpen[name],
     }));
   };
-  const logoutUser = () => {
-    signOut()
-      .then((response) => console.log(response))
-      .catch((err) => console.log(err));
-  };
+
   const preconfirmLogout = (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     setSeeAlerts({
@@ -57,6 +56,9 @@ export default function Topnav() {
     setSeeAlerts({
       alert1: false,
     });
+  };
+  const logOut = () => {
+    logoutUser().then((res) => router.push("/"));
   };
   return (
     <div
@@ -96,7 +98,7 @@ export default function Topnav() {
             </a>
           </div>
 
-          {!auth && (
+          {!isLoading && !auth && (
             <span
               className="hover:text-[#FFC172] cursor-pointer flex items-center text-xs md:text-base sm:text-sm "
               onClick={() => handleOpen(AUTH_MODAL_TYPE.LOGIN)}>
@@ -104,7 +106,7 @@ export default function Topnav() {
               Iniciar Sesión
             </span>
           )}
-          {auth && (
+          {!isLoading && auth && (
             <span
               onClick={preconfirmLogout}
               className=" cursor-pointer flex items-center gap-2 text-sm sm:text-base">
@@ -112,6 +114,7 @@ export default function Topnav() {
               <HiOutlineLogout className=" text-orangeicons text-xl" />
             </span>
           )}
+
           {isAdmin && (
             <Link href={"/Admin"} className="flex items-center gap-2">
               <span>Admin</span>
@@ -123,11 +126,7 @@ export default function Topnav() {
       {open.LOGIN && <Login handleOpen={handleOpen} />}
       {open.REGISTER && <Resgister handleOpen={handleOpen} />}
       {seeAlert.alert1 && (
-        <Alerts
-          Personalizado={seeAlert}
-          onClick={() => logoutUser()}
-          close={closeAlert}
-        />
+        <Alerts Personalizado={seeAlert} onClick={logOut} close={closeAlert} />
       )}
     </div>
   );

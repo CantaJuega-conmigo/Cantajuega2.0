@@ -1,5 +1,4 @@
 import { Providers } from "@/store/provider";
-import AuthProvider from "@/contexts/AuthProvider";
 import "./globals.css";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
@@ -23,11 +22,9 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${inter.className} bg-white`} id="Body">
         <Providers>
-          <AuthProvider>
-            <Navbar />
-            {children}
-            <Footer />
-          </AuthProvider>
+          <Navbar />
+          {children}
+          <Footer />
         </Providers>
       </body>
     </html>
