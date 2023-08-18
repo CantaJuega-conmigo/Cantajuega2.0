@@ -8,7 +8,8 @@ import { useState, FormEvent, MouseEvent } from "react";
 import { RegisterBody } from "@/types";
 import { useAppSelector } from "@/store/hooks";
 import Loading from "../loading";
-export default function page() {
+export default function Page() {
+
   const user = useAppSelector((state) => state.userReducer.user);
   const { data, isLoading } = useAuthqQuery(null);
   const [newUser, setNewUser] = useState<RegisterBody>({
