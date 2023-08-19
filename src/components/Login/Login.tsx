@@ -1,3 +1,4 @@
+"use client";
 import { IoMdClose } from "react-icons/io";
 import { FcGoogle } from "react-icons/fc";
 import styles from "../../styles/login.module.css";
@@ -57,21 +58,18 @@ const Login: React.FC<LoginProps> = ({ handleOpen }) => {
       error.global && alert(error.global);
       return setVisibleErrors(true);
     }
-    loginUser(input)
+    loginUser(input);
   };
- 
-  function showPassword(): void {
-    const passwordInput = document.getElementById(
-      "password"
-    ) as HTMLInputElement;
 
-    if (passwordInput.type === "password") {
-      passwordInput.type = "text";
-    } else {
-      passwordInput.type = "password";
-    }
+  const showPassword = () => {
+    const passwordInput = document.getElementById(
+      "passwordlogin"
+    ) as HTMLInputElement;
     setVisiblePassword(!visiblePassword);
-  }
+    setTimeout(() => {
+      passwordInput.type = visiblePassword ?  "text":"password" ;
+    }, 0);
+  };
 
   useEffect(() => {
     const body = document.getElementById("Body") as HTMLBodyElement;
@@ -170,7 +168,7 @@ const Login: React.FC<LoginProps> = ({ handleOpen }) => {
               className=" w-full"
               onChange={handleChange}
               name="password"
-              id="password"
+              id="passwordlogin"
               style={{ appearance: "none" }}
             />
 

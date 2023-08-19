@@ -1,10 +1,12 @@
+
 import { AUTH_MODAL_TYPE } from '../../utils/constants';
 import styles from '../../styles/register.module.css'
 import { useEffect, useState } from 'react'
 import { registerError } from '../../utils/FormsErrors';
 import { IoMdClose,IoMdEye,IoMdEyeOff} from 'react-icons/io';
 import { FcGoogle } from 'react-icons/fc';
-// import { registerUser } from '@/functions/user.query';
+import { registerUser } from '@/libs/functions';
+
 
 interface RegisterProps {
    handleOpen: (name: AUTH_MODAL_TYPE) => void;
@@ -58,7 +60,7 @@ interface ErrorProps {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // registerUser(input)
+    registerUser(input)
     if(Object.keys(error).length){
        error.global&&alert(error.global)
        return setVisibleErrors(true),

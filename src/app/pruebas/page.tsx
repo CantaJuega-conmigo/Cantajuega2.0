@@ -1,15 +1,11 @@
 "use client";
-import {
-  useAuthqQuery,
-  useGetStageQuery,
-} from "@/store/apis/CantajuegaApi";
+import { useAuthqQuery, useGetStageQuery } from "@/store/apis/CantajuegaApi";
 
 import { useState, FormEvent, MouseEvent } from "react";
 import { RegisterBody } from "@/types";
 import { useAppSelector } from "@/store/hooks";
 import Loading from "../loading";
 export default function Page() {
-
   const user = useAppSelector((state) => state.userReducer.user);
   const { data, isLoading } = useAuthqQuery(null);
   const [newUser, setNewUser] = useState<RegisterBody>({
@@ -30,13 +26,6 @@ export default function Page() {
   };
   const handleRegister = (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    // signIn("credentials", { redirect: false, ...newUser})
-    //   .then((response) => console.log(response))
-    //   .catch((err) => console.log(err));
-    // register(newUser)
-    //   .unwrap()
-    //   .then((res:any) => console.log(res))
-    //   .catch((err) => console.log(err));
   };
   const seeActualUser = () => {
     console.log(user);
@@ -45,6 +34,10 @@ export default function Page() {
     console.log(data);
   };
 
+  const seePassword = () => {
+    const input = document.getElementById("passwordinput") as HTMLInputElement;
+    input.type = "text";
+  };
   return (
     <div className="min-h-screen bg-blue flex justify-center items-center">
       <button onClick={seeActualUser}>Ver usuario actual</button>
@@ -72,6 +65,7 @@ export default function Page() {
         />
         <label htmlFor="">password</label>
         <input
+          id="passwordinput"
           type="password"
           name="password"
           value={newUser.password}
@@ -81,6 +75,7 @@ export default function Page() {
       </form>
 
       <button onClick={seeAuthUser}>auth?</button>
+      <button onClick={seePassword}>ver contraseña</button>
       {/* 
       <h1>Ya te logueaste mi rey</h1> */}
     </div>

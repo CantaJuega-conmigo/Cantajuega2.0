@@ -13,7 +13,7 @@ export const CantajuegaService = createApi({
   reducerPath: "Cantajuegapi", //nombre del estado/cache
 
   baseQuery: fetchBaseQuery({
-    baseUrl:process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001/api/", ///url a donde se hacen las peticiones
+    baseUrl:"http://localhost:3001/api/"|| process.env.NEXT_PUBLIC_API_URL , ///url a donde se hacen las peticiones
     prepareHeaders: (headers) => {
       const token = Cookies.get("accessToken");
       if (token) {
