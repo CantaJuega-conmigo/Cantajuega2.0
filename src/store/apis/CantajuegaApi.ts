@@ -1,9 +1,10 @@
-import { User } from "@/types";
+import { Child, User } from "@/types";
 import { authResponse } from "@/types/auth.type";
 import { Membership } from "@/types/membership.type";
 import { stage } from "@/types/step.type";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { setUser } from "../userSlice";
+import { setChild } from "../childSlice";
 import Cookies from "js-cookie";
 interface id {
   id: number;
@@ -13,9 +14,10 @@ export const CantajuegaService = createApi({
   reducerPath: "Cantajuegapi", //nombre del estado/cache
 
   baseQuery: fetchBaseQuery({
-    baseUrl: process.env.NEXT_PUBLIC_API_URL , ///url a donde se hacen las peticiones
+    baseUrl: process.env.NEXT_PUBLIC_API_URL, ///url a donde se hacen las peticiones
     prepareHeaders: (headers) => {
-      const token = Cookies.get("accessToken");
+      //preparamos los headers para que se envien las credenciales en cada peticion
+      const token = Cookies.get("accessToken"); //obtenemos el token de las cookies
       if (token) {
         headers.set("authorization", `Bearer ${token}`);
       }
@@ -31,26 +33,60 @@ export const CantajuegaService = createApi({
     }),
     getMembership: builder.query<Membership[], null>({
       ///membresias
-      query: () => "membership", ///ruta /stage del back
+      query: () => "membership", ///ruta /membership del back
       keepUnusedDataFor: 600, ///configuramos cada cuanto se elimina la cache
     }),
-    authq: builder.query({
+    auth: builder.query({
       query: () => "/user/auth",
       keepUnusedDataFor: 600,
       async onQueryStarted(id, { dispatch, queryFulfilled }) {
+        //es lo que hara con la respuesta
         try {
-          const data = (await queryFulfilled).data;
-          const { id, firstName, lastName, email } = data.user as User;
+          const data = (await queryFulfilled).data; //en data viene informacion del usuario y el token
+          const { id, firstName, lastName, email } = data.user as any;
+          const UserChild = (data.user.Children[0] as Child) ?? null;
+          ///actualizamos nuestros estados globales
           dispatch(setUser({ id, firstName, lastName, email }));
+          dispatch(setChild(UserChild));
         } catch (err) {
-          console.log("algo salio mal en auth",err);
-          Cookies.remove('accessToken')
+          Cookies.remove("accessToken");
           dispatch(setUser(null));
         }
       },
     }),
+    ///obtener todos los childs
+    getChild: builder.query({
+      query: () => "child",
+      keepUnusedDataFor: 600,
+      async onQueryStarted(nose, { dispatch, queryFulfilled }) {
+        const response = await queryFulfilled;
+      },
+    }),
+    ////obtener child por id
+    getChildById: builder.query({
+      query: (id) => `child/${id}`,
+      keepUnusedDataFor: 600,
+      async onQueryStarted(nose, { dispatch, queryFulfilled }) {
+        const response = (await queryFulfilled).data as Child;
+        dispatch(setChild(response));
+      },
+    }),
+    getProgressChild:builder.query({
+      query:(ProgressId)=>`progress/${ProgressId}`,
+      keepUnusedDataFor:600,
+      async onQueryStarted(any,{dispatch,queryFulfilled}){
+        const progress=(await queryFulfilled).data
+        console.log(progress);
+      }
+    })
   }),
 });
 
-export const { useGetStageQuery, useGetMembershipQuery, useAuthqQuery } =
-  CantajuegaService;
+export const {
+  useGetStageQuery,
+  useGetMembershipQuery,
+  useAuthQuery,
+  useGetChildQuery,
+  useGetProgressChildQuery,
+  useLazyGetProgressChildQuery
+} = CantajuegaService;

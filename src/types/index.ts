@@ -1,6 +1,9 @@
-export type { User } from './user.type';
-export type { RegisterBody } from './user.type';
-export type { loginBody } from './user.type';
-export type { UserQueryData } from './user.type';
-export type { UserQueryError } from './user.type';
-export type { UserQueryResponse } from './user.type';
+export type { User } from "./user.type";
+export type { RegisterBody } from "./user.type";
+export type { loginBody } from "./user.type";
+export type { UserQueryData } from "./user.type";
+export type { UserQueryError } from "./user.type";
+export type { UserQueryResponse } from "./user.type";
+export type { youtubePlayer } from "./YoutubePlayer/youtubeplayer.type";
+export type { youtubeplayercourses } from "./MIsCursos/youtubeplayercourses.type";
+export type { Child } from "./Models/Child.type";

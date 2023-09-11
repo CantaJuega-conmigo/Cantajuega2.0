@@ -2,6 +2,7 @@ import {HiArrowDown } from "react-icons/hi";
 import {useState} from 'react'
 import styles from '../../styles/Nosotros.module.css'
 import YouTube from "react-youtube";
+import YoutubePlayer from "../YoutubePlayer/YoutubePlayer";
 const videoId = "jqLaRv0fuXc";
 export default function AboutUs(){
     const [seeAbout,setSeeAbout]=useState(false);
@@ -82,15 +83,8 @@ export default function AboutUs(){
             min-[500px]:justify-center
             min-[500px]:w-6/12">
                 {/* <Image alt="cjimage" src={image}  className="h-5/6 w-10/12" /> */}
-                <YouTube
-            videoId={videoId}
-            opts={{
-              height: "100%",
-              width: "100%",
-              playerVars: {},
-            }}
-            className=" h-full w-[95%] min-[500px]:w-[90%]"
-          />
+            
+              <YoutubePlayer videoId={videoId} styles="h-full w-[95%] min-[500px]:w-[90%]" />
             </section>
         </div>
     )

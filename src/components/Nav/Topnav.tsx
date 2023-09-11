@@ -13,13 +13,13 @@ import { AiOutlineUserSwitch } from "react-icons/ai";
 import { useAppSelector } from "@/store/hooks";
 import { logoutUser } from "@/libs/functions";
 import { useRouter } from "next/navigation";
-import { useAuthqQuery } from "@/store/apis/CantajuegaApi";
+import { useAuthQuery } from "@/store/apis/CantajuegaApi";
 interface OpenInterface {
   LOGIN: boolean;
   REGISTER: boolean;
 }
 export default function Topnav() {
-  const { isLoading, data } = useAuthqQuery(null);
+  const { isLoading, data } = useAuthQuery(null);
 
   const user = useAppSelector((state) => state.userReducer.user);
   const auth = user;
