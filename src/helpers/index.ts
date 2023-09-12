@@ -1,1 +1,1 @@
-export  {ValidateFirstVideo,ValidateOthersVideo} from './validateVideos'
+export  {ValidateFirstVideo,ValidateOthersVideo,notavaliableTitles} from './validateVideos'

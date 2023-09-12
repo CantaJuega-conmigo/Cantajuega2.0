@@ -1,4 +1,4 @@
-import { Child, User, progress, progressResquest } from "@/types";
+import { Child, Final_Video, First_Video, Other_Video, User, progress, progressResquest, videoprogresses } from "@/types";
 import { authResponse } from "@/types/auth.type";
 import { Membership } from "@/types/membership.type";
 import { stage } from "@/types/step.type";
@@ -82,10 +82,10 @@ export const CantajuegaService = createApi({
           dispatch(setProgress(data))
       },
     }),
-    getProgressChildBySelect: builder.query<keyof progress, progressResquest>({
+    getProgressChildBySelect: builder.query<First_Video|Other_Video|Final_Video|null, progressResquest>({
       query: ({ProgressId,select}) =>`progress/${ProgressId}?select=${select}`,
       keepUnusedDataFor: 600,
-      async onQueryStarted(any, { dispatch, queryFulfilled }) {
+      async onQueryStarted(none, { dispatch, queryFulfilled }) {
         const data = (await queryFulfilled).data;
           dispatch(setActualProgress(data))
       },

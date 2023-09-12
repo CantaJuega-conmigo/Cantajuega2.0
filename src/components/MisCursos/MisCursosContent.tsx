@@ -1,21 +1,14 @@
 "use client";
-
-import {
-  useGetProgressChildBySelectQuery,
-  useGetProgressChildQuery,
-  useGetStageQuery,
-} from "@/store/apis/CantajuegaApi";
 import { useAppSelector } from "@/store/hooks";
 import { videos, videostypes } from "@/types/step.type";
 import { useState, MouseEvent } from "react";
 import YoutubePlayerCourses from "./YoutubePlayerCourses";
+import { miscursosprops } from "@/types";
 import {
-  selectProgressTypes,
-  miscursosprops,
-  progress,
-  videoprogresses,
-} from "@/types";
-import { ValidateFirstVideo, ValidateOthersVideo } from "@/helpers";
+  ValidateFirstVideo,
+  ValidateOthersVideo,
+  notavaliableTitles,
+} from "@/helpers";
 
 export default function MisCursosContent({
   Stage,
@@ -31,14 +24,6 @@ export default function MisCursosContent({
     content: "",
     title: "",
   });
-  const [select, setSelect] = useState<selectProgressTypes | null>();
-
-  const { data } = useGetProgressChildBySelectQuery(
-    { ProgressId: ProgressId!, select: select ?? actualVideo.order },
-    {
-      skip: !ChildExists,
-    }
-  );
 
   const ActualProgress = useAppSelector(
     (state) => state.progressReducer.actualprogress
@@ -76,28 +61,12 @@ export default function MisCursosContent({
     console.log(ActualProgress);
   };
 
-  const notavaliableTitles = ():videostypes[] => {
-    let titles: videostypes[] = [];
+  const invalidTitles = (): videostypes[] => {
     if (GeneralProgress) {
-      for (const key in GeneralProgress) {
-        if (key in videostypes) {
-          const propertye = key as videostypes;
-          if (
-            propertye !== videostypes.First_Video &&
-            !GeneralProgress[propertye].Last_Video_Completed
-          ) {
-            titles.push(propertye);
-          }
-          if (
-            propertye == videostypes.First_Video &&
-            !GeneralProgress[propertye].PdfCompleted
-          ) {
-            titles.push(propertye);
-          }
-        }
-      }
+      const titles = notavaliableTitles(GeneralProgress);
+      return titles;
     }
-    return titles
+    return [];
   };
   return (
     <>
@@ -105,12 +74,14 @@ export default function MisCursosContent({
         <article className="flex justify-center">
           <h1 className="text-2xl">{Stage?.name}</h1>
         </article>
-        <button onClick={notavaliableTitles}>ver estados</button>
+
         <article className="flex flex-col gap-4 items-center">
           {GeneralProgress &&
             Stage?.content.videos.map((i, key) => (
               <button
-                className={notavaliableTitles().includes(i.order)?'text-red' :'text-green'}
+                className={
+                  invalidTitles().includes(i.order) ? "text-red" : "text-green"
+                }
                 key={key}
                 value={i.order}
                 onClick={selectVideo}>
@@ -124,7 +95,13 @@ export default function MisCursosContent({
         <h1>AQUI va el video,{actualVideo.title}</h1>
         <article className="flex">
           {actualVideo.content ? (
-            <YoutubePlayerCourses styles="" videoId={actualVideo.content} />
+            <YoutubePlayerCourses
+              styles=""
+              videoId={actualVideo.content}
+              ChildExists={ChildExists}
+              Progress={GeneralProgress}
+              select={actualVideo.order}
+            />
           ) : (
             <h1>Elija un video</h1>
           )}

@@ -1,9 +1,8 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import {  progress } from "../types";
+import {  Final_Video, First_Video, Other_Video, progress, videoprogresses } from "../types";
 interface initialState  {
   progress:progress|null,
-  actualprogress:keyof progress|null
-
+  actualprogress:First_Video|Other_Video|Final_Video|null,
 }
 const initialState: initialState = {
   progress:null,
@@ -18,7 +17,7 @@ const child_progress_slice = createSlice({
       console.log("guardo a user en el estado global progress", action);
       state.progress = action.payload;
     },
-    setActualProgress(state,action:PayloadAction<keyof progress|null>){
+    setActualProgress(state,action:PayloadAction<First_Video|Final_Video|Other_Video|null>){
       state.actualprogress=action.payload
     }
   },
