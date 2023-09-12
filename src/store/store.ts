@@ -4,10 +4,12 @@ import { CantajuegaService } from "./apis/CantajuegaApi";
 import { setupListeners } from "@reduxjs/toolkit/dist/query";
 import userReducer from "./userSlice";
 import childReducer from "./childSlice";
+import progressReducer from "./child_progress_slice";
 export const rootReducer = {
   reducerSlice,
   userReducer,
-  childReducer
+  childReducer,
+  progressReducer
 };
 
 export const store= configureStore({

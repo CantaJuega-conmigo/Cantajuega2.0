@@ -1,10 +1,11 @@
-import { Child, User } from "@/types";
+import { Child, User, progress, progressResquest } from "@/types";
 import { authResponse } from "@/types/auth.type";
 import { Membership } from "@/types/membership.type";
 import { stage } from "@/types/step.type";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { setUser } from "../userSlice";
 import { setChild } from "../childSlice";
+import { setProgress ,setActualProgress} from "../child_progress_slice";
 import Cookies from "js-cookie";
 interface id {
   id: number;
@@ -71,14 +72,24 @@ export const CantajuegaService = createApi({
         dispatch(setChild(response));
       },
     }),
-    getProgressChild:builder.query({
-      query:(ProgressId)=>`progress/${ProgressId}`,
-      keepUnusedDataFor:600,
-      async onQueryStarted(any,{dispatch,queryFulfilled}){
-        const progress=(await queryFulfilled).data
-        console.log(progress);
-      }
-    })
+    getProgressChild: builder.query<progress, progressResquest>({
+      query: ({ProgressId}) =>`progress/${ProgressId}`,
+      keepUnusedDataFor: 600,
+      async onQueryStarted(any, { dispatch, queryFulfilled }) {
+        const data = (await queryFulfilled).data;
+           console.log(data);
+           
+          dispatch(setProgress(data))
+      },
+    }),
+    getProgressChildBySelect: builder.query<keyof progress, progressResquest>({
+      query: ({ProgressId,select}) =>`progress/${ProgressId}?select=${select}`,
+      keepUnusedDataFor: 600,
+      async onQueryStarted(any, { dispatch, queryFulfilled }) {
+        const data = (await queryFulfilled).data;
+          dispatch(setActualProgress(data))
+      },
+    }),
   }),
 });
 
@@ -88,5 +99,6 @@ export const {
   useAuthQuery,
   useGetChildQuery,
   useGetProgressChildQuery,
-  useLazyGetProgressChildQuery
+  useLazyGetProgressChildQuery,
+  useGetProgressChildBySelectQuery
 } = CantajuegaService;

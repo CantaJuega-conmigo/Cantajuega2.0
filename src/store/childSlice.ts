@@ -7,7 +7,7 @@ const initialState: initialState = {
   child: null,
 };
 
-const userSlice = createSlice({
+const childSlice = createSlice({
   name: "Child",
   initialState,
   reducers: {
@@ -17,5 +17,5 @@ const userSlice = createSlice({
     },
   },
 });
-export const { setChild } = userSlice.actions;
-export default userSlice.reducer;
+export const { setChild } = childSlice.actions;
+export default childSlice.reducer;

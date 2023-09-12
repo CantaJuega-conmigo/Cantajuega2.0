@@ -1,0 +1,1 @@
+export  {ValidateFirstVideo,ValidateOthersVideo} from './validateVideos'

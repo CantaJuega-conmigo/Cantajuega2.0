@@ -13,13 +13,19 @@ export default function YoutubePlayerCourses({
     origin: "http://localhost:3000",
   };
   const [videoDuration, setVideoDuration] = useState<number>();
+  const [firstPlay, setFirstPlay] = useState<number>(0);
   const onReady = (event: YouTubeEvent) => {
     const Duration = event.target.getDuration();
     setVideoDuration(Duration);
-    console.log("el video esta listo y dura", videoDuration);
+   
   };
   const onPlay = () => {
-    console.log("El video comenzo a reproducirse");
+    setFirstPlay(firstPlay + 1);
+    if (firstPlay ===0) {
+      console.log("el video es reproducido por primera vez");
+    } else {
+      console.log("el video se da play varias veces", videoDuration);
+    }
   };
   const onPaused = () => {
     console.log("el video fue pausado");
@@ -28,5 +34,14 @@ export default function YoutubePlayerCourses({
     console.log("el video fue visto");
   };
 
-  return <YouTube videoId={videoId} className={styles??''} opts={options}/>;
+  return (
+    <YouTube
+      videoId={videoId}
+      className={styles ?? ""}
+      opts={options}
+      onPlay={onPlay}
+      onEnd={onFinished}
+      onReady={onReady}
+    />
+  );
 }
