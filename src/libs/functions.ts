@@ -8,11 +8,10 @@ export async function registerUser(body: RegisterBody): Promise<void> {
   try {
     const query: UserQueryResponse = await axios.post("/user/register", body);
     if ("error" in query.data) throw new Error(query.data.error);
-    Cookies.set("accessToken", query?.data.token, {
-      sameSite:'Strict',
-      httpOnly:true,
-      expires: 86400,
-    });
+    // Cookies.set("accessToken", query?.data.token, {
+    //   sameSite:'Strict',
+    //   expires: 86400,
+    // });
     store.dispatch(setUser(query?.data.user));
     alert(`Felicidades, te registraste con exito ${query.data.user.firstName}`);
     return;
@@ -28,11 +27,10 @@ export async function loginUser(body: loginBody): Promise<void> {
       const petition: UserQueryResponse = await axios.post("/user/login", body);
       if ("error" in petition.data) throw new Error(petition.data.error);
       // localStorage.setItem("tkn", petition?.data.token);
-      Cookies.set("accessToken", petition?.data.token, {
-        sameSite:'Strict',
-        httpOnly:true,
-        expires: 86400,
-      });
+      // Cookies.set("accessToken", petition?.data.token, {
+      //   sameSite:'Strict',
+      //   expires: 86400,
+      // }); 
       store.dispatch(setUser(petition?.data.user));
       alert(`bienvenido ${petition.data.user.firstName}`);
       return;

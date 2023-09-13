@@ -18,12 +18,16 @@ export const CantajuegaService = createApi({
     baseUrl: process.env.NEXT_PUBLIC_API_URL, ///url a donde se hacen las peticiones
     prepareHeaders: (headers) => {
       //preparamos los headers para que se envien las credenciales en cada peticion
-      const token = Cookies.get("accessToken"); //obtenemos el token de las cookies
-      if (token) {
-        headers.set("authorization", `Bearer ${token}`);
-      }
+      // const token = Cookies.get('accesscookie'); //obtenemos el token de las cookies;
+      // if (token) {
+      //   headers.set("authorization", token);
+
+      // }
 
       return headers;
+    },
+    fetchFn: (input, init) => {
+      return fetch(input, { ...init, credentials: 'include' });
     },
   }),
   tagTypes:['Progress'],
@@ -51,7 +55,7 @@ export const CantajuegaService = createApi({
           dispatch(setUser({ id, firstName, lastName, email }));
           dispatch(setChild(UserChild));
         } catch (err) {
-          Cookies.remove("accessToken");
+          // Cookies.remove("accessToken");
           dispatch(setUser(null));
         }
       },

@@ -6,11 +6,12 @@ const instance = axios.create({
 
 instance.interceptors.request.use((config) => {
   // const token = localStorage.getItem('tkn');
-  const token = Cookies.get('accessToken')
-  if (token) {
-    config.headers.Authorization = `Bearer ${token}`;
-  }
+  config.withCredentials=true
+  // const token = Cookies.get('accessToken')
+  // if (token) {
+  //   config.headers.Authorization = `Bearer ${token}`;
+  // }
   return config;
-});
+}); 
 
 export default instance;

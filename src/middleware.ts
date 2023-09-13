@@ -1,11 +1,10 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
-import Cookie from 'js-cookie'
+
 export async function middleware(req: NextRequest) {
-  const token = Cookie.get("accessToken");
-  console.log(token)
+  const token = req.cookies.get("accesscookie");
+
   if (!token) {
-    console.log('no hay token')
     const resquestedPage = req.nextUrl.pathname; //ruta solicitada
     const url = req.nextUrl.clone(); //clonamos la url(localhost o deploy)
     url.pathname = "/"; ///seteamos la url a donde redirigiremos
