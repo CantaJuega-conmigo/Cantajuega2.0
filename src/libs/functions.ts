@@ -9,6 +9,8 @@ export async function registerUser(body: RegisterBody): Promise<void> {
     const query: UserQueryResponse = await axios.post("/user/register", body);
     if ("error" in query.data) throw new Error(query.data.error);
     Cookies.set("accessToken", query?.data.token, {
+      sameSite:'Strict',
+      httpOnly:true,
       expires: 86400,
     });
     store.dispatch(setUser(query?.data.user));
@@ -27,6 +29,8 @@ export async function loginUser(body: loginBody): Promise<void> {
       if ("error" in petition.data) throw new Error(petition.data.error);
       // localStorage.setItem("tkn", petition?.data.token);
       Cookies.set("accessToken", petition?.data.token, {
+        sameSite:'Strict',
+        httpOnly:true,
         expires: 86400,
       });
       store.dispatch(setUser(petition?.data.user));

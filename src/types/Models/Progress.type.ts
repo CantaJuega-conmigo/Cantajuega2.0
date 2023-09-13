@@ -53,3 +53,8 @@ export interface progressResquest {
   ProgressId: string;
   select?: selectProgressTypes|videostypes;
 }
+export interface progressResquestMutation{
+  ProgressId: string;
+  select?: selectProgressTypes|videostypes;
+  newprogress:First_Video|Other_Video|Final_Video
+}

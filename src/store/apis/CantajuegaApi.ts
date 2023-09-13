@@ -1,4 +1,4 @@
-import { Child, Final_Video, First_Video, Other_Video, User, progress, progressResquest, videoprogresses } from "@/types";
+import { Child, Final_Video, First_Video, Other_Video, User, progress, progressResquest, progressResquestMutation, videoprogresses } from "@/types";
 import { authResponse } from "@/types/auth.type";
 import { Membership } from "@/types/membership.type";
 import { stage } from "@/types/step.type";
@@ -26,6 +26,7 @@ export const CantajuegaService = createApi({
       return headers;
     },
   }),
+  tagTypes:['Progress'],
   endpoints: (builder) => ({
     getStage: builder.query<stage[], null>({
       ///etapas/cursos
@@ -75,6 +76,7 @@ export const CantajuegaService = createApi({
     getProgressChild: builder.query<progress, progressResquest>({
       query: ({ProgressId}) =>`progress/${ProgressId}`,
       keepUnusedDataFor: 600,
+      providesTags:['Progress'],
       async onQueryStarted(any, { dispatch, queryFulfilled }) {
         const data = (await queryFulfilled).data;
            console.log(data);
@@ -85,11 +87,20 @@ export const CantajuegaService = createApi({
     getProgressChildBySelect: builder.query<First_Video|Other_Video|Final_Video|null, progressResquest>({
       query: ({ProgressId,select}) =>`progress/${ProgressId}?select=${select}`,
       keepUnusedDataFor: 600,
+      providesTags:['Progress'],
       async onQueryStarted(none, { dispatch, queryFulfilled }) {
         const data = (await queryFulfilled).data;
           dispatch(setActualProgress(data))
       },
     }),
+    updateVideoProgress:builder.mutation({
+      query:({ProgressId,select,newprogress}:progressResquestMutation)=>({
+        url:`progress/${ProgressId}?select=${select}`,
+        method:'PUT',
+        body:newprogress
+      }),
+      invalidatesTags:['Progress']
+    })
   }),
 });
 
@@ -100,5 +111,6 @@ export const {
   useGetChildQuery,
   useGetProgressChildQuery,
   useLazyGetProgressChildQuery,
-  useGetProgressChildBySelectQuery
+  useGetProgressChildBySelectQuery,
+  useUpdateVideoProgressMutation
 } = CantajuegaService;
