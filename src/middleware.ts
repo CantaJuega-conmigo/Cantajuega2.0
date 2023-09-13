@@ -1,8 +1,8 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
-
+import Cookie from 'js-cookie'
 export async function middleware(req: NextRequest) {
-  const token = req.cookies.get("accessToken");
+  const token = Cookie.get("accessToken");
 
   if (!token) {
     const resquestedPage = req.nextUrl.pathname; //ruta solicitada
