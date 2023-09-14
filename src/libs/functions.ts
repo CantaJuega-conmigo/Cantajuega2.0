@@ -7,6 +7,7 @@ import Cookies from "js-cookie";
 export async function registerUser(body: RegisterBody): Promise<void> {
   try {
     const query: UserQueryResponse = await axios.post("/user/register", body);
+
     if ("error" in query.data) throw new Error(query.data.error);
     // Cookies.set("accessToken", query?.data.token, {
     //   sameSite:'Strict',
@@ -22,6 +23,9 @@ export async function registerUser(body: RegisterBody): Promise<void> {
 
 export async function loginUser(body: loginBody): Promise<void> {
   const isAnySession = Cookies.get("accesscookie");
+  fetch(`${process.env.NEXT_PUBLIC_API_URL}/cookie`, { credentials: "include" })
+    .then((res) => console.log(res))
+    .then((err) => console.log(err));
   if (!isAnySession) {
     try {
       const petition: UserQueryResponse = await axios.post("/user/login", body);
@@ -47,8 +51,8 @@ export async function logoutUser() {
   try {
     const resquest = await axios.get("/user/logout");
     store.dispatch(setUser(null));
-    alert(resquest.data)
+    alert(resquest.data);
   } catch (error) {
-    console.log(error)
+    console.log(error);
   }
 }
