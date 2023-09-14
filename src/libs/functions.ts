@@ -21,7 +21,7 @@ export async function registerUser(body: RegisterBody): Promise<void> {
 }
 
 export async function loginUser(body: loginBody): Promise<void> {
-  const isAnySession = Cookies.get("accessToken");
+  const isAnySession = Cookies.get("accesscookie");
   if (!isAnySession) {
     try {
       const petition: UserQueryResponse = await axios.post("/user/login", body);
@@ -30,7 +30,7 @@ export async function loginUser(body: loginBody): Promise<void> {
       // Cookies.set("accessToken", petition?.data.token, {
       //   sameSite:'Strict',
       //   expires: 86400,
-      // }); 
+      // });
       store.dispatch(setUser(petition?.data.user));
       alert(`bienvenido ${petition.data.user.firstName}`);
       return;
@@ -44,6 +44,11 @@ export async function loginUser(body: loginBody): Promise<void> {
 }
 
 export async function logoutUser() {
-  Cookies.remove("accessToken");
-  store.dispatch(setUser(null));
+  try {
+    const resquest = await axios.get("/user/logout");
+    store.dispatch(setUser(null));
+    alert(resquest.data)
+  } catch (error) {
+    console.log(error)
+  }
 }
