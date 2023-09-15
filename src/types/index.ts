@@ -17,4 +17,6 @@ export type {
   progressResquest,
   videoprogresses,
   progressResquestMutation,
+  progressPdfUpdateMutation
 } from "./Models/Progress.type";
+export type {responses}from './query/query.type.responses'

@@ -58,3 +58,9 @@ export interface progressResquestMutation{
   select?: selectProgressTypes|videostypes;
   newprogress:First_Video|Other_Video|Final_Video
 }
+export interface progressPdfUpdateMutation{
+  ProgressId: string;
+  Pdf_Viewed: {
+    Pdf_Viewed:true
+  },
+}
