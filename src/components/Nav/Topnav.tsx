@@ -11,16 +11,16 @@ import { alertsState } from "../alerts/types";
 import Link from "next/link";
 import { AiOutlineUserSwitch } from "react-icons/ai";
 import { useAppSelector } from "@/store/hooks";
-import { logoutUser } from "@/libs/functions";
+// import { logoutUser } from "@/libs/functions";
 import { useRouter } from "next/navigation";
-import { useAuthQuery } from "@/store/apis/CantajuegaApi";
+import { useAuthQuery, useLazyLogOutQuery } from "@/store/apis/CantajuegaApi";
 interface OpenInterface {
   LOGIN: boolean;
   REGISTER: boolean;
 }
 export default function Topnav() {
   const { isLoading, data } = useAuthQuery(null);
-
+  const [logoutUser] = useLazyLogOutQuery();
   const user = useAppSelector((state) => state.userReducer.user);
   const auth = user;
   const router = useRouter();
@@ -57,8 +57,13 @@ export default function Topnav() {
       alert1: false,
     });
   };
-  const logOut = () => {
-    logoutUser().then((res) => router.push("/"));
+  const logOut = async () => {
+    try {
+      const signout =await logoutUser(null).unwrap();
+      router.push('/')
+    } catch (error) {
+      console.log(error)
+    }
   };
   return (
     <div
