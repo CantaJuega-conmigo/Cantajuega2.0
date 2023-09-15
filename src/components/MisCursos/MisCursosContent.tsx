@@ -9,12 +9,14 @@ import {
   ValidateOthersVideo,
   notavaliableTitles,
 } from "@/helpers";
+import { useUpdatePdfProgressStatusMutation } from "@/store/apis/CantajuegaApi";
 
 export default function MisCursosContent({
   Stage,
   ProgressId,
   ChildExists,
 }: miscursosprops) {
+  const [seePdf] = useUpdatePdfProgressStatusMutation();
   const GeneralProgress = useAppSelector(
     (state) => state.progressReducer.progress
   );
@@ -68,6 +70,14 @@ export default function MisCursosContent({
     }
     return [];
   };
+  const openPdf = () => {
+    if (!GeneralProgress?.Pdf_Viewed) {
+      seePdf({ ProgressId: ProgressId!, Pdf_Viewed: { Pdf_Viewed: true } })
+        .unwrap()
+        .then((resp) => console.log(resp))
+        .catch((err) => console.log(err));
+    }
+  };
   return (
     <>
       <section className="flex flex-col gap-4 w-2/12">
@@ -76,6 +86,11 @@ export default function MisCursosContent({
         </article>
 
         <article className="flex flex-col gap-4 items-center">
+          <button
+            onClick={openPdf}
+            className={GeneralProgress?.Pdf_Viewed ? "text-green" : "text-red"}>
+            {Stage?.content.pdf.name}
+          </button>
           {GeneralProgress &&
             Stage?.content.videos.map((i, key) => (
               <button
@@ -93,7 +108,7 @@ export default function MisCursosContent({
 
       <section className="w-10/12 flex flex-col items-center gap-4">
         <h1>AQUI va el video,{actualVideo.title}</h1>
-        <article className="flex">
+        <article className="flex flex-col">
           {actualVideo.content ? (
             <YoutubePlayerCourses
               styles=""
@@ -101,6 +116,7 @@ export default function MisCursosContent({
               ChildExists={ChildExists}
               Progress={GeneralProgress}
               select={actualVideo.order}
+              ActualProgress={ActualProgress!}
             />
           ) : (
             <h1>Elija un video</h1>

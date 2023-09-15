@@ -6,10 +6,12 @@ import MisCursosContent from "@/components/MisCursos/MisCursosContent";
 import { useAppSelector } from "@/store/hooks";
 
 export default function Miscursos() {
-  const { data, isLoading, isError, isSuccess } = useAuthQuery(null);
+  const { data, isLoading, isError, isSuccess } = useAuthQuery(null,{
+    refetchOnMountOrArgChange:true,
+  });
   const Child = useAppSelector((state) => state.childReducer.child);
   const ChildExist = Child?.StageId ? true : false;
-
+  
   const { stage } = useGetStageQuery(null, {
     selectFromResult: ({ data }) => ({
       stage: data?.filter((item) => item.id === Child?.StageId)[0], //una vez recibida la data, la transformamos, y nos quedamos con la etapa del niño
@@ -17,9 +19,17 @@ export default function Miscursos() {
     skip: !ChildExist,
   });
   const {data:getProgress}=useGetProgressChildQuery({ProgressId:Child?.ProgressId as string},{
-    skip:!ChildExist
+    skip:!ChildExist,
+    refetchOnFocus:true
   })
-
+  
+  if(isError){
+    return (
+      <div className="min-h-screen flex justify-center items-center">
+        <h1>Inicia sesion o registrate.</h1>
+      </div>
+    )
+  }
   if (isLoading) {
     return (
       <div className="min-h-screen flex justify-center items-center">

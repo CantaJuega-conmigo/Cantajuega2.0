@@ -21,6 +21,7 @@ export default function YoutubePlayerCourses({
   Progress,
   ChildExists,
   select,
+  ActualProgress,
 }: youtubeplayercourses) {
   const options = {
     height: "100%",
@@ -35,6 +36,7 @@ export default function YoutubePlayerCourses({
       skip: !ChildExists,
     }
   );
+  
 
   const [update] = useUpdateVideoProgressMutation();
   const [videoDuration, setVideoDuration] = useState<number>();
@@ -65,7 +67,6 @@ export default function YoutubePlayerCourses({
       select: select,
       newprogress: newProgres,
     };
-
   };
   const onFinished = () => {
     const newProgres: First_Video | Final_Video | Other_Video = {
@@ -90,7 +91,7 @@ export default function YoutubePlayerCourses({
     console.log(data);
   };
   return (
-    <div>
+    <>
       <YouTube
         videoId={videoId}
         className={styles ?? ""}
@@ -99,8 +100,8 @@ export default function YoutubePlayerCourses({
         onEnd={onFinished}
         onReady={onReady}
       />
+      <span>Total de vistas: {data?.Total}</span>
       <button onClick={verestado}>Ver estado</button>
-      <button onClick={updateProgress}>actualizar este video</button>
-    </div>
+    </>
   );
 }

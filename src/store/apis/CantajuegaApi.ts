@@ -1,12 +1,26 @@
-import { Child, Final_Video, First_Video, Other_Video, User, progress, progressResquest, progressResquestMutation, videoprogresses } from "@/types";
+import {
+  Child,
+  Final_Video,
+  First_Video,
+  Other_Video,
+  User,
+  progress,
+  progressPdfUpdateMutation,
+  progressResquest,
+  progressResquestMutation,
+  responses,
+  videoprogresses,
+} from "@/types";
 import { authResponse } from "@/types/auth.type";
 import { Membership } from "@/types/membership.type";
 import { stage } from "@/types/step.type";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { setUser } from "../userSlice";
 import { setChild } from "../childSlice";
-import { setProgress ,setActualProgress} from "../child_progress_slice";
-import Cookies from "js-cookie";
+import { setProgress, setActualProgress } from "../child_progress_slice";
+import {NextRouter} from 'next/router'
+import { AppRouterInstance } from "next/dist/shared/lib/app-router-context";
+
 interface id {
   id: number;
 }
@@ -27,10 +41,10 @@ export const CantajuegaService = createApi({
       return headers;
     },
     fetchFn: (input, init) => {
-      return fetch(input, { ...init, credentials: 'include' });
+      return fetch(input, { ...init, credentials: "include" });
     },
   }),
-  tagTypes:['Progress'],
+  tagTypes: ["Progress", "User", "Child"],
   endpoints: (builder) => ({
     getStage: builder.query<stage[], null>({
       ///etapas/cursos
@@ -60,6 +74,15 @@ export const CantajuegaService = createApi({
         }
       },
     }),
+    logOut: builder.query({
+      query: (callback) => "user/logout",
+      keepUnusedDataFor: 0,
+      async onQueryStarted(router, { dispatch, queryFulfilled }) {
+          dispatch(setUser(null));
+          const response:responses= (await queryFulfilled).data;
+          alert(response.message)
+      },
+    }),
     ///obtener todos los childs
     getChild: builder.query({
       query: () => "child",
@@ -78,33 +101,47 @@ export const CantajuegaService = createApi({
       },
     }),
     getProgressChild: builder.query<progress, progressResquest>({
-      query: ({ProgressId}) =>`progress/${ProgressId}`,
+      query: ({ ProgressId }) => `progress/${ProgressId}`,
       keepUnusedDataFor: 600,
-      providesTags:['Progress'],
+      providesTags: ["Progress"],
       async onQueryStarted(any, { dispatch, queryFulfilled }) {
         const data = (await queryFulfilled).data;
-           console.log(data);
-           
-          dispatch(setProgress(data))
+        dispatch(setProgress(data));
       },
     }),
-    getProgressChildBySelect: builder.query<First_Video|Other_Video|Final_Video|null, progressResquest>({
-      query: ({ProgressId,select}) =>`progress/${ProgressId}?select=${select}`,
+    getProgressChildBySelect: builder.query<
+      First_Video | Other_Video | Final_Video | null,
+      progressResquest
+    >({
+      query: ({ ProgressId, select }) =>
+        `progress/${ProgressId}?select=${select}`,
       keepUnusedDataFor: 600,
-      providesTags:['Progress'],
+      providesTags: ["Progress"],
       async onQueryStarted(none, { dispatch, queryFulfilled }) {
         const data = (await queryFulfilled).data;
-          dispatch(setActualProgress(data))
+        dispatch(setActualProgress(data));
       },
     }),
-    updateVideoProgress:builder.mutation({
-      query:({ProgressId,select,newprogress}:progressResquestMutation)=>({
-        url:`progress/${ProgressId}?select=${select}`,
-        method:'PUT',
-        body:newprogress
+    updateVideoProgress: builder.mutation({
+      query: ({
+        ProgressId,
+        select,
+        newprogress,
+      }: progressResquestMutation) => ({
+        url: `progress/${ProgressId}?select=${select}`,
+        method: "PUT",
+        body: newprogress,
       }),
-      invalidatesTags:['Progress']
-    })
+      invalidatesTags: ["Progress"],
+    }),
+    updatePdfProgressStatus: builder.mutation({
+      query: ({ ProgressId, Pdf_Viewed }: progressPdfUpdateMutation) => ({
+        url: `progress/${ProgressId}`,
+        method: "PUT",
+        body: Pdf_Viewed,
+      }),
+      invalidatesTags: ["Progress"],
+    }),
   }),
 });
 
@@ -116,5 +153,7 @@ export const {
   useGetProgressChildQuery,
   useLazyGetProgressChildQuery,
   useGetProgressChildBySelectQuery,
-  useUpdateVideoProgressMutation
+  useUpdateVideoProgressMutation,
+  useUpdatePdfProgressStatusMutation,
+  useLazyLogOutQuery,
 } = CantajuegaService;
