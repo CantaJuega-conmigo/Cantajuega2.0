@@ -5,9 +5,8 @@ export type { UserQueryData } from "./user.type";
 export type { UserQueryError } from "./user.type";
 export type { UserQueryResponse } from "./user.type";
 export type { youtubePlayer } from "./YoutubePlayer/youtubeplayer.type";
-export type { youtubeplayercourses } from "./MIsCursos/youtubeplayercourses.type";
+export type { youtubeplayercourses,miscursosprops } from "./MIsCursos/";
 export type { Child } from "./Models/Child.type";
-export type { miscursosprops } from "./MIsCursos/MisCursosContent.type";
 export type {
   progress,
   First_Video,

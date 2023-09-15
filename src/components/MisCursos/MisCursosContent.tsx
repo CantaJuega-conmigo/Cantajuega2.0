@@ -10,6 +10,7 @@ import {
   notavaliableTitles,
 } from "@/helpers";
 import { useUpdatePdfProgressStatusMutation } from "@/store/apis/CantajuegaApi";
+import ButtonsBox from "./ButtonsBox";
 
 export default function MisCursosContent({
   Stage,
@@ -26,12 +27,20 @@ export default function MisCursosContent({
     content: "",
     title: "",
   });
-
+  const [indexOfActualvideo, setIndexOfActualVideo] = useState(1);
   const ActualProgress = useAppSelector(
     (state) => state.progressReducer.actualprogress
   );
 
+  const allvideostypes: videostypes[] = [
+    videostypes.First_Video,
+    videostypes.Second_Video,
+    videostypes.Third_Video,
+    videostypes.Fourth_Video,
+    videostypes.Final_Video,
+  ];
   const selectVideo = (event: MouseEvent<HTMLButtonElement>) => {
+ 
     const value = event.currentTarget.value as videostypes;
     const videoselected = Stage?.content.videos.filter(
       ///selecciona el video a ver
@@ -43,6 +52,7 @@ export default function MisCursosContent({
     if (value !== "First_Video") {
       const lastVideoCompleted = ValidateOthersVideo(GeneralProgress![value]);
       if (lastVideoCompleted) {
+        setIndexOfActualVideo(allvideostypes.indexOf(value));
         return setActualVideo(videoselected);
       }
     }
@@ -51,11 +61,14 @@ export default function MisCursosContent({
       const PdfCompleted = ValidateFirstVideo(
         GeneralProgress![videostypes[value]]
       );
-
+      
       if (PdfCompleted) {
+        setIndexOfActualVideo(allvideostypes.indexOf(value));
         return setActualVideo(videoselected);
       }
     }
+   
+    
   };
 
   const seestate = () => {
@@ -80,44 +93,58 @@ export default function MisCursosContent({
   };
   return (
     <>
-      <section className="flex flex-col gap-4 w-2/12">
-        <article className="flex justify-center">
-          <h1 className="text-2xl">{Stage?.name}</h1>
+      <section className="flex flex-col gap-2 w-2/12 items-center border-r-2 border-orangeicons border-dashed">
+        <article className="flex  flex-col items-center gap-2">
+          <h1 className="text-3xl">Mi progreso</h1>
+          <h2 className="text-2xl">{Stage?.name}</h2>
         </article>
-
-        <article className="flex flex-col gap-4 items-center">
+        <article className="flex flex-col gap-2  text-xl items-start">
           <button
             onClick={openPdf}
             className={GeneralProgress?.Pdf_Viewed ? "text-green" : "text-red"}>
-            {Stage?.content.pdf.name}
+            1- {Stage?.content.pdf.name}
           </button>
           {GeneralProgress &&
             Stage?.content.videos.map((i, key) => (
               <button
-                className={
-                  invalidTitles().includes(i.order) ? "text-red" : "text-green"
-                }
+                className={`
+                  p-2 rounded-lg hover:bg-orange
+                  ${
+                    invalidTitles().includes(i.order)
+                      ? " text-gray-500 hover:bg-[#ff4545]"
+                      : `${i.title === actualVideo.title && "bg-orange "}`
+                  }
+                  `}
                 key={key}
                 value={i.order}
                 onClick={selectVideo}>
-                {i.title}
+                {`${key + 2}- ${i.title}`}
               </button>
             ))}
         </article>
       </section>
 
-      <section className="w-10/12 flex flex-col items-center gap-4">
-        <h1>AQUI va el video,{actualVideo.title}</h1>
-        <article className="flex flex-col">
+      <section className="w-10/12 flex flex-col items-center gap-4 ">
+        <h1 className="text-3xl">{actualVideo.title}</h1>
+        <article className="flex flex-col w-9/12 max-w-[70rem]  h-full gap-6">
           {actualVideo.content ? (
-            <YoutubePlayerCourses
-              styles=""
-              videoId={actualVideo.content}
-              ChildExists={ChildExists}
-              Progress={GeneralProgress}
-              select={actualVideo.order}
-              ActualProgress={ActualProgress!}
-            />
+            <>
+              <YoutubePlayerCourses
+                styles="h-5/6 max-h-[30rem]"
+                videoId={actualVideo.content}
+                ChildExists={ChildExists}
+                Progress={GeneralProgress}
+                select={actualVideo.order}
+                ActualProgress={ActualProgress!}
+              />
+              <ButtonsBox
+                videos={allvideostypes}
+                lastvideo={allvideostypes[indexOfActualvideo - 1]}
+                nextvideo={allvideostypes[indexOfActualvideo + 1]}
+                selectvideo={selectVideo}
+                ActualProgress={ActualProgress!}
+              />
+            </>
           ) : (
             <h1>Elija un video</h1>
           )}

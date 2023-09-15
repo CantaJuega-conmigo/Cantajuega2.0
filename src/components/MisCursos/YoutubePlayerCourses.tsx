@@ -14,6 +14,7 @@ import {
 import { videostypes } from "@/types/step.type";
 import { useState } from "react";
 import YouTube, { YouTubeEvent } from "react-youtube";
+import ButtonsBox from "./ButtonsBox";
 
 export default function YoutubePlayerCourses({
   videoId,
@@ -36,7 +37,6 @@ export default function YoutubePlayerCourses({
       skip: !ChildExists,
     }
   );
-  
 
   const [update] = useUpdateVideoProgressMutation();
   const [videoDuration, setVideoDuration] = useState<number>();
@@ -101,7 +101,6 @@ export default function YoutubePlayerCourses({
         onReady={onReady}
       />
       <span>Total de vistas: {data?.Total}</span>
-      <button onClick={verestado}>Ver estado</button>
     </>
   );
 }
