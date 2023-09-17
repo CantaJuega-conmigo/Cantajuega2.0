@@ -111,7 +111,7 @@ export default function MisCursosContent({
                   p-2 rounded-lg hover:bg-orange
                   ${
                     invalidTitles().includes(i.order)
-                      ? " text-gray-500 hover:bg-[#ff4545]"
+                      ? " text-gray-500 hover:bg-[#fc3434]"
                       : `${i.title === actualVideo.title && "bg-orange "}`
                   }
                   `}
