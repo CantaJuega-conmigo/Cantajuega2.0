@@ -35,28 +35,15 @@ const MembershipCard = ({ membership, color, image,Admin,onClick}: Props) => {
       <section className="bg-white flex flex-col w-full h-full justify-between">
      
        <article className="h-[55%]">
-
-        {membership.therapeuticTools &&
-          <p className="text-base h-[33%] text-center w-full justify-center flex items-center  border-b-2 border-dashed border-gray-400">
-                Todas las herramientas terapéuticas para niñas y niños de 0 a 6
-                años.
-          </p>
-          }
-            {membership.videos &&
-              <p  className="text-base h-[33%] text-center w-full justify-center flex items-center  border-b-2 border-dashed border-gray-400">
-                Material de apoyo audiovisual.
-              </p>
-            }
-            {!membership.videos &&
-              <p className="text-base h-[33%] text-center w-full justify-center flex items-center  border-b-2 border-dashed border-gray-400">
-                Todas las canciones infantiles por etapa de desarrollo.
-              </p>
-            }
-            {membership.music ? (
-              <p className="text-base h-[33%] text-center w-full justify-center flex items-center  border-b-2 border-dashed border-gray-400">
-                Canciones del programa.
-              </p>
-            ) : null}
+        {membership.description&&<p  className="text-base h-[33%] text-center w-full justify-center flex items-center  border-b-2 border-dashed border-gray-400">
+               {membership.description}
+        </p>}
+        {membership.text1&&<p  className="text-base h-[33%] text-center w-full justify-center flex items-center  border-b-2 border-dashed border-gray-400">
+               {membership.text1}
+        </p>}
+        {membership.text2&&<p  className="text-base h-[33%] text-center w-full justify-center flex items-center  border-b-2 border-dashed border-gray-400">
+               {membership.text2}
+        </p>}
        </article>
 
           <article className={`flex h-[45%] text-[${color}] flex-col justify-center gap-2 items-center`}>

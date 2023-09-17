@@ -108,13 +108,13 @@ export default function MisCursosContent({
             Stage?.content.videos.map((i, key) => (
               <button
                 className={`
-                  p-2 rounded-lg hover:bg-orange
+                  p-2 rounded-lg
                   ${
                     invalidTitles().includes(i.order)
-                      ? " text-gray-500 hover:bg-[#fc3434]"
-                      : `${i.title === actualVideo.title && "bg-orange "}`
+                      ? " text-gray-500 hover:bg-[#fc3434] cursor-not-allowed"
+                      : `${i.title === actualVideo.title && "bg-orange "}  hover:bg-orange`
                   }
-                  `}
+            `}
                 key={key}
                 value={i.order}
                 onClick={selectVideo}>
