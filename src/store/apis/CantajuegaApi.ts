@@ -17,8 +17,6 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { setUser } from "../userSlice";
 import { setChild } from "../childSlice";
 import { setProgress, setActualProgress } from "../child_progress_slice";
-import {NextRouter} from 'next/router'
-import { AppRouterInstance } from "next/dist/shared/lib/app-router-context";
 import { Membership } from "@/types/Models/Membership.type";
 
 
@@ -32,17 +30,10 @@ export const CantajuegaService = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: process.env.NEXT_PUBLIC_API_URL, ///url a donde se hacen las peticiones
     prepareHeaders: (headers) => {
-      //preparamos los headers para que se envien las credenciales en cada peticion
-      // const token = Cookies.get('accesscookie'); //obtenemos el token de las cookies;
-      // if (token) {
-      //   headers.set("authorization", token);
-
-      // }
-
       return headers;
     },
     fetchFn: (input, init) => {
-      return fetch(input, { ...init, credentials: "include" });
+      return fetch(input, { ...init, credentials: "include" });///esto incluira las cookies del servidor en cada respuesta y peticion.
     },
   }),
   tagTypes: ["Progress", "User", "Child"],
@@ -52,11 +43,14 @@ export const CantajuegaService = createApi({
       query: () => "stage", ///ruta /stage del back
       keepUnusedDataFor: 600, ///configuramos cada cuanto se elimina la cache
     }),
+    //----------------------------------------------------------------------------------
     getMembership: builder.query<responses<Membership>, null>({
       ///membresias
       query: () => "membership", ///ruta /membership del back
       keepUnusedDataFor: 600, ///configuramos cada cuanto se elimina la cache
     }),
+      //----------------------------------------------------------------------------------
+
     auth: builder.query<responses<authUser>,null>({
       query: () => "/user/auth",
       keepUnusedDataFor: 600,
@@ -87,20 +81,21 @@ export const CantajuegaService = createApi({
       },
     }),
     ///obtener todos los childs
-    getChild: builder.query({
+    getChild: builder.query<responses<Child>,null>({
       query: () => "child",
       keepUnusedDataFor: 600,
-      async onQueryStarted(nose, { dispatch, queryFulfilled }) {
-        const response = await queryFulfilled;
-      },
+      // async onQueryStarted(nose, { dispatch, queryFulfilled }) {
+      //   const response = await queryFulfilled;
+      // },
     }),
     ////obtener child por id
-    getChildById: builder.query({
+    getChildById: builder.query<responses<Child>,null>({
       query: (id) => `child/${id}`,
       keepUnusedDataFor: 600,
       async onQueryStarted(nose, { dispatch, queryFulfilled }) {
-        const response = (await queryFulfilled).data as Child;
-        dispatch(setChild(response));
+        const {data} = (await queryFulfilled).data
+        const [child]=data!
+        dispatch(setChild(child));
       },
     }),
     getProgressChild: builder.query<responses<progress>, progressResquest>({
@@ -108,8 +103,9 @@ export const CantajuegaService = createApi({
       keepUnusedDataFor: 600,
       providesTags: ["Progress"],
       async onQueryStarted(any, { dispatch, queryFulfilled }) {
-        const data = (await queryFulfilled).data;
-        dispatch(setProgress(data.data![0]));
+        const {data} = (await queryFulfilled).data;
+        const [progress]=data!
+        dispatch(setProgress(progress));
       },
     }),
     getProgressChildBySelect: builder.query<responses< First_Video | Other_Video | Final_Video | null>,progressResquest>({
@@ -119,7 +115,8 @@ export const CantajuegaService = createApi({
       providesTags: ["Progress"],
       async onQueryStarted(none, { dispatch, queryFulfilled }) {
         const {data} = (await queryFulfilled).data
-        dispatch(setActualProgress(data![0]));
+        const [progress]=data!
+        dispatch(setActualProgress(progress));
       },
     }),
     updateVideoProgress: builder.mutation({
