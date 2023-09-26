@@ -45,7 +45,7 @@ export default function Membresias() {
       </section>
 
       <main className="flex justify-around flex-wrap gap-4">
-        {memberships?.map((i, key) => (
+        {memberships?.data?.map((i, key) => (
           <article key={key}>
             <MembershipCard
               membership={i}

@@ -1,6 +1,6 @@
 "use client";
 import { useAppSelector } from "@/store/hooks";
-import { videos, videostypes } from "@/types/step.type";
+import { videos, videostypes } from "@/types/Models/Stage.type";
 import { useState, MouseEvent } from "react";
 import YoutubePlayerCourses from "./YoutubePlayerCourses";
 import { miscursosprops } from "@/types";

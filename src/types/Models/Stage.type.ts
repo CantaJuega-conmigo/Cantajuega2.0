@@ -33,16 +33,3 @@ export interface stage {
     maxAge: number,
     content:content
 }
-
-
-export interface GetAllStepsError {
-    //fataria tipar el error
-    error: string;
-    status: number;
-}
-
-export type GetAllMembreshipsQuery = {
-    data: stage[];
-  } | {
-    data: GetAllMembreshipsQuery;
-  };

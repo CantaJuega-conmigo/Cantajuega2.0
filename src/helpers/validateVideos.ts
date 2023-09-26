@@ -1,5 +1,5 @@
 import { Final_Video, First_Video, Other_Video, progress } from "@/types";
-import { videostypes } from "@/types/step.type";
+import { videostypes } from "@/types/Models/Stage.type";
 export const notavaliableTitles=(Progress:progress):videostypes[]=>{
     let titles: videostypes[] = [];
     if (Progress) {

@@ -12,14 +12,14 @@ import {
   videoprogresses,
 } from "@/types";
 import { authResponse } from "@/types/auth.type";
-import { Membership } from "@/types/membership.type";
-import { stage } from "@/types/step.type";
+import { stage } from "@/types/Models/Stage.type";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { setUser } from "../userSlice";
 import { setChild } from "../childSlice";
 import { setProgress, setActualProgress } from "../child_progress_slice";
 import {NextRouter} from 'next/router'
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context";
+import { Membership } from "@/types/Models/membership.type";
 
 interface id {
   id: number;
@@ -51,7 +51,7 @@ export const CantajuegaService = createApi({
       query: () => "stage", ///ruta /stage del back
       keepUnusedDataFor: 600, ///configuramos cada cuanto se elimina la cache
     }),
-    getMembership: builder.query<Membership[], null>({
+    getMembership: builder.query<responses<Membership>, null>({
       ///membresias
       query: () => "membership", ///ruta /membership del back
       keepUnusedDataFor: 600, ///configuramos cada cuanto se elimina la cache
@@ -79,7 +79,7 @@ export const CantajuegaService = createApi({
       keepUnusedDataFor: 0,
       async onQueryStarted(router, { dispatch, queryFulfilled }) {
           dispatch(setUser(null));
-          const response:responses= (await queryFulfilled).data;
+          const response:responses<null>= (await queryFulfilled).data;
           alert(response.message)
       },
     }),

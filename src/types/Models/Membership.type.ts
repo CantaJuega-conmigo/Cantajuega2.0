@@ -9,17 +9,5 @@ export interface Membership {
     videos: boolean;
     recurrenteId: string;
     status: string;
+    checkout:string
 }
-
-
-export interface GetAllMembreshipsError {
-    //fataria tipar el error
-    error: string;
-    status: number;
-}
-
-export type GetAllMembreshipsQuery = {
-    data: Membership[];
-  } | {
-    data: GetAllMembreshipsError;
-  };

@@ -1,5 +1,5 @@
 import { ButtonsBox } from "@/types/MIsCursos";
-import { videostypes } from "@/types/step.type";
+import { videostypes } from "@/types/Models/Stage.type";
 import { MouseEvent } from "react";
 
 export default function ButtonsBox({

@@ -5,7 +5,7 @@ import image2 from "../../../public/img/img-2.png";
 import image3 from "../../../public/img/Ellipse 13.png";
 import image4 from "../../../public/img/Rectangle 167.png";
 import styles from "../../styles/Cursos.module.css";
-import { stage } from "@/types/step.type";
+import { stage } from "@/types/Models/Stage.type";
 import Stages from "@/components/stages/Stages";
 import { useGetStageQuery } from "@/store/apis/CantajuegaApi";
 import Loading from "../loading";

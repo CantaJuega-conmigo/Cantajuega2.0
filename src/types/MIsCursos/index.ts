@@ -1,8 +1,8 @@
-import { stage } from "../step.type";
+import { stage } from "../Models/Stage.type";
 
 import { Final_Video, First_Video, Other_Video, progress } from "..";
 import { youtubePlayer } from "../YoutubePlayer/youtubeplayer.type";
-import { videostypes } from "../step.type";
+import { videostypes } from "../Models/Stage.type";
 import { MouseEvent } from "react";
 export interface miscursosprops {
   ProgressId?: string;

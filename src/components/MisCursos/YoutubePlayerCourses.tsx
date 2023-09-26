@@ -11,7 +11,7 @@ import {
   selectProgressTypes,
   youtubeplayercourses,
 } from "@/types";
-import { videostypes } from "@/types/step.type";
+import { videostypes } from "@/types/Models/Stage.type";
 import { useState } from "react";
 import YouTube, { YouTubeEvent } from "react-youtube";
 import ButtonsBox from "./ButtonsBox";

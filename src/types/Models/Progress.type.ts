@@ -1,4 +1,4 @@
-import { videostypes } from "../step.type";
+import { videostypes } from "./Stage.type";
 
 export interface First_Video {
   PdfCompleted: boolean;
