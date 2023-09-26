@@ -1,5 +1,3 @@
-// import { goToSubscribeMembreship } from "@/functions/memership.query";
-// import { Membership } from "@/types/membership.type";
 import Image from "next/image";
 import React, { MouseEventHandler } from "react";
 import { BsFillPencilFill, BsTrash3Fill } from "react-icons/bs";
@@ -14,11 +12,7 @@ interface Props {
 
 const MembershipCard = ({ membership, color, image,Admin,onClick}: Props) => {
 
-    // const handleSelectMembership = () => {
-    //   console.log(membership)
-    //     goToSubscribeMembreship(membership.id)
-    // }
-    
+
   return (
     <div className={` p-2 flex flex-col w-full max-w-[18rem] h-[25rem] relative`} style={{backgroundColor:color}}>
     
@@ -49,12 +43,15 @@ const MembershipCard = ({ membership, color, image,Admin,onClick}: Props) => {
           <article className={`flex h-[45%] text-[${color}] flex-col justify-center gap-2 items-center`}>
               <b className={` text-4xl text-[${color}]`}>Q {membership.price}</b>
               <h3>Cada cierto tiempo</h3>
-             {/* <button className=" bg-[#2C98F0]  text-white w-[50%] p-2  " onClick={handleSelectMembership}>
+              
+             <button className=" bg-[#2C98F0]  text-white w-[50%] p-2  " >
+              <a href={membership.checkout}>
+              seleccionar
+              </a>
+             </button>
+             {/* <button className=" bg-[#2C98F0]  text-white w-[50%] p-2  " >
               seleccionar
              </button> */}
-             <button className=" bg-[#2C98F0]  text-white w-[50%] p-2  " >
-              seleccionar
-             </button>
           </article>
       </section>
     

@@ -1,4 +1,3 @@
-
 import axios from "./axios";
 import { setUser } from "@/store/userSlice";
 import { store } from "@/store/store";
@@ -8,7 +7,9 @@ import { errorResponses } from "@/types/query/query.type.responses";
 
 export async function registerUser(body: registerBody): Promise<void> {
   try {
-    const query: responses<loginResponse> = (await axios.post("/user/register", body)).data
+    const query: responses<loginResponse> = (
+      await axios.post("/user/register", body)
+    ).data;
     const { user } = query.data![0];
     store.dispatch(setUser(user));
     alert(`Felicidades, te registraste con exito ${user.firstName}`);
@@ -25,8 +26,10 @@ export async function loginUser(body: loginbody): Promise<void> {
     .then((err) => console.log(err));
   if (!isAnySession) {
     try {
-      const petition: responses<loginResponse> = (await axios.post("/user/login", body)).data;
-      const {user}=petition.data![0]
+      const petition: responses<loginResponse> = (
+        await axios.post("/user/login", body)
+      ).data;
+      const { user } = petition.data![0];
       store.dispatch(setUser(user));
       alert(`bienvenido ${user.firstName}`);
       return;
