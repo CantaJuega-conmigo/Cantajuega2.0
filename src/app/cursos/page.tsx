@@ -14,7 +14,7 @@ interface state extends stage {
 }
 export default  function Cursos() {
 
-  const {data:steps,isLoading}=useGetStageQuery(null)
+  const {data:stages,isLoading}=useGetStageQuery(null)
   const colors: string[] = [
     "#FF0303",
     "#FF0303",
@@ -90,7 +90,7 @@ export default  function Cursos() {
       >
         <div className=" flex    h-5/6 md:h-full  w-full items-center  flex-col min-[300px]:flex-row  sm:justify-evenly min-[400px]:w-full  sm:w-11/12 ">
           <div className="grid grid-cols-2 h-full md:gap-8 grid-flow-row-dense  w-full  md:w-[40rem] xl:w-[43rem] ">
-            {steps?.map((item, key) => (
+            {stages?.data?.map((item, key) => (
               <Stages
                 id={item.id}
                 key={key}

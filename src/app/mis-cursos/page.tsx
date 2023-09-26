@@ -14,7 +14,7 @@ export default function Miscursos() {
   
   const { stage } = useGetStageQuery(null, {
     selectFromResult: ({ data }) => ({
-      stage: data?.filter((item) => item.id === Child?.StageId)[0], //una vez recibida la data, la transformamos, y nos quedamos con la etapa del niño
+      stage: data?.data?.filter((item) => item.id === Child?.StageId)[0], //una vez recibida la data, la transformamos, y nos quedamos con la etapa del niño
     }),
     skip: !ChildExist,
   });
@@ -37,6 +37,7 @@ export default function Miscursos() {
       </div>
     );
   }
+  console.log(ChildExist,Child,'en componente')
 
   return (
     <div

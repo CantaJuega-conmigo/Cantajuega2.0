@@ -11,7 +11,7 @@ export interface User{
     MembershipId:string
 }
 interface UserAuthResponse extends User{
-    Children:Child
+    Children:Child[]
 }
 export interface authUser{
     error:boolean

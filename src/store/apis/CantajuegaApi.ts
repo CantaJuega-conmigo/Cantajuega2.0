@@ -66,7 +66,8 @@ export const CantajuegaService = createApi({
           const data = (await queryFulfilled).data.data; //en data viene informacion del usuario y el token
           const { user } = data![0];
           const { id, firstName, lastName, email } = user
-          const UserChild = user.Children ?? null;
+          const UserChild = user.Children[0] ?? null;
+          console.log(UserChild,'en funcion')
           ///actualizamos nuestros estados globales
           dispatch(setUser({ id, firstName, lastName, email }));
           dispatch(setChild(UserChild));
@@ -102,26 +103,23 @@ export const CantajuegaService = createApi({
         dispatch(setChild(response));
       },
     }),
-    getProgressChild: builder.query<progress, progressResquest>({
+    getProgressChild: builder.query<responses<progress>, progressResquest>({
       query: ({ ProgressId }) => `progress/${ProgressId}`,
       keepUnusedDataFor: 600,
       providesTags: ["Progress"],
       async onQueryStarted(any, { dispatch, queryFulfilled }) {
         const data = (await queryFulfilled).data;
-        dispatch(setProgress(data));
+        dispatch(setProgress(data.data![0]));
       },
     }),
-    getProgressChildBySelect: builder.query<
-      First_Video | Other_Video | Final_Video | null,
-      progressResquest
-    >({
+    getProgressChildBySelect: builder.query<responses< First_Video | Other_Video | Final_Video | null>,progressResquest>({
       query: ({ ProgressId, select }) =>
         `progress/${ProgressId}?select=${select}`,
       keepUnusedDataFor: 600,
       providesTags: ["Progress"],
       async onQueryStarted(none, { dispatch, queryFulfilled }) {
-        const data = (await queryFulfilled).data;
-        dispatch(setActualProgress(data));
+        const {data} = (await queryFulfilled).data
+        dispatch(setActualProgress(data![0]));
       },
     }),
     updateVideoProgress: builder.mutation({
