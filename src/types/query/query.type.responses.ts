@@ -5,6 +5,7 @@ export interface responses<parameter>{
 }
 export interface errorResponses{
     succes:false,
+    message:string,
     error:string,
-    errors:any[]
+    errors?:any[]
 }

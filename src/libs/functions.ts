@@ -1,42 +1,34 @@
-import { RegisterBody, UserQueryResponse, loginBody } from "@/types";
+
 import axios from "./axios";
 import { setUser } from "@/store/userSlice";
 import { store } from "@/store/store";
 import Cookies from "js-cookie";
+import { loginResponse, loginbody, registerBody, responses } from "@/types";
+import { errorResponses } from "@/types/query/query.type.responses";
 
-export async function registerUser(body: RegisterBody): Promise<void> {
+export async function registerUser(body: registerBody): Promise<void> {
   try {
-    const query: UserQueryResponse = await axios.post("/user/register", body);
-
-    if ("error" in query.data) throw new Error(query.data.error);
-    // Cookies.set("accessToken", query?.data.token, {
-    //   sameSite:'Strict',
-    //   expires: 86400,
-    // });
-    store.dispatch(setUser(query?.data.user));
-    alert(`Felicidades, te registraste con exito ${query.data.user.firstName}`);
+    const query: responses<loginResponse> = (await axios.post("/user/register", body)).data
+    const { user } = query.data![0];
+    store.dispatch(setUser(user));
+    alert(`Felicidades, te registraste con exito ${user.firstName}`);
     return;
   } catch (error) {
     console.log(error);
   }
 }
 
-export async function loginUser(body: loginBody): Promise<void> {
+export async function loginUser(body: loginbody): Promise<void> {
   const isAnySession = Cookies.get("accesscookie");
   fetch(`${process.env.NEXT_PUBLIC_API_URL}/cookie`, { credentials: "include" })
     .then((res) => console.log(res))
     .then((err) => console.log(err));
   if (!isAnySession) {
     try {
-      const petition: UserQueryResponse = await axios.post("/user/login", body);
-      if ("error" in petition.data) throw new Error(petition.data.error);
-      // localStorage.setItem("tkn", petition?.data.token);
-      // Cookies.set("accessToken", petition?.data.token, {
-      //   sameSite:'Strict',
-      //   expires: 86400,
-      // });
-      store.dispatch(setUser(petition?.data.user));
-      alert(`bienvenido ${petition.data.user.firstName}`);
+      const petition: responses<loginResponse> = (await axios.post("/user/login", body)).data;
+      const {user}=petition.data![0]
+      store.dispatch(setUser(user));
+      alert(`bienvenido ${user.firstName}`);
       return;
     } catch (error) {
       console.log(error);

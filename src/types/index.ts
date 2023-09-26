@@ -1,9 +1,6 @@
-export type { User } from "./user.type";
-export type { RegisterBody } from "./user.type";
-export type { loginBody } from "./user.type";
-export type { UserQueryData } from "./user.type";
-export type { UserQueryError } from "./user.type";
-export type { UserQueryResponse } from "./user.type";
+export type { User,authUser } from "./Models/User.type";
+export type { loginbody ,loginResponse} from "./Login";
+export type { registerBody } from "./Register";
 export type { youtubePlayer } from "./YoutubePlayer/youtubeplayer.type";
 export type { youtubeplayercourses,miscursosprops } from "./MIsCursos/";
 export type { Child } from "./Models/Child.type";
@@ -18,4 +15,5 @@ export type {
   progressResquestMutation,
   progressPdfUpdateMutation
 } from "./Models/Progress.type";
-export type {responses}from './query/query.type.responses'
+export type {responses,errorResponses}from './query/query.type.responses'
+

@@ -4,6 +4,7 @@ import {
   First_Video,
   Other_Video,
   User,
+  authUser,
   progress,
   progressPdfUpdateMutation,
   progressResquest,
@@ -11,7 +12,6 @@ import {
   responses,
   videoprogresses,
 } from "@/types";
-import { authResponse } from "@/types/auth.type";
 import { stage } from "@/types/Models/Stage.type";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { setUser } from "../userSlice";
@@ -47,7 +47,7 @@ export const CantajuegaService = createApi({
   }),
   tagTypes: ["Progress", "User", "Child"],
   endpoints: (builder) => ({
-    getStage: builder.query<stage[], null>({
+    getStage: builder.query<responses<stage>, null>({
       ///etapas/cursos
       query: () => "stage", ///ruta /stage del back
       keepUnusedDataFor: 600, ///configuramos cada cuanto se elimina la cache
@@ -57,15 +57,16 @@ export const CantajuegaService = createApi({
       query: () => "membership", ///ruta /membership del back
       keepUnusedDataFor: 600, ///configuramos cada cuanto se elimina la cache
     }),
-    auth: builder.query({
+    auth: builder.query<responses<authUser>,null>({
       query: () => "/user/auth",
       keepUnusedDataFor: 600,
       async onQueryStarted(id, { dispatch, queryFulfilled }) {
         //es lo que hara con la respuesta
         try {
-          const data = (await queryFulfilled).data; //en data viene informacion del usuario y el token
-          const { id, firstName, lastName, email } = data.user as any;
-          const UserChild = (data.user.Children[0] as Child) ?? null;
+          const data = (await queryFulfilled).data.data; //en data viene informacion del usuario y el token
+          const { user } = data![0];
+          const { id, firstName, lastName, email } = user
+          const UserChild = user.Children ?? null;
           ///actualizamos nuestros estados globales
           dispatch(setUser({ id, firstName, lastName, email }));
           dispatch(setChild(UserChild));
