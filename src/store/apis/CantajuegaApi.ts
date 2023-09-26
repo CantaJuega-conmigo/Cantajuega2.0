@@ -19,7 +19,8 @@ import { setChild } from "../childSlice";
 import { setProgress, setActualProgress } from "../child_progress_slice";
 import {NextRouter} from 'next/router'
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context";
-import { Membership } from "@/types/Models/membership.type";
+import { Membership } from "@/types/Models/Membership.type";
+
 
 interface id {
   id: number;
