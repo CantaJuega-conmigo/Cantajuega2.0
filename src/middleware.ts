@@ -4,7 +4,8 @@ import type { NextRequest } from "next/server";
 export async function middleware(req: NextRequest) {
   try {
     
-    const token = req.cookies.get("accesscookie");
+    const token =  req.cookies.get("accesscookie");
+    console.log('explorando req',req.cookies.getAll()),
     console.log(token, "en middleware next");
     if (!token) {
       console.log("se ejecuto la condicional");
