@@ -3,8 +3,9 @@ import type { NextRequest } from "next/server";
 
 export async function middleware(req: NextRequest) {
   const token = req.cookies.get("accesscookie");
-
+  console.log(token, "en middleware next");
   if (!token) {
+    console.log("se ejecuto la condicional");
     const resquestedPage = req.nextUrl.pathname; //ruta solicitada
     const url = req.nextUrl.clone(); //clonamos la url(localhost o deploy)
     url.pathname = "/"; ///seteamos la url a donde redirigiremos

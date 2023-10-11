@@ -21,9 +21,9 @@ export async function registerUser(body: registerBody): Promise<void> {
 
 export async function loginUser(body: loginbody): Promise<void> {
   const isAnySession = Cookies.get("accesscookie");
-  fetch(`${process.env.NEXT_PUBLIC_API_URL}/cookie`, { credentials: "include" })
-    .then((res) => console.log(res))
-    .then((err) => console.log(err));
+  // fetch(`${process.env.NEXT_PUBLIC_API_URL}/cookie`, { credentials: "include" })
+  //   .then((res) => console.log(res))
+  //   .then((err) => console.log(err));
   if (!isAnySession) {
     try {
       const petition: responses<loginResponse> = (
