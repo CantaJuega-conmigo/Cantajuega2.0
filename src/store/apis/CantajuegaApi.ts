@@ -19,7 +19,6 @@ import { setChild } from "../childSlice";
 import { setProgress, setActualProgress } from "../child_progress_slice";
 import { Membership } from "@/types/Models/Membership.type";
 
-
 interface id {
   id: number;
 }
@@ -33,7 +32,7 @@ export const CantajuegaService = createApi({
       return headers;
     },
     fetchFn: (input, init) => {
-      return fetch(input, { ...init, credentials: "include" });///esto incluira las cookies del servidor en cada respuesta y peticion.
+      return fetch(input, { ...init, credentials: "include" }); ///esto incluira las cookies del servidor en cada respuesta y peticion.
     },
   }),
   tagTypes: ["Progress", "User", "Child"],
@@ -49,9 +48,9 @@ export const CantajuegaService = createApi({
       query: () => "membership", ///ruta /membership del back
       keepUnusedDataFor: 600, ///configuramos cada cuanto se elimina la cache
     }),
-      //----------------------------------------------------------------------------------
+    //----------------------------------------------------------------------------------
 
-    auth: builder.query<responses<authUser>,null>({
+    auth: builder.query<responses<authUser>, null>({
       query: () => "/user/auth",
       keepUnusedDataFor: 600,
       async onQueryStarted(id, { dispatch, queryFulfilled }) {
@@ -59,9 +58,9 @@ export const CantajuegaService = createApi({
         try {
           const data = (await queryFulfilled).data.data; //en data viene informacion del usuario y el token
           const { user } = data![0];
-          const { id, firstName, lastName, email } = user
+          const { id, firstName, lastName, email } = user;
           const UserChild = user.Children[0] ?? null;
-          console.log(UserChild,'en funcion')
+          console.log(UserChild, "en funcion");
           ///actualizamos nuestros estados globales
           dispatch(setUser({ id, firstName, lastName, email }));
           dispatch(setChild(UserChild));
@@ -75,13 +74,13 @@ export const CantajuegaService = createApi({
       query: (callback) => "user/logout",
       keepUnusedDataFor: 0,
       async onQueryStarted(router, { dispatch, queryFulfilled }) {
-          dispatch(setUser(null));
-          const response:responses<null>= (await queryFulfilled).data;
-          alert(response.message)
+        dispatch(setUser(null));
+        const response: responses<null> = (await queryFulfilled).data;
+        alert(response.message);
       },
     }),
     ///obtener todos los childs
-    getChild: builder.query<responses<Child>,null>({
+    getChild: builder.query<responses<Child>, null>({
       query: () => "child",
       keepUnusedDataFor: 600,
       // async onQueryStarted(nose, { dispatch, queryFulfilled }) {
@@ -89,12 +88,12 @@ export const CantajuegaService = createApi({
       // },
     }),
     ////obtener child por id
-    getChildById: builder.query<responses<Child>,null>({
+    getChildById: builder.query<responses<Child>, null>({
       query: (id) => `child/${id}`,
       keepUnusedDataFor: 600,
       async onQueryStarted(nose, { dispatch, queryFulfilled }) {
-        const {data} = (await queryFulfilled).data
-        const [child]=data!
+        const { data } = (await queryFulfilled).data;
+        const [child] = data!;
         dispatch(setChild(child));
       },
     }),
@@ -103,20 +102,25 @@ export const CantajuegaService = createApi({
       keepUnusedDataFor: 600,
       providesTags: ["Progress"],
       async onQueryStarted(any, { dispatch, queryFulfilled }) {
-        const {data} = (await queryFulfilled).data;
-        const [progress]=data!
+        const { data } = (await queryFulfilled).data;
+        const [progress] = data!;
         dispatch(setProgress(progress));
       },
     }),
-    getProgressChildBySelect: builder.query<responses< First_Video | Other_Video | Final_Video | null>,progressResquest>({
+    getProgressChildBySelect: builder.query<responses<First_Video | Other_Video | Final_Video | null>,   progressResquest>({
       query: ({ ProgressId, select }) =>
         `progress/${ProgressId}?select=${select}`,
       keepUnusedDataFor: 600,
       providesTags: ["Progress"],
       async onQueryStarted(none, { dispatch, queryFulfilled }) {
-        const {data} = (await queryFulfilled).data
-        const [progress]=data!
-        dispatch(setActualProgress(progress));
+        try {
+          console.log("en try front");
+          const { data } = (await queryFulfilled).data;
+          const [progress] = data!;
+          dispatch(setActualProgress(progress));
+        } catch (error) {
+          console.log(error);
+        }
       },
     }),
     updateVideoProgress: builder.mutation({
