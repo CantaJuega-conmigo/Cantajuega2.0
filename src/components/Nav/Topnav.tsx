@@ -2,7 +2,6 @@ import { HiOutlineLogout, HiUserAdd } from 'react-icons/hi';
 import { BsTelephone, BsYoutube } from 'react-icons/bs';
 import { TiSocialFacebook } from 'react-icons/ti';
 import { IoMdMail } from 'react-icons/io';
-import Login from '../Login/Login';
 import Resgister from '../Register/Register';
 import { AUTH_MODAL_TYPE } from '../../utils/constants';
 import { MouseEvent, Suspense, useState } from 'react';
@@ -11,7 +10,6 @@ import { alertsState } from '../alerts/types';
 import Link from 'next/link';
 import { AiOutlineUserSwitch } from 'react-icons/ai';
 import { useAppSelector } from '@/store/hooks';
-// import { logoutUser } from "@/libs/functions";
 import { useRouter } from 'next/navigation';
 import { useAuthQuery, useLazyLogOutQuery } from '@/store/apis/CantajuegaApi';
 interface OpenInterface {

@@ -1,7 +1,7 @@
 export default function Page (){
     return(
-        <div>
+        <div className="flex justify-center">
             pagina uno admin sin nav ni foot
         </div>
     )
-}
+} 
