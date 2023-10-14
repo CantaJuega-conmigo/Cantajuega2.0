@@ -1,10 +1,10 @@
 "use client";
 import MembershipCard from "@/components/MembershipsCards/MembershipsCards";
-import firstbackground from "../../../public/img/Untitled_Artwork 3.png";
-import secondbackground from "../../../public/img/Untitled_Artwork 5.png";
+import firstbackground from "../../../../public/img/Untitled_Artwork 3.png";
+import secondbackground from "../../../../public/img/Untitled_Artwork 5.png";
 // import { Membership } from "@/types/membership.type";
 import { useGetMembershipQuery } from "@/store/apis/CantajuegaApi";
-import Loading from "../loading";
+import Loading from "../../loading";
 
 export default function Membresias() {
   const { data: memberships, isLoading } = useGetMembershipQuery(null);

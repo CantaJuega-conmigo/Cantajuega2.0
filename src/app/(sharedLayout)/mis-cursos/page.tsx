@@ -1,5 +1,5 @@
 "use client";
-import styles from "../../styles/Miscursos.module.css";
+import styles from "../../../styles/Miscursos.module.css";
 import { useAuthQuery,useGetChildQuery, useGetStageQuery ,useGetProgressChildQuery} from "@/store/apis/CantajuegaApi";
 
 import MisCursosContent from "@/components/MisCursos/MisCursosContent";
