@@ -1,12 +1,12 @@
 "use client"
 import Image from "next/image";
 import { BsArrowLeft} from "react-icons/bs";
-import image1 from '../../../public/img/image 12.png'
-import image2 from '../../../public/img/Star 9.png'
-import image3 from '../../../public/img/Untitled_Artwork-3-1.png'
-import styles from '../../styles/Cancionero.module.css'
+import image1 from '../../../../public/img/image 12.png'
+import image2 from '../../../../public/img/Star 9.png'
+import image3 from '../../../../public/img/Untitled_Artwork-3-1.png'
+import styles from '../../../styles/Cancionero.module.css'
 import { IoMdDownload } from "react-icons/io";
-import MusicsPlayers from "../../components/MusicPlayer/MusicsPlayers";
+import MusicsPlayers from "../../../components/MusicPlayer/MusicsPlayers";
 import { useAppSelector } from "@/store/hooks";
 
 

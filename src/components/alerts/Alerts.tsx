@@ -6,7 +6,6 @@ import {
   PagosAlerts,
   CuestionarioAlerts,
 } from "./types";
-import Login from "../Login/Login";
 import { AUTH_MODAL_TYPE } from "@/utils/constants";
 import Register from "../Register/Register";
 import Link from "next/link";
@@ -123,7 +122,6 @@ export default function Alerts({
               INSCRIBIRSE
             </button>
           </div>
-          {open.LOGIN && <Login handleOpen={handleOpen} />}
           {open.REGISTER && <Register handleOpen={handleOpen} />}
         </section>
       )}

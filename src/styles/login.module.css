@@ -1,235 +1,261 @@
-.FormContainer{
-    width: 25rem;
-    height: 30rem;
-}
-.Form input{
- padding: 5px;
-}
-.Form input[type="password"]::-ms-reveal {/* para desactivar el icono de mostrar contraseña por defecto del navegador microsoft edge */
-  display: none;
+.container {
+  position: relative;
+  width: 100%;
+  height: 700px;
+  overflow: hidden;
+  /* background-color: rgb(210, 212, 251); */
 }
 
-.FormContainer > :nth-child(1)  {
-  /* Estilos para el cuarto hijo */
- height: 5%;
-}
-.FormContainer > :nth-child(2) {
-  /* Estilos para el cuarto hijo */
- height: 10%;
-}
-.FormContainer > :nth-child(3) {
-  /* Estilos para el cuarto hijo */
-
- height: 58%;
-}
-.FormContainer > :nth-child(4) {
-  /* Estilos para el cuarto hijo */
-height: 2%;
-}
-.FormContainer > :nth-child(5) {
-  /* Estilos para el cuarto hijo */
-
-  height: 15%;
-}
-.FormContainer > :nth-child(6) {
-  /* Estilos para el cuarto hijo */
-
-  height: 10%;
+.spinnerContainer {
+  display: flex;
+  align-items: center;
+  column-gap: 5px;
+  font-size: 16px;
+  color: #ff3d00;
+  width: 100%;
+  height: 100%;
+  z-index: 100;
 }
 
-/* Estilos para pantallas  en modo vertical */
-@media (max-width: 915px) and (orientation: portrait) {
-  /* Estilos para modo vertical */
-  .FormContainer{
-  width: 20rem;
-  height: 25rem;
-  }
+.img1 {
+  position: absolute;
+  width: 500px;
+  height: 150px;
+  z-index: 10;
+  user-select: none;
+}
+.img2 {
+  position: absolute;
+  width: 550px;
+  height: 150px;
+  user-select: none;
+}
+.img3 {
+  position: absolute;
+  width: 400px;
+  bottom: 0;
+  user-select: none;
+}
+.img4 {
+  position: absolute;
+  width: 180px;
+  height: 180px;
+  bottom: 0;
+  right: 0;
+  user-select: none;
 }
 
-/* Estilos para pantallas con ancho máximo de 915px en modo horizontal */
-@media (max-width: 915px) and (orientation: landscape) {
-  /* Estilos para modo horizontal */
-  .FormContainer{
-      width: 20rem;
-      height: 25rem;
-      }
-      .pwforgot {
-        font-size: 0.9rem;
-      }
-  
-}
-/* Estilos para pantallas  en modo vertical */
-@media (max-width: 900px) and (orientation: portrait) {
-  /* Estilos para modo vertical */
-  .FormContainer{
-  width: 20rem;
-  height: 25rem;
-  }
+.tittle {
+  position: relative;
+  top: 40px;
+  left: 50px;
+  font-size: 25px;
+  color: #fff;
+  z-index: 10;
 }
 
-/* Estilos para pantallas con ancho máximo de 900px en modo horizontal */
-@media (max-width: 900px) and (orientation: landscape) {
-  /* Estilos para modo horizontal */
-  .FormContainer{
-      width: 20rem;
-      height: 25rem;
-
-      }
-      .pwforgot {
-        font-size: 0.9rem;
-      }
-  
+.form {
+  position: absolute;
+  padding: 10px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  margin: auto;
+  max-width: 700px;
+  width: 100%;
+  z-index: 10;
 }
 
-/*----------------------------------------------------------------------------*/
+.sectionErrors {
+  margin-top: 30px;
+  max-width: 100%;
+  height: 27px;
+}
+.errorContainer {
+  display: flex;
+  align-items: center;
+  column-gap: 5px;
+  width: 100%;
+}
+.errorContainer svg {
+  align-self: flex-start;
+  margin-left: 5px;
+  font-size: 23px;
+  color: #f00;
+}
 
-/* Estilos para pantallas  en modo vertical */
-@media (max-width: 768px) and (orientation: portrait) {
-    /* Estilos para modo vertical */
-    .FormContainer{
-    width: 20rem;
-    height: 25rem;
-  
-    }
-  }
-  
-  /* Estilos para pantallas  en modo horizontal */
-  @media (max-width: 768px) and (orientation: landscape) {
-    /* Estilos para modo horizontal */
-    /* .FormContainer{
-        width: 20rem;
-        height: 17rem;
-        color: rgb(9, 51, 0);
-        } */
-  }
-/* Estilos para pantallas  en modo vertical */
-@media (max-width: 740px) and (orientation: portrait) {
-    /* Estilos para modo vertical */
-    .FormContainer{
-    
-    width: 20rem;
-    height: 25rem;
-  
-    }
-  }
-  
-  /* Estilos para pantallas con ancho máximo de 740px en modo horizontal */
-  @media (max-width: 740px) and (orientation: landscape) {
-    /* Estilos para modo horizontal */
-    .FormContainer{
-      margin-top: 7%;
-        width: 20rem;
-        height: 28rem;
+.errorDescription {
+  align-self: flex-end;
+  color: #f00;
+  font-size: 15px;
+  overflow-y: auto;
+}
 
-        }
-    .Container{
-          padding-bottom:2% ;
-     }
+.inputsContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 10px;
+}
+.inputsContainer:nth-child(2) {
+  margin-top: 20px;
+}
+.inputsContainer label {
+  align-self: self-start;
+  margin-left: 5px;
+}
+
+.inputs {
+  width: 100%;
+  padding: 10px;
+  margin-top: 3px;
+  border-radius: 5px;
+  border: 1px solid #000;
+}
+
+.inputs:focus {
+  outline: 2px solid #ff3d00;
+  border: 1px solid #fff;
+}
+.inputPassword {
+  position: relative;
+}
+
+.inputError {
+  border: 1px solid #f00;
+  outline: 1px solid #f00;
+}
+
+.errorInputsContainer {
+  width: 100%;
+  height: 20px;
+}
+.errorParagraph {
+  margin-top: 5px;
+  margin-left: 5px;
+  font-size: 15px;
+  color: #f00;
+}
+
+.sectionRememberme {
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+  user-select: none;
+  margin-top: 15px;
+}
+.checkRememberme {
+  display: flex;
+  column-gap: 5px;
+  margin-left: 5px;
+}
+.sectionRememberme label {
+  cursor: pointer;
+}
+.sectionRememberme span {
+  position: relative;
+  left: -53px;
+  right: 0;
+  margin: auto;
+  color: #ff3d00;
+  cursor: pointer;
+  align-self: center;
+}
+
+.check {
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+  accent-color: #ff3d00;
+}
+
+.sectionButtons {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  row-gap: 30px;
+  margin-top: 10px;
+}
+.sectionButtons button {
+  width: 200px;
+  border-radius: 5px;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  -ms-border-radius: 5px;
+  -o-border-radius: 5px;
+  cursor: pointer;
+  font-size: 15px;
+  font-weight: 600;
+}
+.normalBtn {
+  padding: 5px;
+  text-align: center;
+  text-decoration: none;
+  outline: none;
+  background-color: #f1d245;
+  color: #000;
+  border: none;
+  border-radius: 15px;
+  box-shadow: 0 4px #999;
+}
+.normalBtn:hover {
+  background-color: #87fb3a;
+}
+.normalBtn:active {
+  background-color: #87fb3a;
+  box-shadow: 0 2px #999;
+  transform: translateY(2px);
+  -webkit-transform: translateY(2px);
+  -moz-transform: translateY(2px);
+  -ms-transform: translateY(2px);
+  -o-transform: translateY(2px);
+}
+
+.googleBtn {
+  display: flex;
+  align-items: center;
+  padding: 5px;
+  background-color: #fff;
+  box-shadow: 0 4px #999;
+}
+.googleBtn svg {
+  margin-right: 8px;
+  font-size: 25px;
+}
+.googleBtn:hover {
+  background-color: #eeecff;
+}
+.googleBtn:active {
+  background-color: #eeecff;
+  box-shadow: 0 2px #999;
+  transform: translateY(2px);
+  -webkit-transform: translateY(2px);
+  -moz-transform: translateY(2px);
+  -ms-transform: translateY(2px);
+  -o-transform: translateY(2px);
+}
+
+@media screen and (max-width: 540px) {
+  .sectionRememberme {
+    flex-direction: column;
   }
-  
-/*----------------------------------------------------------------------------*/
-  @media (max-width: 668px) and (orientation: portrait) {
-  
-   .Form input{
-    padding: 5px;
-   }
-   
+  .sectionRememberme span {
+    left: 0;
+    margin-top: 15px;
+    margin-bottom: 10px;
+  }
+}
+@media screen and (max-width: 470px) {
+  .img2 {
+    display: none;
+  }
+  .tittle {
+    left: inherit;
+    width: 100%;
+    text-align: center;
   }
 
-  @media (max-width: 668px) and (orientation: landscape) {
-   
-    .FormContainer{
-       margin-top: 150px;
-    }
-    .Form input{
-      padding: 3px;
-     }
-     .pwforgot {
-      font-size: 0.9rem;
-    }
-    
+  .sectionErrors {
+    margin-bottom: 30px;
   }
-/*----------------------------------------------------------------------------*/
-  /* @media (max-width: 653px) and (orientation: portrait) {
-
-  } */
-
-  @media (max-width: 653px) and (orientation: landscape) {
-    .FormContainer{
-      margin-top: 150px;
-      overflow: scroll;
-        height: 25rem;
-    }
-    .Form input{
-      padding: 1px;
-    }
-  }
-/*----------------------------------------------------------------------------*/
-  @media (max-width: 540px) and (orientation: portrait) {
-   /* .FormContainer{
-     
-   } */
-   .pwforgot{
-    font-size: 0.9rem;
-  }
-  }
-
-  /* @media (max-width: 540px) and (orientation: landscape) {
-    .FormContainer{
-        height: 17rem;
-        color:  rgb(255, 80, 176);
-    }
-    .pwforgot{
-      background-color: black;
-    }
-  } */
-/*----------------------------------------------------------------------------*/
-  @media (max-width: 415px) and (orientation: portrait) {
-   .FormContainer{
-  
-     height: 28rem;
-     
-   }
-   .Form input{
-    padding: 2px;
-   }
-  
-   .pwforgot{
-    font-size: 0.8rem;
-  }
-  .googleButtonSection{
-    height: 20%;
-  }
-  .googleButtonSection button{
-    width: 70%;
-  }
-  }
-  @media (max-width: 300px) and (orientation: portrait) {
-   .FormContainer{
-    margin-top: -35%;
-     height: 24rem;
-     width: 90%;
-   }
-   .Form input{
-    padding: 2px;
-   }
-  
-   .pwforgot{
-    font-size: 0.8rem;
-  }
-  .googleButtonSection{
-    height: 20%;
-  }
-  .googleButtonSection button{
-    width: 70%;
-  }
-  }
-
-  /* @media (max-width: 300px) and (orientation: landscape) {
-    .FormContainer{
-      
-    }
-    .pwforgot{
-  
-    }
-  } */
+}
