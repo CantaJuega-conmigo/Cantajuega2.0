@@ -36,7 +36,8 @@ export default function YoutubePlayerCourses({
     { ProgressId: Progress?.id!, select: select ?? videostypes.First_Video },
     {
       selectFromResult: ({ data }) => {
-        console.log('dentro de selectFromResult',data?.data)
+        console.log('dentro de selectFromResult',data?.data,data)
+        console.log('child exist en selectfromresult',ChildExists)
         return {
           data: data?.data![0], //una vez recibida la data, la transformamos, y nos quedamos con la etapa del niño
         };
