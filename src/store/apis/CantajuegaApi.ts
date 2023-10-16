@@ -36,20 +36,21 @@ export const CantajuegaService = createApi({
     },
   }),
   tagTypes: ["Progress", "User", "Child"],
-  endpoints: (builder) => ({
+
+  endpoints: (builder) => ({//aqui creamos funciones para comunicarse con los endpoints del back
+     ///etapas/cursos
     getStage: builder.query<responses<stage>, null>({
-      ///etapas/cursos
       query: () => "stage", ///ruta /stage del back
       keepUnusedDataFor: 600, ///configuramos cada cuanto se elimina la cache
     }),
     //----------------------------------------------------------------------------------
+    ///membresias
     getMembership: builder.query<responses<Membership>, null>({
-      ///membresias
       query: () => "membership", ///ruta /membership del back
       keepUnusedDataFor: 600, ///configuramos cada cuanto se elimina la cache
     }),
     //----------------------------------------------------------------------------------
-
+    //authenticacion
     auth: builder.query<responses<authUser>, null>({
       query: () => "/user/auth",
       keepUnusedDataFor: 600,
@@ -60,33 +61,36 @@ export const CantajuegaService = createApi({
           const { user } = data![0];
           const { id, firstName, lastName, email } = user;
           const UserChild = user.Children[0] ?? null;
-          console.log(UserChild, "en funcion");
           ///actualizamos nuestros estados globales
           dispatch(setUser({ id, firstName, lastName, email }));
           dispatch(setChild(UserChild));
         } catch (err) {
-          // Cookies.remove("accessToken");
           dispatch(setUser(null));
+          dispatch(setChild(null))
         }
       },
     }),
-    logOut: builder.query({
-      query: (callback) => "user/logout",
-      keepUnusedDataFor: 0,
-      async onQueryStarted(router, { dispatch, queryFulfilled }) {
+    //-----------------------------------------------
+    //deslogueo
+    logOut: builder.mutation({
+      query:({})=>({
+        url:'user/logout',
+        method:'POST',
+        body:{}
+      }),
+      async onQueryStarted(none, { dispatch, queryFulfilled }) {
         dispatch(setUser(null));
         const response: responses<null> = (await queryFulfilled).data;
         alert(response.message);
       },
     }),
+    //-----------------------------
     ///obtener todos los childs
     getChild: builder.query<responses<Child>, null>({
       query: () => "child",
       keepUnusedDataFor: 600,
-      // async onQueryStarted(nose, { dispatch, queryFulfilled }) {
-      //   const response = await queryFulfilled;
-      // },
     }),
+    //----------------------------
     ////obtener child por id
     getChildById: builder.query<responses<Child>, null>({
       query: (id) => `child/${id}`,
@@ -97,6 +101,8 @@ export const CantajuegaService = createApi({
         dispatch(setChild(child));
       },
     }),
+    ///---------------------
+    //obtener progresos del chic@
     getProgressChild: builder.query<responses<progress>, progressResquest>({
       query: ({ ProgressId }) => `progress/${ProgressId}`,
       keepUnusedDataFor: 600,
@@ -107,6 +113,8 @@ export const CantajuegaService = createApi({
         dispatch(setProgress(progress));
       },
     }),
+    ///////----------------------------
+    //obtener info de los progresos de videos
     getProgressChildBySelect: builder.query<responses<First_Video | Other_Video | Final_Video | null>,   progressResquest>({
       query: ({ ProgressId, select }) =>
         `progress/${ProgressId}?select=${select}`,
@@ -123,6 +131,8 @@ export const CantajuegaService = createApi({
         }
       },
     }),
+    //--------------------------------------------------------
+    //actualizar el progreso de los videos 
     updateVideoProgress: builder.mutation({
       query: ({
         ProgressId,
@@ -135,6 +145,8 @@ export const CantajuegaService = createApi({
       }),
       invalidatesTags: ["Progress"],
     }),
+    //------------------------------------------------
+    //actualizar el progreso del pdf(para cuando se mire el pdf)
     updatePdfProgressStatus: builder.mutation({
       query: ({ ProgressId, Pdf_Viewed }: progressPdfUpdateMutation) => ({
         url: `progress/${ProgressId}`,
@@ -156,5 +168,5 @@ export const {
   useGetProgressChildBySelectQuery,
   useUpdateVideoProgressMutation,
   useUpdatePdfProgressStatusMutation,
-  useLazyLogOutQuery,
+  useLogOutMutation,
 } = CantajuegaService;
