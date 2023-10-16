@@ -52,9 +52,9 @@ export async function loginUser(body: loginbody): Promise<void> {
 
 export async function logoutUser() {
   try {
-    const resquest = await axios.get('/user/logout');
+    const resquest = await axios.post('/user/logout');
     store.dispatch(setUser(null));
-    alert(resquest.data);
+    alert(resquest.data?.message);
   } catch (error) {
     console.log(error);
   }
