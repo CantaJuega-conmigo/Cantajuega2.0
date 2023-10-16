@@ -30,13 +30,17 @@ export default function YoutubePlayerCourses({
     playerVars: {},
     origin: "http://localhost:3000",
   };
+  console.log(Progress?.id, select, "para ver en produccion",ChildExists);
 
   const { data } = useGetProgressChildBySelectQuery(
     { ProgressId: Progress?.id!, select: select ?? videostypes.First_Video },
     {
-      selectFromResult: ({ data }) => ({
-        data:data?.data![0] //una vez recibida la data, la transformamos, y nos quedamos con la etapa del niño
-      }),
+      selectFromResult: ({ data }) => {
+        console.log('dentro de selectFromResult',data?.data)
+        return {
+          data: data?.data![0], //una vez recibida la data, la transformamos, y nos quedamos con la etapa del niño
+        };
+      },
       skip: !ChildExists,
     }
   );
