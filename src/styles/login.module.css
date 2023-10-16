@@ -1,9 +1,8 @@
 .container {
   position: relative;
   width: 100%;
-  height: 700px;
   overflow: hidden;
-  /* background-color: rgb(210, 212, 251); */
+  height: 100vh;
 }
 
 .spinnerContainer {
