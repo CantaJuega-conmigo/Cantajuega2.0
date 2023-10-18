@@ -1,5 +1,5 @@
 'use client';
-import styles from '../../styles/Register.module.css';
+import styles from '../../styles/register.module.css';
 import Image from 'next/image';
 import img1 from '../../../public/img/login/Ellipse 15.png';
 import img2 from '../../../public/img/login/Ellipse 17.png';
