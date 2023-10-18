@@ -1,6 +1,6 @@
 
 import { AUTH_MODAL_TYPE } from '../../utils/constants';
-import styles from '../../styles/register.module.css'
+// import styles from '../../styles/register.module.css'
 import { useEffect, useState } from 'react'
 import { registerError } from '../../utils/FormsErrors';
 import { IoMdClose,IoMdEye,IoMdEyeOff} from 'react-icons/io';

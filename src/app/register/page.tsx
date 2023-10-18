@@ -1,5 +1,5 @@
 'use client';
-import styles from '../../styles/login.module.css';
+import styles from '../../styles/Register.module.css';
 import Image from 'next/image';
 import img1 from '../../../public/img/login/Ellipse 15.png';
 import img2 from '../../../public/img/login/Ellipse 17.png';
@@ -10,25 +10,31 @@ import { GoAlert } from 'react-icons/go';
 import { FaArrowLeft } from 'react-icons/fa';
 import { RotatingLines } from 'react-loader-spinner';
 import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
-import { loginError } from '@/utils/FormsErrors';
-import { loginUser } from '@/libs/functions';
+import { registerError } from '@/utils/FormsErrors';
+import { registerUser } from '@/libs/functions';
 import { useRouter } from 'next/navigation';
 
-interface ILogin {
+interface IRegister {
+  firstName: string;
+  lastName: string;
   email: string;
   password: string;
 }
-interface ILoginErrors {
+interface IRegisterErrors {
+  firstName?: string;
+  lastName?: string;
   email?: string;
   password?: string;
   global?: string;
 }
 
-export default function Login() {
+export default function Register() {
   const router = useRouter();
-  const [errors, setErrors] = useState<ILoginErrors>({});
+  const [errors, setErrors] = useState<IRegisterErrors>({});
 
-  const [loginValues, setLoginValues] = useState<ILogin>({
+  const [registerValues, setRegisterValues] = useState<IRegister>({
+    firstName: '',
+    lastName: '',
     email: '',
     password: '',
   });
@@ -37,28 +43,32 @@ export default function Login() {
 
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>): void => {
     const { name, value } = event.target;
-    setLoginValues({ ...loginValues, [name]: value });
+    setRegisterValues({ ...registerValues, [name]: value });
   };
 
   const handleSubmit = async (
     event: FormEvent<HTMLFormElement>
   ): Promise<void> => {
     event.preventDefault();
-    setErrors(loginError(loginValues));
+    setErrors(registerError(registerValues));
 
     if (
-      !Object.keys(loginError(loginValues)).length &&
-      loginValues.email.length &&
-      loginValues.password.length
+      !Object.keys(registerError(registerValues)).length &&
+      registerValues.firstName.length &&
+      registerValues.lastName.length &&
+      registerValues.email.length &&
+      registerValues.password.length
     ) {
       try {
         setLoading(true);
-        await loginUser(loginValues);
+        await registerUser(registerValues);
         setLoading(false);
         router.push('/');
       } catch (error: any) {
         setErrors({
           ...errors,
+          firstName: '',
+          lastName: '',
           email: '',
           password: '',
           global: error.message,
@@ -91,7 +101,7 @@ export default function Login() {
         >
           <FaArrowLeft />
         </div>
-        <h2 className={styles.tittle}>Inicio de sesion</h2>
+        <h2 className={styles.tittle}>Crea un usuario</h2>
       </div>
       <form className={styles.form} onSubmit={handleSubmit}>
         <section className={styles.sectionErrors}>
@@ -101,7 +111,6 @@ export default function Login() {
               <p className={styles.errorDescription}>{errors.global}</p>
             </div>
           )}
-
           {loading && (
             <div className={styles.spinnerContainer}>
               <RotatingLines
@@ -117,7 +126,43 @@ export default function Login() {
         </section>
         <section className={styles.sectionInputs}>
           <div className={styles.inputsContainer}>
-            <label htmlFor='email'>Usuario/correo electronico</label>
+            <label htmlFor='firstName'>Nombre</label>
+            <input
+              className={`${styles.inputs} ${
+                errors.firstName && styles.inputError
+              }`}
+              onChange={handleInputChange}
+              type='text'
+              name='firstName'
+              id='firstName'
+              placeholder='Introduce tu nombre...'
+            />
+            <div className={styles.errorInputsContainer}>
+              {errors.email && (
+                <p className={styles.errorParagraph}>{errors.firstName}</p>
+              )}
+            </div>
+          </div>
+          <div className={styles.inputsContainer}>
+            <label htmlFor='lastName'>Apellido</label>
+            <input
+              className={`${styles.inputs} ${
+                errors.lastName && styles.inputError
+              }`}
+              onChange={handleInputChange}
+              type='text'
+              name='lastName'
+              id='lastName'
+              placeholder='Introduce tu apellido...'
+            />
+            <div className={styles.errorInputsContainer}>
+              {errors.email && (
+                <p className={styles.errorParagraph}>{errors.lastName}</p>
+              )}
+            </div>
+          </div>
+          <div className={styles.inputsContainer}>
+            <label htmlFor='email'>Correo electronico</label>
             <input
               onChange={handleInputChange}
               className={`${styles.inputs} ${
@@ -126,7 +171,7 @@ export default function Login() {
               type='text'
               id='email'
               name='email'
-              placeholder='Escribe aquí...'
+              placeholder='Introduce tu correo...'
               autoComplete='on'
             />
             <div className={styles.errorInputsContainer}>
@@ -160,15 +205,14 @@ export default function Login() {
             <input className={styles.check} type='checkbox' id='remember' />
             <label htmlFor='remember'>Recordarme</label>
           </div>
-          <span>¿Olvidaste tu contraseña?</span>
         </section>
         <section className={styles.sectionButtons}>
           <button className={styles.normalBtn} type='submit'>
-            Iniciar
+            Registrarse
           </button>
           <button className={styles.googleBtn}>
             <FcGoogle />
-            Iniciar con Google
+            Registrar con Google
           </button>
         </section>
       </form>
