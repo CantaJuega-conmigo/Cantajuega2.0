@@ -13,11 +13,14 @@ export async function registerUser(body: registerBody): Promise<true | any> {
     store.dispatch(setUser(user));
     return true;
   } catch (error: any) {
-    throw new Error(
-      error.response.data.message
-        ? error.response.data.message
-        : 'No se ha podido crear el usuario'
-    );
+    console.log(error);
+    if (error.response.data.message.errors) {
+      throw new Error(error.response.data.message.errors[0]?.msg);
+    } else if (typeof error.response.data.message === 'string') {
+      throw new Error(error.response.data.message);
+    } else {
+      throw new Error('No se ha podido crear el usuario');
+    }
   }
 }
 

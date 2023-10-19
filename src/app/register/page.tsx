@@ -77,6 +77,7 @@ export default function Register() {
       }
     }
   };
+
   useEffect(() => {
     const timer = setTimeout(() => {
       setErrors({});
@@ -138,7 +139,7 @@ export default function Register() {
               placeholder='Introduce tu nombre...'
             />
             <div className={styles.errorInputsContainer}>
-              {errors.email && (
+              {errors.firstName && (
                 <p className={styles.errorParagraph}>{errors.firstName}</p>
               )}
             </div>
@@ -156,7 +157,7 @@ export default function Register() {
               placeholder='Introduce tu apellido...'
             />
             <div className={styles.errorInputsContainer}>
-              {errors.email && (
+              {errors.lastName && (
                 <p className={styles.errorParagraph}>{errors.lastName}</p>
               )}
             </div>
