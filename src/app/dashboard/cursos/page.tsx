@@ -1,7 +1,8 @@
-export default function Page(){
-    return(
-        <div className="min-h-screen">
-            <h1>Cursos</h1>
-        </div>
-    )
+export default function Page() {
+  return (
+    <>
+      <h1>Cursos</h1>
+      <span>Aqui se podran ver los cursos existentes, modificarlos , eliminarlos o crear</span>
+    </>
+  );
 }
