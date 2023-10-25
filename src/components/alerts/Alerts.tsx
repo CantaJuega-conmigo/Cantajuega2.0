@@ -1,15 +1,14 @@
-import { useState, MouseEvent, useEffect } from "react";
+import { useState, MouseEvent, useEffect } from 'react';
 import {
   Alertsprops,
   MiscursosAlerts,
   MembresiasAlerts,
   PagosAlerts,
   CuestionarioAlerts,
-} from "./types";
-import { AUTH_MODAL_TYPE } from "@/utils/constants";
-import Register from "../Register/Register";
-import Link from "next/link";
-import { Alertaux } from "@/utils/auxfunctions";
+} from './types';
+import { AUTH_MODAL_TYPE } from '@/utils/constants';
+import Link from 'next/link';
+import { Alertaux } from '@/utils/auxfunctions';
 ///importar el componente Alerts donde vayamos a usarlo ej: import Alerts from "@/components/alerts/Alerts";
 /*    s
 declarar un estado para poder usar como modal al alert que querramos, si vamos a usar mas de un alerta agregaremos mas alert al estado en false inicialmente
@@ -65,8 +64,8 @@ export default function Alerts({
     }, 1000);
   };
   useEffect(() => {
-    const list = ["mainhome", "CancioneroPage", "CursosPage", "MembresiasPage"];
-    const exptionspages = [{ id: "MisCursosPage", pagename: "Miscursos" }];
+    const list = ['mainhome', 'CancioneroPage', 'CursosPage', 'MembresiasPage'];
+    const exptionspages = [{ id: 'MisCursosPage', pagename: 'Miscursos' }];
 
     Alertaux({
       effect: true,
@@ -85,15 +84,15 @@ export default function Alerts({
   }, []);
   return (
     <div
-      id="alert"
-      className="bg-[#D9D9D9A1] fixed w-full h-full justify-center items-center top-0 z-[500000] flex"
+      id='alert'
+      className='bg-[#D9D9D9A1] fixed w-full h-full justify-center items-center top-0 z-[500000] flex'
     >
       {Miscursos === MiscursosAlerts.Alert1 && (
-        <section className="bg-white w-6/12 max-w-[40rem] h-3/6 max-h-[20rem] flex flex-col items-center justify-evenly">
+        <section className='bg-white w-6/12 max-w-[40rem] h-3/6 max-h-[20rem] flex flex-col items-center justify-evenly'>
           <h1>¡Recuerda!</h1>
           <h1>AUN NO PUEDES AVANZAR</h1>
           <button
-            className="bg-orangeicons text-[#ffffff]  w-3/12 max-w-[10rem] p-2  rounded-xl m-2 h-[2.8rem]"
+            className='bg-orangeicons text-[#ffffff]  w-3/12 max-w-[10rem] p-2  rounded-xl m-2 h-[2.8rem]'
             onClick={close}
           >
             CONTINUAR
@@ -102,47 +101,46 @@ export default function Alerts({
       )}
 
       {Membresias === MembresiasAlerts.Alert1 && (
-        <section className="bg-white w-6/12 max-w-[40rem] h-3/6 max-h-[20rem] flex flex-col items-center justify-evenly">
+        <section className='bg-white w-6/12 max-w-[40rem] h-3/6 max-h-[20rem] flex flex-col items-center justify-evenly'>
           <h1>UPS ALGO HA SALIDO MAL :(</h1>
-          <h1 className="w-7/12 text-center leading-6 font-medium ">
+          <h1 className='w-7/12 text-center leading-6 font-medium '>
             AL PARECER NO TIENES UNA CUENTA. SI DESEAS SUSCRIBIRTE A UNA
             MEMBRESIA NECESITAS CREAR UN PERFIL.
           </h1>
-          <div className="flex  w-full justify-center ">
+          <div className='flex  w-full justify-center '>
             <button
-              className="p-2 rounded-lg m-2 border border-orangeicons w-3/12 max-w-[10rem]"
+              className='p-2 rounded-lg m-2 border border-orangeicons w-3/12 max-w-[10rem]'
               onClick={close}
             >
               CANCELAR
             </button>
             <button
-              className="bg-orange  w-3/12 max-w-[10rem] p-2 rounded-lg m-2"
+              className='bg-orange  w-3/12 max-w-[10rem] p-2 rounded-lg m-2'
               onClick={() => handleOpen(AUTH_MODAL_TYPE.REGISTER)}
             >
               INSCRIBIRSE
             </button>
           </div>
-          {open.REGISTER && <Register handleOpen={handleOpen} />}
         </section>
       )}
 
       {Pagos === PagosAlerts.SALDOINSUFICIENTE && (
-        <section className="bg-white w-6/12 max-w-[40rem] h-3/6 max-h-[20rem] flex flex-col items-center justify-evenly">
+        <section className='bg-white w-6/12 max-w-[40rem] h-3/6 max-h-[20rem] flex flex-col items-center justify-evenly'>
           <h1>SALDO INSUFICIENTE</h1>
-          <h1 className="w-7/12 text-center leading-6 font-medium ">
+          <h1 className='w-7/12 text-center leading-6 font-medium '>
             AL PARECER NO TIENES UNA CUENTA. INTENTA PROBANDO POR OTRO MEDIO DE
             PAGO
           </h1>
-          <div className="flex  w-full justify-center ">
+          <div className='flex  w-full justify-center '>
             <button
-              className="p-2 rounded-lg m-2 border border-orangeicons w-3/12 max-w-[10rem]"
+              className='p-2 rounded-lg m-2 border border-orangeicons w-3/12 max-w-[10rem]'
               onClick={close}
             >
               CANCELAR
             </button>
             <button
-              className="bg-orange  w-3/12 max-w-[10rem] p-2 rounded-lg m-2"
-              onClick={() => console.log("Reintentar pago")}
+              className='bg-orange  w-3/12 max-w-[10rem] p-2 rounded-lg m-2'
+              onClick={() => console.log('Reintentar pago')}
             >
               Reintentar
             </button>
@@ -151,22 +149,22 @@ export default function Alerts({
       )}
 
       {Pagos === PagosAlerts.ERRORDEPAGO && (
-        <section className="bg-white w-6/12 max-w-[40rem] h-3/6 max-h-[20rem] flex flex-col items-center justify-evenly">
+        <section className='bg-white w-6/12 max-w-[40rem] h-3/6 max-h-[20rem] flex flex-col items-center justify-evenly'>
           <h1>UPS EN ESTOS MOMENTOS NO PODEMOS PROCESAR EL PAGO</h1>
-          <h1 className="w-7/12 text-center leading-6 font-medium ">
+          <h1 className='w-7/12 text-center leading-6 font-medium '>
             INTENTA DE NUEVO MAS TARDE. <br />
             LO SENTIMOS
           </h1>
-          <div className="flex  w-full justify-center ">
+          <div className='flex  w-full justify-center '>
             <button
-              className="p-2 rounded-lg m-2 border border-orangeicons w-3/12 max-w-[10rem]"
+              className='p-2 rounded-lg m-2 border border-orangeicons w-3/12 max-w-[10rem]'
               onClick={close}
             >
               CANCELAR
             </button>
             <button
-              className="bg-orange  w-3/12 max-w-[10rem] p-2 rounded-lg m-2"
-              onClick={() => console.log("Reintentar pago")}
+              className='bg-orange  w-3/12 max-w-[10rem] p-2 rounded-lg m-2'
+              onClick={() => console.log('Reintentar pago')}
             >
               Reintentar
             </button>
@@ -175,20 +173,20 @@ export default function Alerts({
       )}
 
       {Pagos === PagosAlerts.ERROR3 && (
-        <section className="bg-white w-6/12 max-w-[40rem] h-3/6 max-h-[20rem] flex flex-col items-center justify-evenly">
+        <section className='bg-white w-6/12 max-w-[40rem] h-3/6 max-h-[20rem] flex flex-col items-center justify-evenly'>
           <h1>NO PUEDES ACCEDER A ESTE SERVICIO</h1>
-          <h1 className="w-7/12 text-center leading-6 font-medium ">
+          <h1 className='w-7/12 text-center leading-6 font-medium '>
             AL PARECER YA ESTAS SUSCRIPTO A UNA MEMBRESIA.
           </h1>
-          <div className="flex  w-full justify-center ">
+          <div className='flex  w-full justify-center '>
             <button
-              className="p-2 rounded-lg m-2 border border-orangeicons w-3/12 max-w-[10rem]"
+              className='p-2 rounded-lg m-2 border border-orangeicons w-3/12 max-w-[10rem]'
               onClick={close}
             >
               CANCELAR
             </button>
-            <Link href={"/"}>
-              <button className="bg-orange  w-3/12 max-w-[10rem] p-2 rounded-lg m-2">
+            <Link href={'/'}>
+              <button className='bg-orange  w-3/12 max-w-[10rem] p-2 rounded-lg m-2'>
                 Home
               </button>
             </Link>
@@ -196,20 +194,20 @@ export default function Alerts({
         </section>
       )}
       {Cuestionario === CuestionarioAlerts.Confirm && (
-        <section className="bg-white w-6/12 max-w-[40rem] h-3/6 max-h-[20rem] flex flex-col items-center justify-evenly">
+        <section className='bg-white w-6/12 max-w-[40rem] h-3/6 max-h-[20rem] flex flex-col items-center justify-evenly'>
           <h1>ATENCIÓN</h1>
-          <h1 className="w-10/12 text-center leading-6 font-medium ">
+          <h1 className='w-10/12 text-center leading-6 font-medium '>
             ¿DESEA USTED GUARDAR Y ENVIAR LOS DATOS?
           </h1>
-          <div className="flex  w-full justify-evenly ">
+          <div className='flex  w-full justify-evenly '>
             <button
-              className="p-2  rounded-xl m-2 border border-orangeicons w-3/12 max-w-[10rem]"
+              className='p-2  rounded-xl m-2 border border-orangeicons w-3/12 max-w-[10rem]'
               onClick={close}
             >
               No
             </button>
             <button
-              className="bg-orangeicons text-[#ffffff]  w-3/12 max-w-[10rem] p-2  rounded-xl m-2"
+              className='bg-orangeicons text-[#ffffff]  w-3/12 max-w-[10rem] p-2  rounded-xl m-2'
               onClick={(event) => submit(event, close)}
             >
               SI
@@ -220,21 +218,21 @@ export default function Alerts({
 
       {Personalizado && (
         <section
-          className="bg-white w-11/12 h-3/6  min-h-[15rem] flex flex-col items-center max-h-[20rem] justify-evenly md:w-[40rem] 
-         text-xs sm:text-sm md:text-base lg:text-lg xl:text-xl  2xl:text-2xl  "
+          className='bg-white w-11/12 h-3/6  min-h-[15rem] flex flex-col items-center max-h-[20rem] justify-evenly md:w-[40rem] 
+         text-xs sm:text-sm md:text-base lg:text-lg xl:text-xl  2xl:text-2xl  '
         >
           <h1>{Personalizado.text1}</h1>
           <h1>{Personalizado.text2}</h1>
-          <div className="flex justify-center gap-3 w-full xl:text-lg 2xl:text-xl">
+          <div className='flex justify-center gap-3 w-full xl:text-lg 2xl:text-xl'>
             <button
-              className="bg-orange   min-[400px]:w-4/12 max-w-[10rem] p-2  rounded-xl m-2"
+              className='bg-orange   min-[400px]:w-4/12 max-w-[10rem] p-2  rounded-xl m-2'
               onClick={close}
             >
               {Personalizado.CancelText}
             </button>
             {onClick && (
               <button
-                className="bg-orangeicons text-[#ffffff]   min-[400px]:w-4/12 max-w-[10rem] p-2  rounded-xl m-2"
+                className='bg-orangeicons text-[#ffffff]   min-[400px]:w-4/12 max-w-[10rem] p-2  rounded-xl m-2'
                 onClick={(event) => submit(event, close)}
               >
                 {Personalizado.AcceptTText}

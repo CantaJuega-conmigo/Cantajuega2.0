@@ -3,6 +3,19 @@ import { setUser } from '@/store/userSlice';
 import { store } from '@/store/store';
 import Cookies from 'js-cookie';
 import { loginResponse, loginbody, registerBody, responses } from '@/types';
+import { log } from 'console';
+
+export async function acountConfirmation(
+  email: string,
+  code: string
+): Promise<boolean> {
+  try {
+    await axios.get(`/user/verify?email=${email}&code=${code}`);
+    return true;
+  } catch (error: any) {
+    return false;
+  }
+}
 
 export async function registerUser(body: registerBody): Promise<true | any> {
   try {
