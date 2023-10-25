@@ -16,20 +16,20 @@ export default function AcountConfirmation({
   email: string;
   name: string;
 }) {
-  const [error, setError] = useState(false);
+  const [error, setError] = useState<boolean>(false);
   const router = useRouter();
 
-  const [inputValue, setInputValue] = useState('');
+  const [inputValue, setInputValue] = useState<string>('');
 
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     setInputValue(event.target.value);
   };
 
-  const [spinner, setSpinner] = useState(false);
+  const [spinner, setSpinner] = useState<boolean>(false);
 
-  const [verifycated, setVerifycated] = useState(false);
+  const [verifycated, setVerifycated] = useState<boolean>(false);
 
-  const handleVerify = async () => {
+  const handleVerify = async (): Promise<void> => {
     setError(false);
     setSpinner(true);
     const verify = await acountConfirmation(email, inputValue);
