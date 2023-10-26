@@ -2,7 +2,6 @@ import { HiOutlineLogout, HiUserAdd } from 'react-icons/hi';
 import { BsTelephone, BsYoutube } from 'react-icons/bs';
 import { TiSocialFacebook } from 'react-icons/ti';
 import { IoMdMail } from 'react-icons/io';
-import Resgister from '../Register/Register';
 import { AUTH_MODAL_TYPE } from '../../utils/constants';
 import { MouseEvent, Suspense, useState } from 'react';
 import Alerts from '../alerts/Alerts';
@@ -19,7 +18,7 @@ interface OpenInterface {
 }
 export default function Topnav() {
   const { isLoading, data } = useAuthQuery(null);
-  const [logOutUser]=useLogOutMutation()
+  const [logOutUser] = useLogOutMutation();
   const user = useAppSelector((state) => state.userReducer.user);
   const auth = user;
   const router = useRouter();
@@ -58,7 +57,7 @@ export default function Topnav() {
   };
   const logOut = async () => {
     try {
-      await logOutUser({}).unwrap()
+      await logOutUser({}).unwrap();
       router.push('/');
     } catch (error) {
       console.log(error);
@@ -135,7 +134,6 @@ export default function Topnav() {
         </div>
       </section>
       {/* {open.LOGIN && <Login handleOpen={handleOpen} />} */}
-      {open.REGISTER && <Resgister handleOpen={handleOpen} />}
       {seeAlert.alert1 && (
         <Alerts Personalizado={seeAlert} onClick={logOut} close={closeAlert} />
       )}

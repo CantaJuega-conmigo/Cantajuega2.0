@@ -13,6 +13,7 @@ import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
 import { registerError } from '@/utils/FormsErrors';
 import { registerUser } from '@/libs/functions';
 import { useRouter } from 'next/navigation';
+import AcountConfirmation from '@/components/AcountConfirmation/AcountConfirmation';
 
 interface IRegister {
   firstName: string;
@@ -46,6 +47,7 @@ export default function Register() {
     setRegisterValues({ ...registerValues, [name]: value });
   };
 
+  const [verificationModal, setVerificationModal] = useState<boolean>(false);
   const handleSubmit = async (
     event: FormEvent<HTMLFormElement>
   ): Promise<void> => {
@@ -63,7 +65,8 @@ export default function Register() {
         setLoading(true);
         await registerUser(registerValues);
         setLoading(false);
-        router.push('/');
+        setVerificationModal(true);
+        // router.push('/');
       } catch (error: any) {
         setErrors({
           ...errors,
@@ -77,6 +80,7 @@ export default function Register() {
       }
     }
   };
+
   useEffect(() => {
     const timer = setTimeout(() => {
       setErrors({});
@@ -88,6 +92,12 @@ export default function Register() {
   const [hoverBack, setHoverBack] = useState<boolean>(false);
   return (
     <div className={styles.container}>
+      {verificationModal && (
+        <AcountConfirmation
+          email={registerValues.email}
+          name={registerValues.firstName}
+        />
+      )}
       <Image className={styles.img1} src={img1} alt='decoration1' />
       <Image className={styles.img2} src={img2} alt='decoration2' />
       <Image className={styles.img3} src={img3} alt='decoration3' />
@@ -138,7 +148,7 @@ export default function Register() {
               placeholder='Introduce tu nombre...'
             />
             <div className={styles.errorInputsContainer}>
-              {errors.email && (
+              {errors.firstName && (
                 <p className={styles.errorParagraph}>{errors.firstName}</p>
               )}
             </div>
@@ -156,7 +166,7 @@ export default function Register() {
               placeholder='Introduce tu apellido...'
             />
             <div className={styles.errorInputsContainer}>
-              {errors.email && (
+              {errors.lastName && (
                 <p className={styles.errorParagraph}>{errors.lastName}</p>
               )}
             </div>

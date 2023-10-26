@@ -3,6 +3,19 @@ import { setUser } from '@/store/userSlice';
 import { store } from '@/store/store';
 import Cookies from 'js-cookie';
 import { loginResponse, loginbody, registerBody, responses } from '@/types';
+import { log } from 'console';
+
+export async function acountConfirmation(
+  email: string,
+  code: string
+): Promise<boolean> {
+  try {
+    await axios.get(`/user/verify?email=${email}&code=${code}`);
+    return true;
+  } catch (error: any) {
+    return false;
+  }
+}
 
 export async function registerUser(body: registerBody): Promise<true | any> {
   try {
@@ -13,11 +26,14 @@ export async function registerUser(body: registerBody): Promise<true | any> {
     store.dispatch(setUser(user));
     return true;
   } catch (error: any) {
-    throw new Error(
-      error.response.data.message
-        ? error.response.data.message
-        : 'No se ha podido crear el usuario'
-    );
+    console.log(error);
+    if (error.response.data.message.errors) {
+      throw new Error(error.response.data.message.errors[0]?.msg);
+    } else if (typeof error.response.data.message === 'string') {
+      throw new Error(error.response.data.message);
+    } else {
+      throw new Error('No se ha podido crear el usuario');
+    }
   }
 }
 
