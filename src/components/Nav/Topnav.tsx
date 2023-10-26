@@ -126,12 +126,12 @@ export default function Topnav() {
             </span>
           )}
 
-          {isAdmin && (
-            <Link href={'/Admin'} className='flex items-center gap-2'>
-              <span>Admin</span>
+          
+            <Link href={'/perfil'} className='flex items-center gap-2'>
+              <span>Perfil</span>
               <AiOutlineUserSwitch className=' text-orangeicons text-xl' />
             </Link>
-          )}
+       
         </div>
       </section>
       {/* {open.LOGIN && <Login handleOpen={handleOpen} />} */}

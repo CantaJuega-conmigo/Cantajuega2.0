@@ -1,4 +1,4 @@
-import { Child } from ".."
+import { Child, Report } from ".."
 
 export interface User{
     id:string,
@@ -8,7 +8,8 @@ export interface User{
     phone?:number,
     is_Admin:boolean,
     recurrenteId:string,
-    MembershipId:string
+    MembershipId:string,
+    Reports?:Report[]
 }
 interface UserAuthResponse extends User{
     Children:Child[]

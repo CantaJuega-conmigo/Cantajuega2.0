@@ -37,17 +37,32 @@ export const CantajuegaService = createApi({
   }),
   tagTypes: ["Progress", "User", "Child"],
 
-  endpoints: (builder) => ({//aqui creamos funciones para comunicarse con los endpoints del back
-     ///etapas/cursos
+  endpoints: (builder) => ({
+    //aqui creamos funciones para comunicarse con los endpoints del back
+    ///etapas/cursos
     getStage: builder.query<responses<stage>, null>({
       query: () => "stage", ///ruta /stage del back
       keepUnusedDataFor: 600, ///configuramos cada cuanto se elimina la cache
+    }),
+    getStageById: builder.query<stage, string>({
+      query: (id) => `stage/${id}`, ///ruta /stage del back
+      keepUnusedDataFor: 600, ///configuramos cada cuanto se elimina la cache
+      transformResponse:(response:responses<stage>, meta, arg)=> {
+        return response.data![0]
+      },
     }),
     //----------------------------------------------------------------------------------
     ///membresias
     getMembership: builder.query<responses<Membership>, null>({
       query: () => "membership", ///ruta /membership del back
       keepUnusedDataFor: 600, ///configuramos cada cuanto se elimina la cache
+    }),
+    getMembershipById: builder.query<Membership, string>({
+      query: (id) => `membership/${id}`, ///ruta /membership del back
+      keepUnusedDataFor: 600, ///configuramos cada cuanto se elimina la cache
+      transformResponse: (response: responses<Membership>, meta) => {///achicamos la respuesta de la api
+        return response.data![0]
+      },
     }),
     //----------------------------------------------------------------------------------
     //authenticacion
@@ -59,24 +74,27 @@ export const CantajuegaService = createApi({
         try {
           const data = (await queryFulfilled).data.data; //en data viene informacion del usuario y el token
           const { user } = data![0];
-          const { id, firstName, lastName, email } = user;
+          const { id, firstName, lastName, email, Reports, MembershipId } =
+            user;
           const UserChild = user.Children[0] ?? null;
           ///actualizamos nuestros estados globales
-          dispatch(setUser({ id, firstName, lastName, email }));
+          dispatch(
+            setUser({ id, firstName, lastName, email, Reports, MembershipId })
+          );
           dispatch(setChild(UserChild));
         } catch (err) {
           dispatch(setUser(null));
-          dispatch(setChild(null))
+          dispatch(setChild(null));
         }
       },
     }),
     //-----------------------------------------------
     //deslogueo
     logOut: builder.mutation({
-      query:({})=>({
-        url:'user/logout',
-        method:'POST',
-        body:{}
+      query: ({}) => ({
+        url: "user/logout",
+        method: "POST",
+        body: {},
       }),
       async onQueryStarted(none, { dispatch, queryFulfilled }) {
         dispatch(setUser(null));
@@ -115,7 +133,10 @@ export const CantajuegaService = createApi({
     }),
     ///////----------------------------
     //obtener info de los progresos de videos
-    getProgressChildBySelect: builder.query<responses<First_Video | Other_Video | Final_Video | null>,   progressResquest>({
+    getProgressChildBySelect: builder.query<
+      responses<First_Video | Other_Video | Final_Video | null>,
+      progressResquest
+    >({
       query: ({ ProgressId, select }) =>
         `progress/${ProgressId}?select=${select}`,
       keepUnusedDataFor: 600,
@@ -132,7 +153,7 @@ export const CantajuegaService = createApi({
       },
     }),
     //--------------------------------------------------------
-    //actualizar el progreso de los videos 
+    //actualizar el progreso de los videos
     updateVideoProgress: builder.mutation({
       query: ({
         ProgressId,
@@ -169,4 +190,7 @@ export const {
   useUpdateVideoProgressMutation,
   useUpdatePdfProgressStatusMutation,
   useLogOutMutation,
+  useGetChildByIdQuery,
+  useGetMembershipByIdQuery,
+  useGetStageByIdQuery
 } = CantajuegaService;
