@@ -1,4 +1,3 @@
-import { column } from "@/types";
 import ColumnGrid from "./ColumnGrid";
 import { DashboardGrid } from "@/types/dashboard";
 

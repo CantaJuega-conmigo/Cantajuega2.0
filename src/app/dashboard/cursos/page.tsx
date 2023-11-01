@@ -1,11 +1,18 @@
 "use client";
 import DashboardGrid from "@/components/DashBoard/DashBoardGrid";
 import { useGetStageQuery } from "@/store/apis/CantajuegaApi";
-import { useAppSelector } from "@/store/hooks";
 
 export default function Page() {
-  const { data: stages } = useGetStageQuery(null);
-
+  const { data: stages, isLoading } = useGetStageQuery(null);
+  if (isLoading) {
+    return (
+      <>
+        <div className=" min-h-[20rem] flex justify-center items-center">
+          <h1 className="text-2xl">soy un loader xd.....</h1>
+        </div>
+      </>
+    );
+  }
   return (
     <>
       <h1>Cursoos</h1>
