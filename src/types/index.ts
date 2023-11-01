@@ -1,10 +1,10 @@
-export type { User,authUser } from "./Models/User.type";
-export type { loginbody ,loginResponse} from "./Login";
+export type { User, authUser } from "./Models/User.type";
+export type { loginbody, loginResponse } from "./Login";
 export type { registerBody } from "./Register";
 export type { youtubePlayer } from "./YoutubePlayer/youtubeplayer.type";
-export type { youtubeplayercourses,miscursosprops } from "./MIsCursos/";
+export type { youtubeplayercourses, miscursosprops } from "./MIsCursos/";
 export type { Child } from "./Models/Child.type";
-export type { Report} from "./Models/Report.type";
+export type { Report } from "./Models/Report.type";
 export type {
   progress,
   First_Video,
@@ -14,7 +14,7 @@ export type {
   progressResquest,
   videoprogresses,
   progressResquestMutation,
-  progressPdfUpdateMutation
+  progressPdfUpdateMutation,
 } from "./Models/Progress.type";
-export type {responses,errorResponses}from './query/query.type.responses'
-
+export type { responses, errorResponses } from "./query/query.type.responses";
+export type { column, ColumnGrid } from "./dashboard";
