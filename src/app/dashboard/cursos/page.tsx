@@ -3,7 +3,7 @@ import DashboardGrid from "@/components/DashBoard/DashBoardGrid";
 import { useGetStageQuery } from "@/store/apis/CantajuegaApi";
 
 export default function Page() {
-  const { data: stages, isLoading } = useGetStageQuery(null);
+  const { data: stages, isLoading,isError } = useGetStageQuery({childs:true});
   if (isLoading) {
     return (
       <>
@@ -13,11 +13,21 @@ export default function Page() {
       </>
     );
   }
+  if(isError){
+    return(
+
+      <>
+        <div className=" min-h-[20rem] flex justify-center items-center">
+          <h1 className="text-2xl"> Algo salio mal mi rey.....</h1>
+        </div>
+      </>
+    )
+  }
   return (
     <>
       <h1>Cursoos</h1>
       <DashboardGrid
-        numberOfColumns={5}
+        numberOfColumns={6}
         numberOfLinks={8}
         column1={{
           data: stages?.data!,
@@ -38,6 +48,11 @@ export default function Page() {
           data: stages?.data!,
           title: "Edad max",
           dataProperty: "maxAge" as keyof object,
+        }}
+        columnOfTotal={{
+          title:'Total alumnos',
+          data:stages?.data!,
+          dataProperty:'Childrens' as keyof object
         }}
       />
     </>
