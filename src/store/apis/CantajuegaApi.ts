@@ -40,8 +40,8 @@ export const CantajuegaService = createApi({
   endpoints: (builder) => ({
     //aqui creamos funciones para comunicarse con los endpoints del back
     ///etapas/cursos
-    getStage: builder.query<responses<stage>, null>({
-      query: () => "stage", ///ruta /stage del back
+    getStage: builder.query<responses<stage>, {childs?:boolean|null}>({
+      query: ({childs}) => childs? "stage?childs=yes":"stage", ///ruta /stage del back
       keepUnusedDataFor: 600, ///configuramos cada cuanto se elimina la cache
     }),
     getStageById: builder.query<stage, string>({
