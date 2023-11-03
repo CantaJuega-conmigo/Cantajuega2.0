@@ -52,7 +52,7 @@ export default function ColumnGrid({
           </article>
           <article className=" h-full flex flex-col items-center gap-5">
             {dataOfTotalColumn?.data.map((i, key) => (
-              <p>{[].concat(i["Childrens" as keyof object]).length}</p>
+              <p key={key}>{[].concat(i["Childrens" as keyof object]).length}</p>
             ))}
           </article>
         </section>
