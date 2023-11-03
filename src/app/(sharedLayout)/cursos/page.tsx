@@ -14,7 +14,7 @@ interface state extends stage {
 }
 export default  function Cursos() {
 
-  const {data:stages,isLoading}=useGetStageQuery(null)
+  const {data:stages,isLoading}=useGetStageQuery({childs:null})
   const colors: string[] = [
     "#FF0303",
     "#FF0303",

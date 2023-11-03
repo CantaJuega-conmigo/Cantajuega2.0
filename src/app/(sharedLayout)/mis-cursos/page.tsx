@@ -12,7 +12,7 @@ export default function Miscursos() {
   const Child = useAppSelector((state) => state.childReducer.child);
   const ChildExist = Child?.StageId ? true : false;
   
-  const { stage } = useGetStageQuery(null, {
+  const { stage } = useGetStageQuery({childs:null}, {
     selectFromResult: ({ data }) => ({
       stage: data?.data?.filter((item) => item.id === Child?.StageId)[0], //una vez recibida la data, la transformamos, y nos quedamos con la etapa del niño
     }),
