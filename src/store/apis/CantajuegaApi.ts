@@ -101,6 +101,7 @@ export const CantajuegaService = createApi({
         const response: responses<null> = (await queryFulfilled).data;
         alert(response.message);
       },
+      invalidatesTags:['Child','Progress','User']
     }),
     //-----------------------------
     ///obtener todos los childs
