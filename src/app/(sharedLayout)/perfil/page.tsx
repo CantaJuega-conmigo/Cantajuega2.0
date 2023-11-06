@@ -108,12 +108,12 @@ export default function Page() {
         <section className=" w-11/12 flex flex-col gap-2">
           <h3 className="text-2xl">Progreso actual en la etapa:</h3>
           <p>{progresloading&&'Cargando...'}</p>
-          <p>Video1: {progress?.data![0].First_Video.Ready_to_Next_Video?'Completo':'Sin completar'}</p>
-          <p>Video2: {progress?.data![0].Second_Video.Ready_to_Next_Video?'Completo':'Sin completar'}</p>
-          <p>Video3: {progress?.data![0].Third_Video.Ready_to_Next_Video?'Completo':'Sin completar'}</p>
-          <p>Video4: {progress?.data![0].Fourth_Video.Ready_to_Next_Video?'Completo':'Sin completar'}</p>
-          <p>Video5: {progress?.data![0].Final_Video.Ready_to_Test?'Completo':'Sin completar'}</p>
-          <p>Examen: {progress?.data![0].Test_Status.Month_Passed?'Listo para el examen':'No listo'}</p>
+          <p>Video1: {progress?.data![0]?.First_Video.Ready_to_Next_Video?'Completo':'Sin completar'}</p>
+          <p>Video2: {progress?.data![0]?.Second_Video.Ready_to_Next_Video?'Completo':'Sin completar'}</p>
+          <p>Video3: {progress?.data![0]?.Third_Video.Ready_to_Next_Video?'Completo':'Sin completar'}</p>
+          <p>Video4: {progress?.data![0]?.Fourth_Video.Ready_to_Next_Video?'Completo':'Sin completar'}</p>
+          <p>Video5: {progress?.data![0]?.Final_Video.Ready_to_Test?'Completo':'Sin completar'}</p>
+          <p>Examen: {progress?.data![0]?.Test_Status.Month_Passed?'Listo para el examen':'No listo'}</p>
         </section>
       </section>
     </div>

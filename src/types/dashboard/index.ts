@@ -18,10 +18,11 @@ export interface ColumnGrid {
   dataOfTotalColumn?:dataOfTotalColumn
 }
 export interface DashboardGrid {
+  linksRedirectTo?:string,
   numberOfColumns: number;
   numberOfLinks?: number;
   totaldatacolumn?: boolean;
-  columnOfTotal:dataOfTotalColumn
+  columnOfTotal?:dataOfTotalColumn
   column1?: column;
   column2?: column;
   column3?: column;

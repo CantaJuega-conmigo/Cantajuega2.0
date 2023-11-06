@@ -58,6 +58,14 @@ export const CantajuegaService = createApi({
       query: () => 'membership', ///ruta /membership del back
       keepUnusedDataFor: 600, ///configuramos cada cuanto se elimina la cache
     }),
+    getAllUsers: builder.query<responses<User>, null>({
+      query: () => "user",
+      keepUnusedDataFor: 600, ///configuramos cada cuanto se elimina la cache
+      transformResponse:(response: responses<User>, meta)=>{
+        response.data?.forEach((i)=>i.email_verified= i.email_verified?'verificado':'no verificado');
+        return response!
+      }
+    }),
     getMembershipById: builder.query<Membership, string>({
       query: (id) => `membership/${id}`, ///ruta /membership del back
       keepUnusedDataFor: 600, ///configuramos cada cuanto se elimina la cache
@@ -108,6 +116,7 @@ export const CantajuegaService = createApi({
         const response: responses<null> = (await queryFulfilled).data;
         alert(response.message);
       },
+      invalidatesTags:['Child','Progress','User']
     }),
     //-----------------------------
     ///obtener todos los childs
@@ -206,6 +215,5 @@ export const {
   useGetChildByIdQuery,
   useGetMembershipByIdQuery,
   useGetStageByIdQuery,
-  useGetReportsQuery,
-  useGetUsersWithReportsQuery,
+  useGetAllUsersQuery
 } = CantajuegaService;

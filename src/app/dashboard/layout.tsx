@@ -6,7 +6,7 @@ export default function DashboardLayout({
 }) {
   return (
     <div className="min-h-screen flex  ">
-      <aside className="flex bg-blue text-white flex-col w-[20%] pt-6 gap-4 items-center text-center">
+      <aside className="flex bg-blue text-white flex-col w-[20%] pt-6 gap-4 items-center text-center relative z-50">
         <AsideNav1 />
       </aside>
       <section className="w-full overflow-auto flex flex-col items-center">
