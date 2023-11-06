@@ -1,5 +1,3 @@
-import { type } from 'os';
-
 export type { User, authUser } from './Models/User.type';
 export type { loginbody, loginResponse } from './Login';
 export type { registerBody } from './Register';
@@ -19,5 +17,4 @@ export type {
   progressPdfUpdateMutation,
 } from './Models/Progress.type';
 export type { responses, errorResponses } from './query/query.type.responses';
-
-export type { IReport, IReports, IUser } from './Reports';
+export type { IReport, IUser } from './Reports';

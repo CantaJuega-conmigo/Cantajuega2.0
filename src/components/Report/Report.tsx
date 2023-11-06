@@ -1,22 +1,22 @@
 'use client';
 import styles from './Report.module.css';
-import { IReport } from '@/types';
+import { IUser } from '@/types';
 import Image from 'next/image';
 import fakeProfile from '../../../public/img/fakeProfile.png';
 
 interface Props {
-  report: IReport;
+  userReport: IUser;
 }
 
-export default function Report({ report }: Props) {
+export default function Report({ userReport }: Props) {
   return (
     <section className={styles.report}>
       <div className={styles.firstContainer}>
-        {typeof report.User.image === 'string' ? (
+        {typeof user.image === 'string' ? (
           <div>
             <Image
               src={report.User.image}
-              alt={`Imagen de ${report.User.firstName} ${report.User.lastName}`}
+              alt={`Imagen de ${user.firstName} ${user.lastName}`}
             />
           </div>
         ) : (
@@ -24,7 +24,7 @@ export default function Report({ report }: Props) {
             <Image
               className={styles.fakeImgContainer}
               src={fakeProfile}
-              alt={`Imagen de ${report.User.firstName} ${report.User.lastName}`}
+              alt={`Imagen de ${user.firstName} ${report.User.lastName}`}
             />
           </div>
         )}
@@ -33,7 +33,7 @@ export default function Report({ report }: Props) {
           <p className={styles.email}>{report.User.email}</p>
         </div>
       </div>
-      <p>{report.Description}</p>
+      <p>{user.Description}</p>
     </section>
   );
 }
