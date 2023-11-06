@@ -39,6 +39,7 @@ export default function Page() {
       <DashboardGrid
         numberOfColumns={6}
         numberOfLinks={8}
+        linksRedirectTo="cursos"
         column1={{
           data: stages?.data!,
           title: "nombres",

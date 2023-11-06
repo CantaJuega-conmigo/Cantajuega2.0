@@ -9,7 +9,8 @@ export interface User{
     is_Admin:boolean,
     recurrenteId:string,
     MembershipId:string,
-    Reports?:Report[]
+    Reports?:Report[],
+    email_verified:boolean|'verificado'|'no verificado'
 }
 interface UserAuthResponse extends User{
     Children:Child[]

@@ -5,6 +5,7 @@ export default function DashboardGrid({
   numberOfColumns,
   numberOfLinks,
   columnOfTotal,
+  linksRedirectTo,
   column1,
   column2,
   column3,
@@ -32,7 +33,7 @@ export default function DashboardGrid({
           normalColumn={false}
           LinkColumn={true}
           numberOfLinks={numberOfLinks}
-          linksRedirectTo="cursos"
+          linksRedirectTo={linksRedirectTo??'/'}
         />
       )}
     </div>
