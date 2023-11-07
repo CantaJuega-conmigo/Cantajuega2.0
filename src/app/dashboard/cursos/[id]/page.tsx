@@ -38,7 +38,7 @@ export default function page({ params }: { params: { id: string } }) {
       <div className=" bg-gray-400 w-full flex flex-col items-center">
         <h2>Videos de la etapa</h2>
         {stage?.content.videos.map((i, key) => (
-          <article className="">
+          <article className="" key={key}>
             <section>
               <button onClick={selectVideo} value={i.content}>
                 {i.title}
