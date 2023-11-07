@@ -225,6 +225,7 @@ export default function Register() {
             Registrar con Google
           </button>
         </section>
+        
       </form>
     </div>
   );

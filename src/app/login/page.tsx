@@ -13,6 +13,7 @@ import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
 import { loginError } from '@/utils/FormsErrors';
 import { loginUser } from '@/libs/functions';
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 
 interface ILogin {
   email: string;
@@ -170,6 +171,11 @@ export default function Login() {
             <FcGoogle />
             Iniciar con Google
           </button>
+        </section>
+        <section className=' flex justify-center text-blue'>
+          <Link href={'/register'}>
+          <h1>no tienes cuenta?</h1>
+          </Link>
         </section>
       </form>
     </div>
