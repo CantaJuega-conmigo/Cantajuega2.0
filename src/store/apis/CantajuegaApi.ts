@@ -41,8 +41,8 @@ export const CantajuegaService = createApi({
   endpoints: (builder) => ({
     //aqui creamos funciones para comunicarse con los endpoints del back
     ///etapas/cursos
-    getStage: builder.query<responses<stage>, {childs?:boolean|null}>({
-      query: ({childs}) => childs? "stage?childs=yes":"stage", ///ruta /stage del back
+    getStage: builder.query<responses<stage>, { childs?: boolean | null }>({
+      query: ({ childs }) => (childs ? 'stage?childs=yes' : 'stage'), ///ruta /stage del back
       keepUnusedDataFor: 600, ///configuramos cada cuanto se elimina la cache
     }),
     getStageById: builder.query<stage, string>({
@@ -59,12 +59,17 @@ export const CantajuegaService = createApi({
       keepUnusedDataFor: 600, ///configuramos cada cuanto se elimina la cache
     }),
     getAllUsers: builder.query<responses<User>, null>({
-      query: () => "user",
+      query: () => 'user',
       keepUnusedDataFor: 600, ///configuramos cada cuanto se elimina la cache
-      transformResponse:(response: responses<User>, meta)=>{
-        response.data?.forEach((i)=>i.email_verified= i.email_verified?'verificado':'no verificado');
-        return response!
-      }
+      transformResponse: (response: responses<User>, meta) => {
+        response.data?.forEach(
+          (i) =>
+            (i.email_verified = i.email_verified
+              ? 'verificado'
+              : 'no verificado')
+        );
+        return response!;
+      },
     }),
     getMembershipById: builder.query<Membership, string>({
       query: (id) => `membership/${id}`, ///ruta /membership del back
@@ -99,8 +104,8 @@ export const CantajuegaService = createApi({
       },
     }),
     //Obtener solo los users que tienen reportes
-    getUsersWithReports: builder.query<responses<IUser>, null>({
-      query: () => '/user/reports',
+    getUsersWithReports: builder.query<responses<IUser>, string | null>({
+      query: (id) => (id ? `/user/reports?id=${id}` : '/user/reports'),
       keepUnusedDataFor: 600,
     }),
     //-----------------------------------------------
@@ -116,7 +121,7 @@ export const CantajuegaService = createApi({
         const response: responses<null> = (await queryFulfilled).data;
         alert(response.message);
       },
-      invalidatesTags:['Child','Progress','User']
+      invalidatesTags: ['Child', 'Progress', 'User'],
     }),
     //-----------------------------
     ///obtener todos los childs
@@ -215,5 +220,6 @@ export const {
   useGetChildByIdQuery,
   useGetMembershipByIdQuery,
   useGetStageByIdQuery,
-  useGetAllUsersQuery
+  useGetAllUsersQuery,
+  useGetUsersWithReportsQuery,
 } = CantajuegaService;
