@@ -25,5 +25,5 @@ export interface IUser {
   createdAt: Date;
   updatedAt: Date;
   MembershipId: string;
-  Reports: Report[];
+  Reports: IReport[];
 }

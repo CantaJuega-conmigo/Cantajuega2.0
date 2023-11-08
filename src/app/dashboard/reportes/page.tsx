@@ -3,10 +3,15 @@ import styles from '../../../styles/Reports.module.css';
 import { useGetUsersWithReportsQuery } from '@/store/apis/CantajuegaApi';
 import Image from 'next/image';
 import fakeProfile from '../../../../public/img/fakeProfile.png';
-import { FaRegEye } from 'react-icons/fa';
+import { useRouter } from 'next/navigation';
 
 export default function Reports() {
   const { data } = useGetUsersWithReportsQuery(null);
+
+  const router = useRouter();
+  const navigateUserDetails = (id: string): void => {
+    router.push(`reportes/${id}`);
+  };
 
   return (
     <main className={styles.container}>
@@ -48,8 +53,10 @@ export default function Reports() {
               <td className={styles.value}>
                 <div className={styles.reportsContainer}>
                   <span className={styles.reports}>{user.Reports.length}</span>
-                  <button className={styles.btnReports}>
-                    {/* <FaRegEye /> */}
+                  <button
+                    className={styles.btnReports}
+                    onClick={() => navigateUserDetails(user.id)}
+                  >
                     👀
                   </button>
                 </div>
