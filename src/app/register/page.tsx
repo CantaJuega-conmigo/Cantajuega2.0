@@ -63,7 +63,7 @@ export default function Register() {
     ) {
       try {
         setLoading(true);
-        await registerUser(registerValues);
+        await registerUser({user:registerValues});
         setLoading(false);
         setVerificationModal(true);
         // router.push('/');
@@ -225,6 +225,7 @@ export default function Register() {
             Registrar con Google
           </button>
         </section>
+        
       </form>
     </div>
   );
