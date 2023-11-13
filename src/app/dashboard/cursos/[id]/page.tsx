@@ -4,7 +4,7 @@ import YoutubePlayer from "@/components/YoutubePlayer/YoutubePlayer";
 import { useGetStageByIdQuery } from "@/store/apis/CantajuegaApi";
 import { MouseEvent, useState } from "react";
 
-export default function page({ params }: { params: { id: string } }) {
+export default function Page({ params }: { params: { id: string } }) {
   const { id } = params;
   const { data: stage, isLoading, isError } = useGetStageByIdQuery(id);
   const [actualVideo, setActualVideo] = useState<string>("");
@@ -38,7 +38,7 @@ export default function page({ params }: { params: { id: string } }) {
       <div className=" bg-gray-400 w-full flex flex-col items-center">
         <h2>Videos de la etapa</h2>
         {stage?.content.videos.map((i, key) => (
-          <article className="">
+          <article className="" key={key}>
             <section>
               <button onClick={selectVideo} value={i.content}>
                 {i.title}
