@@ -1,7 +1,7 @@
 "use client";
 import { useGetUserbyIdQuery } from "@/store/apis/CantajuegaApi";
 
-export default function page({ params }: { params: { id: string } }) {
+export default function Page({ params }: { params: { id: string } }) {
   const { data: user } = useGetUserbyIdQuery(params.id);
   console.log(user?.Reports);
   return (
