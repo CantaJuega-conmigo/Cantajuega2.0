@@ -18,3 +18,4 @@ export type {
 } from './Models/Progress.type';
 export type { responses, errorResponses } from './query/query.type.responses';
 export type { IReport, IUser } from './Reports';
+export type {ColumnGrid,column,dataOfTotalColumn} from './dashboard'
