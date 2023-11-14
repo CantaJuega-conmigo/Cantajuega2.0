@@ -1,4 +1,5 @@
 import { Child, Report } from ".."
+import { Membership } from "./Membership.type"
 
 export interface User{
     id:string,
@@ -11,6 +12,8 @@ export interface User{
     MembershipId:string,
     Reports?:Report[],
     email_verified:boolean|'verificado'|'no verificado'
+    Membership:Membership,
+    Children:Child[]
 }
 interface UserAuthResponse extends User{
     Children:Child[]

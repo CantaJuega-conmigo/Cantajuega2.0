@@ -12,20 +12,20 @@ import {
   progressResquest,
   progressResquestMutation,
   responses,
-} from '@/types';
-import { stage } from '@/types/Models/Stage.type';
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { setUser } from '../userSlice';
-import { setChild } from '../childSlice';
-import { setProgress, setActualProgress } from '../child_progress_slice';
-import { Membership } from '@/types/Models/Membership.type';
+} from "@/types";
+import { stage } from "@/types/Models/Stage.type";
+import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { setUser } from "../userSlice";
+import { setChild } from "../childSlice";
+import { setProgress, setActualProgress } from "../child_progress_slice";
+import { Membership } from "@/types/Models/Membership.type";
 
 interface id {
   id: number;
 }
 
 export const CantajuegaService = createApi({
-  reducerPath: 'Cantajuegapi', //nombre del estado/cache
+  reducerPath: "Cantajuegapi", //nombre del estado/cache
 
   baseQuery: fetchBaseQuery({
     baseUrl: process.env.NEXT_PUBLIC_API_URL, ///url a donde se hacen las peticiones
@@ -33,7 +33,7 @@ export const CantajuegaService = createApi({
       return headers;
     },
     fetchFn: (input, init) => {
-      return fetch(input, { ...init, credentials: 'include' }); ///esto incluira las cookies del servidor en cada respuesta y peticion.
+      return fetch(input, { ...init, credentials: "include" }); ///esto incluira las cookies del servidor en cada respuesta y peticion.
     },
   }),
   tagTypes: ['Progress', 'User', 'Child', 'Reports'],
@@ -42,7 +42,7 @@ export const CantajuegaService = createApi({
     //aqui creamos funciones para comunicarse con los endpoints del back
     ///etapas/cursos
     getStage: builder.query<responses<stage>, { childs?: boolean | null }>({
-      query: ({ childs }) => (childs ? 'stage?childs=yes' : 'stage'), ///ruta /stage del back
+      query: ({ childs }) => (childs ? "stage?childs=yes" : "stage"), ///ruta /stage del back
       keepUnusedDataFor: 600, ///configuramos cada cuanto se elimina la cache
     }),
     getStageById: builder.query<stage, string>({
@@ -55,20 +55,31 @@ export const CantajuegaService = createApi({
     //----------------------------------------------------------------------------------
     ///membresias
     getMembership: builder.query<responses<Membership>, null>({
-      query: () => 'membership', ///ruta /membership del back
+      query: () => "membership", ///ruta /membership del back
       keepUnusedDataFor: 600, ///configuramos cada cuanto se elimina la cache
     }),
     getAllUsers: builder.query<responses<User>, null>({
-      query: () => 'user',
+      query: () => "user",
       keepUnusedDataFor: 600, ///configuramos cada cuanto se elimina la cache
       transformResponse: (response: responses<User>, meta) => {
         response.data?.forEach(
           (i) =>
             (i.email_verified = i.email_verified
-              ? 'verificado'
-              : 'no verificado')
+              ? "verificado"
+              : "no verificado")
         );
         return response!;
+      },
+    }),
+    getUserbyId: builder.query<User, string>({
+      query: (id) => `user/${id}`,
+      keepUnusedDataFor: 600, ///configuramos cada cuanto se elimina la cache
+      transformResponse: (response: responses<User>, meta) => {
+        ///achicamos la respuesta de la api
+        response.data![0].email_verified = response.data![0].email_verified
+          ? "verificado"
+          : "no verificado";
+        return response.data![0];
       },
     }),
     getMembershipById: builder.query<Membership, string>({
@@ -82,7 +93,7 @@ export const CantajuegaService = createApi({
     //----------------------------------------------------------------------------------
     //authenticacion
     auth: builder.query<responses<authUser>, null>({
-      query: () => '/user/auth',
+      query: () => "/user/auth",
       keepUnusedDataFor: 600,
       async onQueryStarted(id, { dispatch, queryFulfilled }) {
         //es lo que hara con la respuesta
@@ -105,7 +116,7 @@ export const CantajuegaService = createApi({
     }),
     //Obtener solo los users que tienen reportes
     getUsersWithReports: builder.query<responses<IUser>, string | null>({
-      query: (id) => (id ? `/user/reports?id=${id}` : '/user/reports'),
+      query: (id) => (id ? `/user/reports?id=${id}` : "/user/reports"),
       keepUnusedDataFor: 600,
       providesTags: ['Reports'],
     }),
@@ -124,8 +135,8 @@ export const CantajuegaService = createApi({
     //deslogueo
     logOut: builder.mutation({
       query: ({}) => ({
-        url: 'user/logout',
-        method: 'POST',
+        url: "user/logout",
+        method: "POST",
         body: {},
       }),
       async onQueryStarted(none, { dispatch, queryFulfilled }) {
@@ -133,12 +144,12 @@ export const CantajuegaService = createApi({
         const response: responses<null> = (await queryFulfilled).data;
         alert(response.message);
       },
-      invalidatesTags: ['Child', 'Progress', 'User'],
+      invalidatesTags: ["Child", "Progress", "User"],
     }),
     //-----------------------------
     ///obtener todos los childs
     getChild: builder.query<responses<Child>, null>({
-      query: () => 'child',
+      query: () => "child",
       keepUnusedDataFor: 600,
     }),
     //----------------------------
@@ -157,7 +168,7 @@ export const CantajuegaService = createApi({
     getProgressChild: builder.query<responses<progress>, progressResquest>({
       query: ({ ProgressId }) => `progress/${ProgressId}`,
       keepUnusedDataFor: 600,
-      providesTags: ['Progress'],
+      providesTags: ["Progress"],
       async onQueryStarted(any, { dispatch, queryFulfilled }) {
         const { data } = (await queryFulfilled).data;
         const [progress] = data!;
@@ -173,10 +184,10 @@ export const CantajuegaService = createApi({
       query: ({ ProgressId, select }) =>
         `progress/${ProgressId}?select=${select}`,
       keepUnusedDataFor: 600,
-      providesTags: ['Progress'],
+      providesTags: ["Progress"],
       async onQueryStarted(none, { dispatch, queryFulfilled }) {
         try {
-          console.log('en try front');
+          console.log("en try front");
           const { data } = (await queryFulfilled).data;
           const [progress] = data!;
           dispatch(setActualProgress(progress));
@@ -194,25 +205,25 @@ export const CantajuegaService = createApi({
         newprogress,
       }: progressResquestMutation) => ({
         url: `progress/${ProgressId}?select=${select}`,
-        method: 'PUT',
+        method: "PUT",
         body: newprogress,
       }),
-      invalidatesTags: ['Progress'],
+      invalidatesTags: ["Progress"],
     }),
     //------------------------------------------------
     //actualizar el progreso del pdf(para cuando se mire el pdf)
     updatePdfProgressStatus: builder.mutation({
       query: ({ ProgressId, Pdf_Viewed }: progressPdfUpdateMutation) => ({
         url: `progress/${ProgressId}`,
-        method: 'PUT',
+        method: "PUT",
         body: Pdf_Viewed,
       }),
-      invalidatesTags: ['Progress'],
+      invalidatesTags: ["Progress"],
     }),
     /*---------------------------------------------------------*/
     //Obtener todos los reportes
     getReports: builder.query<responses<IReport>, null>({
-      query: () => '/reports',
+      query: () => "/reports",
       keepUnusedDataFor: 600,
     }),
   }),
@@ -234,5 +245,6 @@ export const {
   useGetStageByIdQuery,
   useGetAllUsersQuery,
   useGetUsersWithReportsQuery,
+  useGetUserbyIdQuery,
   useEditReportMutation,
 } = CantajuegaService;

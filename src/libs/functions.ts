@@ -17,13 +17,17 @@ export async function acountConfirmation(
   }
 }
 
-export async function registerUser(body: registerBody): Promise<true | any> {
+export async function registerUser({child,user}: registerBody): Promise<true | any> {
   try {
+    const body = {
+      child,
+      user,
+    }
     const query: responses<loginResponse> = (
       await axios.post('/user/register', body)
     ).data;
-    const { user } = query.data![0];
-    store.dispatch(setUser(user));
+    const { user:UserData } = query.data![0];
+    store.dispatch(setUser(UserData));
     return true;
   } catch (error: any) {
     console.log(error);

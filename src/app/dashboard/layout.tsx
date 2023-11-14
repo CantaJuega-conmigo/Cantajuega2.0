@@ -1,6 +1,7 @@
 'use client';
-import { useState, useEffect } from 'react';
 import AsideNav1 from '@/components/DashBoard/AsideNav1';
+import DashBoardHeader from '@/components/DashBoard/DashBoardHeader';
+import { useEffect } from 'react';
 import { useAppDispatch } from '@/store/hooks';
 import { heigthNavDashboard } from '@/store/uiSlice';
 
@@ -36,13 +37,8 @@ export default function DashboardLayout({
         <AsideNav1 />
       </aside>
       <section className='w-full overflow-auto flex flex-col items-center'>
-        <header className='flex justify-end w-full' id='navDashboard'>
-          <article className='flex  items-center w-2/12 justify-evenly'>
-            <figure className=' bg-red h-20 w-20 rounded-full flex justify-center items-center'>
-              foto
-            </figure>
-            <h1>Kathy</h1>
-          </article>
+        <header className=' flex justify-end w-full' id='navDashboard'>
+          <DashBoardHeader name='Kathy' image={''} notifications={'5'} />
         </header>
         <main className=' bg-slate-300 w-full flex flex-col items-center h-full'>
           {children}
