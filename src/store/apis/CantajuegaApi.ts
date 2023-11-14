@@ -36,7 +36,7 @@ export const CantajuegaService = createApi({
       return fetch(input, { ...init, credentials: 'include' }); ///esto incluira las cookies del servidor en cada respuesta y peticion.
     },
   }),
-  tagTypes: ['Progress', 'User', 'Child'],
+  tagTypes: ['Progress', 'User', 'Child', 'Reports'],
 
   endpoints: (builder) => ({
     //aqui creamos funciones para comunicarse con los endpoints del back
@@ -107,7 +107,19 @@ export const CantajuegaService = createApi({
     getUsersWithReports: builder.query<responses<IUser>, string | null>({
       query: (id) => (id ? `/user/reports?id=${id}` : '/user/reports'),
       keepUnusedDataFor: 600,
+      providesTags: ['Reports'],
     }),
+
+    //Editar reportes
+    editReport: builder.mutation({
+      query: ({ id, Response }: { id: string; Response: string }) => ({
+        url: `reports/${id}`,
+        method: 'PUT',
+        body: { Response },
+      }),
+      invalidatesTags: ['Reports'],
+    }),
+
     //-----------------------------------------------
     //deslogueo
     logOut: builder.mutation({
@@ -222,4 +234,5 @@ export const {
   useGetStageByIdQuery,
   useGetAllUsersQuery,
   useGetUsersWithReportsQuery,
+  useEditReportMutation,
 } = CantajuegaService;
