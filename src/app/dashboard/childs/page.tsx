@@ -22,6 +22,7 @@ export default function Page() {
         {childs?.map(child=>{
           return(
             <RowColumn 
+            key={child.id}
             column1={{ text: child.firstName }}
             column2={{ text: child.lastName }}
             column3={{ text: child?.age?.toString() }}
