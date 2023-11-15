@@ -58,7 +58,7 @@ export default function AsideNav1() {
         <button className=" text-start  w-8/12">ESTADISTICAS</button>
       </Link>
       <Link
-        className={`${actualpage("estadisticas", "bg-slate-400")} flex w-full justify-center gap-4`}
+        className={`${actualpage("childs", "bg-slate-400")} flex w-full justify-center gap-4`}
         href={"/dashboard/childs"}>
           <FaChildren className=' text-2xl'/>
         <button className=" text-start  w-8/12">ALUMNOS</button>
