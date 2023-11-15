@@ -1,3 +1,5 @@
+import { Child } from ".."
+
 export enum videostypes{
   First_Video = "First_Video",
   Second_Video = "Second_Video",
@@ -32,4 +34,7 @@ export interface stage {
     minAge: number,
     maxAge: number,
     content:content
+}
+export interface stageWithChilds extends stage{
+  Children?:Child[]
 }

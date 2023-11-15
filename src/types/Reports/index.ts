@@ -3,8 +3,8 @@ export interface IReport {
   Description: string;
   is_Resolved: boolean;
   Response: null | string;
-  createdAt: Date;
-  updatedAt: Date;
+  createdAt: string;
+  updatedAt: string;
   UserId: string;
 }
 
@@ -22,8 +22,8 @@ export interface IUser {
   recurrenteId: null;
   OTPcode: null;
   Otp_Code_Email: string;
-  createdAt: Date;
-  updatedAt: Date;
+  createdAt: string;
+  updatedAt: string;
   MembershipId: string;
   Reports: IReport[];
 }

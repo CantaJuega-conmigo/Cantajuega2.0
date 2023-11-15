@@ -8,4 +8,10 @@ export interface Child{
     ProgressId:string, 
     StageId:string
     Stages_Completed: object[] 
+    User:{
+        firstName:string
+    },
+    Stage:{
+        name:string
+    }
 }

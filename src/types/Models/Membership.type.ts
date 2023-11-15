@@ -9,5 +9,6 @@ export interface Membership {
     videos: boolean;
     recurrenteId: string;
     status: string;
-    checkout:string
+    checkout:string;
+    Users: []
 }
