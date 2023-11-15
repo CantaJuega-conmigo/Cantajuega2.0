@@ -13,7 +13,7 @@ import {
   progressResquestMutation,
   responses,
 } from "@/types";
-import { stage } from "@/types/Models/Stage.type";
+import { stage, stageWithChilds } from "@/types/Models/Stage.type";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { setUser } from "../userSlice";
 import { setChild } from "../childSlice";
@@ -41,7 +41,7 @@ export const CantajuegaService = createApi({
   endpoints: (builder) => ({
     //aqui creamos funciones para comunicarse con los endpoints del back
     ///etapas/cursos
-    getStage: builder.query<responses<stage>, { childs?: boolean | null }>({
+    getStage: builder.query<responses<stage|stageWithChilds>, { childs?: boolean | null }>({
       query: ({ childs }) => (childs ? "stage?childs=yes" : "stage"), ///ruta /stage del back
       keepUnusedDataFor: 600, ///configuramos cada cuanto se elimina la cache
     }),
@@ -148,9 +148,12 @@ export const CantajuegaService = createApi({
     }),
     //-----------------------------
     ///obtener todos los childs
-    getChild: builder.query<responses<Child>, null>({
+    getChild: builder.query<Child[], null>({
       query: () => "child",
       keepUnusedDataFor: 600,
+      transformResponse: (response: responses<Child>, meta) => {
+        return response.data!
+      }
     }),
     //----------------------------
     ////obtener child por id
