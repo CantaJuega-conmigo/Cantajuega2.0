@@ -1,40 +1,45 @@
 "use client";
+import Boxinfo from "@/components/DashBoard/BoxInfo";
+import BoxInfoLayout from "@/components/DashBoard/BoxInfoLayout";
+import UserCard from "@/components/DashBoard/UserCard";
 import { useGetUserbyIdQuery } from "@/store/apis/CantajuegaApi";
+import { transformDate } from "@/utils/general";
 
 export default function Page({ params }: { params: { id: string } }) {
   const { data: user } = useGetUserbyIdQuery(params.id);
-  console.log(user?.Reports);
+ 
   return (
     <>
-      <h1>Informacion del usuario:{user?.firstName}</h1>
-      <section className="flex flex-col">
-        <article className="flex flex-col bg-blue">
-          <p>Nombre Completo: {`${user?.firstName} ${user?.lastName}`}</p>
-          <p>Email:{user?.email}</p>
-          <p>Email verificado: {user?.email_verified}</p>
-          <p>Telefono de contacto:{user?.phone ?? "Sin telefono."}</p>
-          <p>Membresia:{user?.Membership?.name ?? "Sin membresia."}</p>
-        </article>
-        <article className="flex flex-col bg-emerald-500">
-          <h1>Informacion del niño/a a cargo:</h1>
-          <p>Nombre:{user?.Children[0].firstName}</p>
-          <p>Edad:{user?.Children[0].age}</p>
-        </article>
-        <article className="flex flex-col bg-green">
-          <h1>Reportes:</h1>
-          {user?.Reports?.map((report) => {
-            return (
-              <div
-                key={report.id}
-                className="flex flex-col  text-white">
-                <h2>fecha:{report.createdAt}</h2>
-                <p>{report.Description}</p>
-              </div>
-            );
-          })}
-        </article>
-      </section>
-      <section></section>
+      <div className="flex ">
+        <section className="flex flex-col w-8/12 gap-2 ">
+          <BoxInfoLayout title="Registro /actualizacion">
+            <Boxinfo title="fecha de registro" info={transformDate(user?.createdAt??'')} />
+            <Boxinfo title="fecha actualizacion" info={transformDate(user?.updatedAt??'')} />
+          </BoxInfoLayout>
+
+          <BoxInfoLayout title="Datos">
+            <Boxinfo title="Telefono" info={user?.phone?.toString() ??'Sin registrar'}/>
+            <Boxinfo title="email" info={user?.email} />
+            <Boxinfo title="¿email verificado?" info={user?.email_verified + ''} />
+          </BoxInfoLayout>
+
+          <BoxInfoLayout title="Membresia">
+            <Boxinfo title="Fecha adquirida" info="05/06/1999" />
+            <Boxinfo title="Nombre" info={user?.Membership.name??''} />
+            <Boxinfo title="Etapa habilitada" info="Etapa inicial" />
+            <Boxinfo title="Vence" info="05/06/1999" />
+          </BoxInfoLayout>
+
+          <BoxInfoLayout title="Mas informacion">
+            <Boxinfo title="Hijo/a"  seeMoreButton={true} seeMorePath={`/dashboard/childs/${user?.Children[0].id}`}/>
+            <Boxinfo title="Reportes" seeMoreButton={true} seeMorePath={`/dashboard/reportes/${user?.id}`} />
+          </BoxInfoLayout>
+        </section>
+
+        <section className=" w-4/12 flex justify-center ">
+          <UserCard Name={user?.firstName??''} lastName={user?.lastName??''} admin={user?.is_Admin?'admin':'Usuario'} id={user?.id??''} age={5151551} />
+        </section>
+      </div>
     </>
   );
 }
