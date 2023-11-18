@@ -157,14 +157,14 @@ export const CantajuegaService = createApi({
     }),
     //----------------------------
     ////obtener child por id
-    getChildById: builder.query<responses<Child>, null>({
+    getChildById: builder.query<responses<Child>, string>({
       query: (id) => `child/${id}`,
       keepUnusedDataFor: 600,
       async onQueryStarted(nose, { dispatch, queryFulfilled }) {
         const { data } = (await queryFulfilled).data;
         const [child] = data!;
         dispatch(setChild(child));
-      },
+      }
     }),
     ///---------------------
     //obtener progresos del chic@
