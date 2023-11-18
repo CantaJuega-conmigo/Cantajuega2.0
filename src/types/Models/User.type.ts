@@ -13,10 +13,13 @@ export interface User{
     Reports?:Report[],
     email_verified:boolean|'verificado'|'no verificado'
     Membership:Membership,
-    Children:Child[]
+    Children:Child[],
+    createdAt:string,
+    updatedAt:string
 }
 interface UserAuthResponse extends User{
     Children:Child[]
+  
 }
 export interface authUser{
     error:boolean

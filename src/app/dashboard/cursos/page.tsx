@@ -39,7 +39,7 @@ export default function Page() {
     <>
       <h1>Cursoos</h1>
       <RowColumn
-        className={" font-bold w-[98%] border-b border-black "}
+        className={" font-bold w-[94%] border-b border-black "}
         numberOfColumns={"6"}
         column1={{ text: "nombre" }}
         column2={{ text: "Descripcion" }}
