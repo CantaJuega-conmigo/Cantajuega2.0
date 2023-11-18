@@ -6,11 +6,7 @@ export default function Page() {
   const { data: users } = useGetAllUsersQuery(null);
   return (
     <>
-      <h1>
-        Usuarios de la app,se veria una lista de todos los usuarios, con
-        opciones de paginado, al hacer click a un usuarios redirige a otra
-        pestaña con info del usuario
-      </h1>
+
       <RowColumn
         className={" font-bold w-[98.8%] border-b border-black "}
         numberOfColumns={"6"}
