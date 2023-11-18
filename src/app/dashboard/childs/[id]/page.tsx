@@ -9,7 +9,7 @@ import {
   useGetProgressChildQuery,
 } from "@/store/apis/CantajuegaApi";
 
-export default function page({ params }: { params: { id: string } }) {
+export default function Page({ params }: { params: { id: string } }) {
   const { data, isLoading } = useGetChildByIdQuery(params.id);
   const child = data?.data![0];
 
