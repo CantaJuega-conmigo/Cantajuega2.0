@@ -4,16 +4,22 @@ export interface First_Video {
   PdfCompleted: boolean;
   Total: number;
   Ready_to_Next_Video: boolean;
+  day_Started: string;
+  one_Day_Passed: boolean;
 }
 export interface Final_Video {
   Last_Video_Completed: boolean;
   Total: number;
   Ready_to_Test: boolean;
+  one_Day_Passed: boolean;
+  day_Started: string;
 }
 export interface Other_Video {
   Last_Video_Completed: boolean;
   Total: number;
   Ready_to_Next_Video: boolean;
+  day_Started: string;
+  one_Day_Passed: boolean;
 }
 export interface Test_Status {
   Month_Passed: boolean;

@@ -40,7 +40,7 @@ export default function DashboardLayout({
         <header className=' flex justify-end w-full' id='navDashboard'>
           <DashBoardHeader name='Kathy' image={''} notifications={'5'} />
         </header>
-        <main className=' bg-slate-300 w-full flex flex-col  h-full p-4 gap-4'>
+        <main className=' bg-slate-300 w-full flex flex-col  h-full p-4 gap-4 items-center'>
           {children}
         </main>
       </section>
