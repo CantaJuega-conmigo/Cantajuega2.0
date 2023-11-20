@@ -10,7 +10,7 @@ export default function Page({ params }: { params: { id: string } }) {
 
   return (
     <>
-      <div className="flex ">
+      <div className="flex w-full ">
         <section className="flex flex-col w-8/12 gap-2 ">
           <BoxInfoLayout title="Registro /actualizacion">
             <Boxinfo

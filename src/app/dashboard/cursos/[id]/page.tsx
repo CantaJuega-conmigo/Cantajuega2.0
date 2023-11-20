@@ -1,12 +1,19 @@
 "use client";
+import Boxinfo from "@/components/DashBoard/BoxInfo";
+import BoxInfoLayout from "@/components/DashBoard/BoxInfoLayout";
 import Modal from "@/components/DashBoard/Modal";
 import YoutubePlayer from "@/components/YoutubePlayer/YoutubePlayer";
 import { useGetStageByIdQuery } from "@/store/apis/CantajuegaApi";
+import Link from "next/link";
 import { MouseEvent, useState } from "react";
 
 export default function Page({ params }: { params: { id: string } }) {
   const { id } = params;
-  const { data: stage, isLoading, isError } = useGetStageByIdQuery(id);
+  const {
+    data: stage,
+    isLoading,
+    isError,
+  } = useGetStageByIdQuery({ id, childs: true });
   const [actualVideo, setActualVideo] = useState<string>("");
   const [seeModal, setSeeModal] = useState<boolean>(false);
   if (isLoading) {
@@ -16,54 +23,59 @@ export default function Page({ params }: { params: { id: string } }) {
       </div>
     );
   }
-  const selectVideo = (e: MouseEvent<HTMLButtonElement>) => {
+  const openForm = (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    const { value } = e.currentTarget;
-    setActualVideo(value);
+    setSeeModal(!seeModal);
   };
-  const openForm=(e:MouseEvent<HTMLButtonElement>)=>{
-    e.preventDefault();
-    setSeeModal(!seeModal)
-  }
+  const selectVideo = (e: MouseEvent<HTMLButtonElement>, data?: string) => {
+    openForm(e);
+    setActualVideo(data!);
+  };
   return (
     <>
-      <div className=" bg-slate-500 w-full flex flex-col items-center ">
-        <h1>Info del curso </h1>
-        <h1>Curso : {stage?.name}</h1>
-        <h1>Edad: {stage?.description}</h1>
-        <h1>Edad minima: {stage?.minAge}</h1>
-        <h1>Edad maxima: {stage?.maxAge}</h1>
-      </div>
-
-      <div className=" bg-gray-400 w-full flex flex-col items-center">
-        <h2>Videos de la etapa</h2>
-        {stage?.content.videos.map((i, key) => (
-          <article className="" key={key}>
-            <section>
-              <button onClick={selectVideo} value={i.content}>
-                {i.title}
-              </button>
-            </section>
-          </article>
-        ))}
-      </div>
-      <section className=" bg-yellow">
-        {actualVideo ? (
-          <YoutubePlayer videoId={actualVideo} />
-        ) : (
-          <h1 className=" text-2xl">Seleccione un video.</h1>
-        )}
-      </section>
-      <section className="w-full bg-green ">
-        <button>Editar curso</button>
-      </section>
-      {seeModal && (
-        <Modal>
-          <section className=" text-white">
-            <h1>dentro del modal</h1>
-          </section>
-        </Modal>
-      )}
+      <BoxInfoLayout title={stage?.name!} className="w-8/12">
+        <Boxinfo title="Descripcion" info={stage?.description} />
+        <Boxinfo title="Edad mínima" info={stage?.minAge.toString()} />
+        <Boxinfo title="Edad máxima" info={stage?.maxAge.toString()} />
+      </BoxInfoLayout>
+      <BoxInfoLayout title={"Contenido"} className="w-8/12">
+        {stage?.content.videos.map((video, key) => {
+          return (
+            <Boxinfo key={key} title={video?.title}>
+              <section className="flex justify-around">
+                <button
+                  className=" bg-blue p-2 rounded-2xl text-sm text-white"
+                  onClick={(e) => selectVideo(e, video?.content ?? "")}>
+                  Ver video
+                </button>
+              </section>
+            </Boxinfo>
+          );
+        })}
+      </BoxInfoLayout>
+      <BoxInfoLayout title={"Alumnos"} className="w-8/12">
+        <Boxinfo title="Total" info={stage?.Children?.length.toString()} />
+        <Boxinfo title="Nombres">
+          {stage?.Children?.map((child, key) => {
+            return (
+              <article key={key} className="flex  justify-center gap-2">
+                <p>
+                  {child?.firstName} {child?.lastName}{" "}
+                </p>
+                <Link href={`/dashboard/childs/${child?.id}`}>
+                  <button className=" bg-cream px-3 rounded-xl border  border-black text-sm">
+                    ver mas
+                  </button>
+                </Link>
+              </article>
+            );
+          })}
+        </Boxinfo>
+      </BoxInfoLayout>
+      <button className=" bg-blue text-white px-3 rounded-xl border  border-black text-sm">
+       Editar
+      </button>
+      {seeModal && <Modal actualVideo={actualVideo} openForm={openForm} />}
     </>
   );
 }

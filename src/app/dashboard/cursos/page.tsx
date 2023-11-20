@@ -49,7 +49,7 @@ export default function Page() {
         column6={{ text: "  " }}
       />
       <section className="flex flex-col w-full gap-8 overflow-y-scroll   ">
-        {stages?.data?.map((stage:stageWithChilds,key:number) => (
+        {stages?.data?.map((stage,key:number) => (
           <RowColumn
             key={key}
             numberOfColumns={"6"}
@@ -67,87 +67,8 @@ export default function Page() {
           Crear una nueva etapa.
         </button>
       </section>
-      {seeModal && (
-        <Modal>
-          <div className="w-5/12 h-5/6 bg-blue flex flex-col gap-4 overflow-auto transition-shadow translate-x-2">
-            <article className="relative h-[2rem]">
-              <button
-                onClick={openForm}
-                type="button"
-                className=" absolute right-0 top-0">
-                X
-              </button>
-            </article>
-            <form action="" className="flex flex-col gap-2">
-              <h1 className=" text-white text-center">Detalles</h1>
-              <article>
-                <label htmlFor="">Titulo</label>
-                <input type="text" name="" id="" />
-              </article>
-              <article>
-                <label htmlFor="">Descripcion</label>
-                <input type="text" name="" id="" />
-              </article>
-              <article>
-                <label htmlFor="">Edad minima</label>
-                <input type="text" name="" id="" />
-              </article>
-              <article>
-                <label htmlFor="">Edad maxima</label>
-                <input type="text" name="" id="" />
-              </article>
-               <h1 className=" text-white text-center">Contenido, Videos</h1>
-               <article>
-                <label htmlFor="">Primer video, (enlace de youtube)</label>
-                <input type="text" />
-               </article>
-               <article>
-                <label htmlFor="">Segundo video, (enlace de youtube)</label>
-                <input type="text" />
-               </article>
-               <article>
-                <label htmlFor="">Tercer video, (enlace de youtube)</label>
-                <input type="text" />
-               </article>
-               <article>
-                <label htmlFor="">Cuarto video, (enlace de youtube)</label>
-                <input type="text" />
-               </article>
-               <article>
-                <label htmlFor="">Quinto video, (enlace de youtube)</label>
-                <input type="text" />
-               </article>
-              
-               <h1 className=" text-white text-center">Contenido, Musicas</h1>
-               <article>
-                <label htmlFor="">Primer musica</label>
-                <input type="file" />
-               </article>
-               <article>
-                <label htmlFor="">Segunda musica</label>
-                <input type="file" />
-               </article>
-               <article>
-                <label htmlFor="">Tercera musica</label>
-                <input type="file" />
-               </article>
-               <article>
-                <label htmlFor="">Cuarta musica</label>
-                <input type="file" />
-               </article>
-               <article>
-                <label htmlFor="">Quinta musica</label>
-                <input type="file" />
-               </article>
-               <article className=" flex justify-center">
-                <button className=" p-2 bg-orange text-white">
-                  Crear nueva etapa
-                </button>
-               </article>
-            </form>
-          </div>
-        </Modal>
-      )}
+     
+      
     </>
   );
 }
