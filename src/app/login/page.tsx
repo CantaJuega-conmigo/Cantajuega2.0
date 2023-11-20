@@ -172,7 +172,7 @@ export default function Login() {
             Iniciar con Google
           </button>
         </section>
-        <section className=' flex justify-center text-blue'>
+        <section className=' flex justify-center text-blue pt-4'>
           <Link href={'/register'}>
           <h1>no tienes cuenta?</h1>
           </Link>

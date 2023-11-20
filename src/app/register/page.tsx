@@ -1,19 +1,21 @@
-'use client';
-import styles from '../../styles/register.module.css';
-import Image from 'next/image';
-import img1 from '../../../public/img/login/Ellipse 15.png';
-import img2 from '../../../public/img/login/Ellipse 17.png';
-import img3 from '../../../public/img/login/Ellipse 18.png';
-import img4 from '../../../public/img/login/Ellipse 19.png';
-import { FcGoogle } from 'react-icons/fc';
-import { GoAlert } from 'react-icons/go';
-import { FaArrowLeft } from 'react-icons/fa';
-import { RotatingLines } from 'react-loader-spinner';
-import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
-import { registerError } from '@/utils/FormsErrors';
-import { registerUser } from '@/libs/functions';
-import { useRouter } from 'next/navigation';
-import AcountConfirmation from '@/components/AcountConfirmation/AcountConfirmation';
+"use client";
+import styles from "../../styles/register.module.css";
+import Image from "next/image";
+import img1 from "../../../public/img/login/Ellipse 15.png";
+import img2 from "../../../public/img/login/Ellipse 17.png";
+import img3 from "../../../public/img/login/Ellipse 18.png";
+import img4 from "../../../public/img/login/Ellipse 19.png";
+import { FcGoogle } from "react-icons/fc";
+import { GoAlert } from "react-icons/go";
+import { FaArrowLeft } from "react-icons/fa";
+import { RotatingLines } from "react-loader-spinner";
+import { ChangeEvent, FormEvent, useEffect, useState,MouseEvent } from "react";
+import { registerError } from "@/utils/FormsErrors";
+import { registerUser } from "@/libs/functions";
+import { useRouter } from "next/navigation";
+import AcountConfirmation from "@/components/AcountConfirmation/AcountConfirmation";
+import StepOne from "@/components/Register/StepOne";
+import StepTwo from "@/components/Register/StepTwo";
 
 interface IRegister {
   firstName: string;
@@ -34,14 +36,17 @@ export default function Register() {
   const [errors, setErrors] = useState<IRegisterErrors>({});
 
   const [registerValues, setRegisterValues] = useState<IRegister>({
-    firstName: '',
-    lastName: '',
-    email: '',
-    password: '',
+    firstName: "",
+    lastName: "",
+    email: "",
+    password: "",
   });
 
   const [loading, setLoading] = useState(false);
-
+  const [step, setStep] = useState({
+    stepOne: true,
+    stepTwo: false,
+  });
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>): void => {
     const { name, value } = event.target;
     setRegisterValues({ ...registerValues, [name]: value });
@@ -63,17 +68,17 @@ export default function Register() {
     ) {
       try {
         setLoading(true);
-        await registerUser({user:registerValues});
+        await registerUser({ user: registerValues });
         setLoading(false);
         setVerificationModal(true);
         // router.push('/');
       } catch (error: any) {
         setErrors({
           ...errors,
-          firstName: '',
-          lastName: '',
-          email: '',
-          password: '',
+          firstName: "",
+          lastName: "",
+          email: "",
+          password: "",
           global: error.message,
         });
         setLoading(false);
@@ -90,6 +95,13 @@ export default function Register() {
   }, [errors]);
 
   const [hoverBack, setHoverBack] = useState<boolean>(false);
+  const changeStep=(e:MouseEvent<HTMLButtonElement>)=>{
+      const {name}=e.currentTarget;
+      if(name==='next'){
+       return setStep({stepOne:false,stepTwo:true})
+      }
+      return setStep({stepOne:true,stepTwo:false})
+  }
   return (
     <div className={styles.container}>
       {verificationModal && (
@@ -98,21 +110,21 @@ export default function Register() {
           name={registerValues.firstName}
         />
       )}
-      <Image className={styles.img1} src={img1} alt='decoration1' />
-      <Image className={styles.img2} src={img2} alt='decoration2' />
-      <Image className={styles.img3} src={img3} alt='decoration3' />
-      <Image className={styles.img4} src={img4} alt='decoration4' />
+      <Image className={styles.img1} src={img1} alt="decoration1" />
+      <Image className={styles.img2} src={img2} alt="decoration2" />
+      <Image className={styles.img3} src={img3} alt="decoration3" />
+      <Image className={styles.img4} src={img4} alt="decoration4" />
       <div className={styles.tittleContainer}>
         <div
           className={`${styles.backContainer} ${hoverBack && styles.hovered}`}
-          onClick={() => router.push('/')}
+          onClick={() => router.push("/")}
           onMouseOver={() => setHoverBack(true)}
-          onMouseLeave={() => setHoverBack(false)}
-        >
+          onMouseLeave={() => setHoverBack(false)}>
           <FaArrowLeft />
         </div>
         <h2 className={styles.tittle}>Crea un usuario</h2>
       </div>
+
       <form className={styles.form} onSubmit={handleSubmit}>
         <section className={styles.sectionErrors}>
           {errors.global && (
@@ -124,108 +136,44 @@ export default function Register() {
           {loading && (
             <div className={styles.spinnerContainer}>
               <RotatingLines
-                strokeColor='#ff3d00'
-                strokeWidth='5'
-                animationDuration='0.75'
-                width='30'
+                strokeColor="#ff3d00"
+                strokeWidth="5"
+                animationDuration="0.75"
+                width="30"
                 visible={true}
-              />{' '}
+              />{" "}
               Verificando cuenta...
             </div>
           )}
         </section>
         <section className={styles.sectionInputs}>
-          <div className={styles.inputsContainer}>
-            <label htmlFor='firstName'>Nombre</label>
-            <input
-              className={`${styles.inputs} ${
-                errors.firstName && styles.inputError
-              }`}
-              onChange={handleInputChange}
-              type='text'
-              name='firstName'
-              id='firstName'
-              placeholder='Introduce tu nombre...'
-            />
-            <div className={styles.errorInputsContainer}>
-              {errors.firstName && (
-                <p className={styles.errorParagraph}>{errors.firstName}</p>
-              )}
-            </div>
-          </div>
-          <div className={styles.inputsContainer}>
-            <label htmlFor='lastName'>Apellido</label>
-            <input
-              className={`${styles.inputs} ${
-                errors.lastName && styles.inputError
-              }`}
-              onChange={handleInputChange}
-              type='text'
-              name='lastName'
-              id='lastName'
-              placeholder='Introduce tu apellido...'
-            />
-            <div className={styles.errorInputsContainer}>
-              {errors.lastName && (
-                <p className={styles.errorParagraph}>{errors.lastName}</p>
-              )}
-            </div>
-          </div>
-          <div className={styles.inputsContainer}>
-            <label htmlFor='email'>Correo electronico</label>
-            <input
-              onChange={handleInputChange}
-              className={`${styles.inputs} ${
-                errors.email && styles.inputError
-              }`}
-              type='text'
-              id='email'
-              name='email'
-              placeholder='Introduce tu correo...'
-              autoComplete='on'
-            />
-            <div className={styles.errorInputsContainer}>
-              {errors.email && (
-                <p className={styles.errorParagraph}>{errors.email}</p>
-              )}
-            </div>
-          </div>
-          <div className={styles.inputsContainer}>
-            <label htmlFor='password'>Contraseña</label>
-            <input
-              onChange={handleInputChange}
-              className={`${styles.inputs} ${styles.inputPassword} ${
-                errors.password && styles.inputError
-              }`}
-              type='password'
-              id='password'
-              name='password'
-              placeholder='Introduce tu contraseña...'
-              autoComplete='on'
-            />
-            <div className={styles.errorInputsContainer}>
-              {errors.password && (
-                <p className={styles.errorParagraph}>{errors.password}</p>
-              )}
-            </div>
-          </div>
+          {/* {Registro padres} */}
+         { step.stepOne && <StepOne errors={errors} handleInputChange={handleInputChange} />}
+         { step.stepTwo && <StepTwo errors={errors} handleInputChange={handleInputChange} />}
         </section>
-        <section className={styles.sectionRememberme}>
-          <div className={styles.checkRememberme}>
-            <input className={styles.check} type='checkbox' id='remember' />
-            <label htmlFor='remember'>Recordarme</label>
-          </div>
-        </section>
+
         <section className={styles.sectionButtons}>
-          <button className={styles.normalBtn} type='submit'>
-            Registrarse
-          </button>
-          <button className={styles.googleBtn}>
-            <FcGoogle />
-            Registrar con Google
-          </button>
+          {step.stepOne && (
+            <>
+              <button className={styles.normalBtn} type="button" name="next" onClick={changeStep} >
+                Siguiente paso
+              </button>
+
+              <button className={styles.googleBtn}>
+                <FcGoogle />
+                Registrarse con Google
+              </button>
+            </>
+          )}
+          {step.stepTwo &&  <>
+              <button className={styles.normalBtn} type="button" name="next" onClick={changeStep} >
+                Completar el registro
+              </button>
+              <button className={styles.normalBtn} type="button" name="back" onClick={changeStep} >
+                volver
+              </button>
+            </>}
         </section>
-        
       </form>
     </div>
   );
