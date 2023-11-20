@@ -15,7 +15,8 @@ export interface User{
     Membership:Membership,
     Children:Child[],
     createdAt:string,
-    updatedAt:string
+    updatedAt:string,
+    
 }
 interface UserAuthResponse extends User{
     Children:Child[]

@@ -63,6 +63,9 @@ export default function Page({ params }: { params: { id: string } }) {
         Final_Video={progress?.Final_Video!}
         title="Ultimo video"
       />
+      <BoxInfoLayout title="Adulto responsable">
+        <Boxinfo title="Nombre" info={child?.User?.firstName} seeMoreButton={true} seeMorePath={  `/dashboard/usuarios/${child?.UserId}`}/>
+      </BoxInfoLayout>
     </>
   );
 }
