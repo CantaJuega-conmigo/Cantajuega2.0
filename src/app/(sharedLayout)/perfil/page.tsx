@@ -19,7 +19,7 @@ export default function Page() {
       skip: !userMembershipexist,
     }
   );
-  const { data: stage } = useGetStageByIdQuery(child?.StageId!, {
+  const { data: stage } = useGetStageByIdQuery({id:child?.StageId!,}, {
     skip: !childStageExist,
   });
   const {data:progress,isLoading:progresloading}=useGetProgressChildQuery({ProgressId:child?.ProgressId!})

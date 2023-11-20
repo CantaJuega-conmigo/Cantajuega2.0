@@ -5,7 +5,8 @@ export default function Boxinfo({
   BoxStyle,
   BoxTitle,
   seeMoreButton,
-  seeMorePath
+  seeMorePath,
+  children,
 }: {
   title?: string;
   info?: string;
@@ -13,13 +14,15 @@ export default function Boxinfo({
   BoxTitle?: string;
   seeMoreButton?: boolean;
   seeMorePath?: string;
+  children?: React.ReactNode;
 }) {
   return (
     <section className={` ${BoxStyle ?? ""} text-center grow   md:w-1/4  flex flex-col gap-2 `}>
       <article className={`${BoxTitle ?? ""} bg-green rounded-full`}>
         <h2>{title ?? ""}</h2>
       </article>
-      {!seeMoreButton && <p> {info ?? ""}</p>}
+      <p> {info ?? ""}</p>
+      {children}
       {seeMoreButton && (
         <Link href={seeMorePath ?? ""}>
           <button className=" bg-cream px-3 rounded-xl border  border-black text-sm">

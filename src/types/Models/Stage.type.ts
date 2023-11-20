@@ -34,7 +34,8 @@ export interface stage {
     minAge: number,
     maxAge: number,
     content:content
+    Children?:Child[]
 }
 export interface stageWithChilds extends stage{
-  Children?:Child[]
+  Children:Child[]
 }
