@@ -37,7 +37,7 @@ export default function Page({ params }: { params: { id: string } }) {
 
           <BoxInfoLayout title="Membresia">
             <Boxinfo title="Fecha adquirida" info="05/06/1999" />
-            <Boxinfo title="Nombre" info={user?.Membership.name ?? ""} />
+            <Boxinfo title="Nombre" info={user?.Membership?.name ?? "Sin adquirir"} />
             <Boxinfo title="Etapa habilitada" info="Etapa inicial" />
             <Boxinfo title="Vence" info="05/06/1999" />
           </BoxInfoLayout>
@@ -46,7 +46,7 @@ export default function Page({ params }: { params: { id: string } }) {
             <Boxinfo
               title="Hijo/a"
               seeMoreButton={true}
-              seeMorePath={`/dashboard/childs/${user?.Children[0].id}`}
+              seeMorePath={`/dashboard/childs/${user?.Children[0]?.id??''}`}
             />
             <Boxinfo
               title="Reportes"
