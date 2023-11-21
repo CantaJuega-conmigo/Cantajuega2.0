@@ -12,7 +12,7 @@ export default function StepOne({
   handleInputChange,
 }: {
   errors: IRegisterErrors;
-  handleInputChange: (e: ChangeEvent<HTMLInputElement>) => void;
+  handleInputChange: (event: ChangeEvent<HTMLInputElement>,type:'user' | 'child') => void;
 }) {
   return (
     <>
@@ -23,7 +23,7 @@ export default function StepOne({
           className={`${styles.inputs} ${
             errors.firstName && styles.inputError
           }`}
-          onChange={handleInputChange}
+          onChange={(event) =>handleInputChange(event,'user')}
           type="text"
           name="firstName"
           id="firstName"
@@ -39,7 +39,7 @@ export default function StepOne({
         <label htmlFor="lastName">Apellido</label>
         <input
           className={`${styles.inputs} ${errors.lastName && styles.inputError}`}
-          onChange={handleInputChange}
+          onChange={(event) =>handleInputChange(event,'user')}
           type="text"
           name="lastName"
           id="lastName"
@@ -54,7 +54,7 @@ export default function StepOne({
       <div className={styles.inputsContainer}>
         <label htmlFor="email">Correo electronico</label>
         <input
-          onChange={handleInputChange}
+          onChange={(event) =>handleInputChange(event,'user')}
           className={`${styles.inputs} ${errors.email && styles.inputError}`}
           type="text"
           id="email"
@@ -71,7 +71,7 @@ export default function StepOne({
       <div className={styles.inputsContainer}>
         <label htmlFor="password">Contraseña</label>
         <input
-          onChange={handleInputChange}
+          onChange={(event) =>handleInputChange(event,'user')}
           className={`${styles.inputs} ${styles.inputPassword} ${
             errors.password && styles.inputError
           }`}
