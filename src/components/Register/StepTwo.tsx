@@ -1,9 +1,9 @@
 import { ChangeEvent, useState } from "react";
 import styles from "../../styles/register.module.css";
 import DatePicker, { registerLocale } from "react-datepicker";
-import es from "date-fns/locale/es"
+import es from "date-fns/locale/es";
 import "react-datepicker/dist/react-datepicker.css";
-
+import { InputChilds, inputErrorChilds } from "@/utils/FormsErrors";
 
 interface IRegisterErrors {
   firstName?: string;
@@ -12,17 +12,30 @@ interface IRegisterErrors {
   password?: string;
   global?: string;
 }
-registerLocale('es', es);
+registerLocale("es", es);
 export default function StepTwo({
-  errors,
   handleInputChange,
+  errorsChild,
+  setChildData,
+  childData
 }: {
-  errors: IRegisterErrors;
-  handleInputChange: (e: ChangeEvent<HTMLInputElement>) => void;
+  handleInputChange: (
+    event: ChangeEvent<HTMLInputElement | HTMLSelectElement>,
+    type: "user" | "child"
+  ) => void;
+  errorsChild: inputErrorChilds;
+  setChildData: React.Dispatch<React.SetStateAction<InputChilds>>;
+  childData: InputChilds;
 }) {
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
 
   const handleDateChange = (date: Date | null) => {
+   
+    const formatDate=date?.toISOString().split('T')[0].split('-').reverse().join('/')??''
+    setChildData({
+      ...childData,
+      birthDate: formatDate,
+    })
     setSelectedDate(date);
   };
 
@@ -33,17 +46,17 @@ export default function StepTwo({
         <label htmlFor="firstName">Nombre</label>
         <input
           className={`${styles.inputs} ${
-            errors.firstName && styles.inputError
+            errorsChild.firstName && styles.inputError
           }`}
-          onChange={handleInputChange}
+          onChange={(event) => handleInputChange(event, "child")}
           type="text"
           name="firstName"
           id="firstName"
           placeholder="Nombre del niño/a..."
         />
         <div className={styles.errorInputsContainer}>
-          {errors.firstName && (
-            <p className={styles.errorParagraph}>{errors.firstName}</p>
+          {errorsChild.firstName && (
+            <p className={styles.errorParagraph}>{errorsChild.firstName}</p>
           )}
         </div>
       </div>
@@ -51,16 +64,18 @@ export default function StepTwo({
       <div className={styles.inputsContainer}>
         <label htmlFor="lastName">Apellido</label>
         <input
-          className={`${styles.inputs} ${errors.lastName && styles.inputError}`}
-          onChange={handleInputChange}
+          className={`${styles.inputs} ${
+            errorsChild.lastName && styles.inputError
+          }`}
+          onChange={(event) => handleInputChange(event, "child")}
           type="text"
           name="lastName"
           id="lastName"
           placeholder="Apellido del niño/a..."
         />
         <div className={styles.errorInputsContainer}>
-          {errors.lastName && (
-            <p className={styles.errorParagraph}>{errors.lastName}</p>
+          {errorsChild.lastName && (
+            <p className={styles.errorParagraph}>{errorsChild.lastName}</p>
           )}
         </div>
       </div>
@@ -71,19 +86,20 @@ export default function StepTwo({
           <select
             name=""
             id="gender"
-            className="  text-center bg-gray-200 w-2/6 p-2">
+            className="  text-center bg-gray-200 w-2/6 p-2"
+            onChange={(event) => handleInputChange(event, "child")}>
             <option value="">Niño</option>
             <option value="">Niña</option>
           </select>
         </article>
         <div className={styles.errorInputsContainer}>
-          {errors.email && (
-            <p className={styles.errorParagraph}>{errors.email}</p>
+          {errorsChild.gender && (
+            <p className={styles.errorParagraph}>{errorsChild.gender}</p>
           )}
         </div>
       </div>
 
-      <div className={' flex flex-col gap-2'}>
+      <div className={" flex flex-col gap-2"}>
         <label htmlFor="birthDate">Fecha de nacimiento:</label>
         <DatePicker
           selected={selectedDate}
@@ -93,10 +109,11 @@ export default function StepTwo({
           id="birthDate"
           className="border border-black rounded-lg"
           placeholderText="dd/mm/yyyy"
+          name="birthDate"
         />
         <div className={styles.errorInputsContainer}>
-          {errors.password && (
-            <p className={styles.errorParagraph}>{errors.password}</p>
+          {errorsChild.birthDate && (
+            <p className={styles.errorParagraph}>{errorsChild.birthDate}</p>
           )}
         </div>
       </div>

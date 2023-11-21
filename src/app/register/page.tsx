@@ -9,8 +9,13 @@ import { FcGoogle } from "react-icons/fc";
 import { GoAlert } from "react-icons/go";
 import { FaArrowLeft } from "react-icons/fa";
 import { RotatingLines } from "react-loader-spinner";
-import { ChangeEvent, FormEvent, useEffect, useState,MouseEvent } from "react";
-import { registerError } from "@/utils/FormsErrors";
+import { ChangeEvent, FormEvent, useEffect, useState, MouseEvent } from "react";
+import {
+  InputChilds,
+  inputErrorChilds,
+  registerErrorChild,
+  registerErrorUser,
+} from "@/utils/FormsErrors";
 import { registerUser } from "@/libs/functions";
 import { useRouter } from "next/navigation";
 import AcountConfirmation from "@/components/AcountConfirmation/AcountConfirmation";
@@ -34,7 +39,13 @@ interface IRegisterErrors {
 export default function Register() {
   const router = useRouter();
   const [errors, setErrors] = useState<IRegisterErrors>({});
-
+  const [errorsChild, setErrorsChild] = useState<inputErrorChilds>({});
+  const [childData, setChildData] = useState<InputChilds>({
+    firstName: "",
+    lastName: "",
+    birthDate: "",
+    gender: "male",
+  });
   const [registerValues, setRegisterValues] = useState<IRegister>({
     firstName: "",
     lastName: "",
@@ -47,9 +58,13 @@ export default function Register() {
     stepOne: true,
     stepTwo: false,
   });
-  const handleInputChange = (event: ChangeEvent<HTMLInputElement>): void => {
+  const handleInputChange = (event: ChangeEvent<HTMLInputElement|HTMLSelectElement>,type:'user' | 'child'): void => {
     const { name, value } = event.target;
-    setRegisterValues({ ...registerValues, [name]: value });
+    if(type === 'user'){
+      setRegisterValues({ ...registerValues, [name]: value });
+    }else{
+      setChildData({ ...childData, [name]: value });
+    }
   };
 
   const [verificationModal, setVerificationModal] = useState<boolean>(false);
@@ -57,18 +72,15 @@ export default function Register() {
     event: FormEvent<HTMLFormElement>
   ): Promise<void> => {
     event.preventDefault();
-    setErrors(registerError(registerValues));
-
-    if (
-      !Object.keys(registerError(registerValues)).length &&
-      registerValues.firstName.length &&
-      registerValues.lastName.length &&
-      registerValues.email.length &&
-      registerValues.password.length
-    ) {
+    const { errors, anyError } = registerErrorUser(registerValues);
+    const { errors: childErrors, anyError: anyErrorChild } =
+    registerErrorChild(childData);
+    setErrorsChild(childErrors);
+    console.log(childData);
+    if (!anyError && !anyErrorChild) {
       try {
         setLoading(true);
-        await registerUser({ user: registerValues });
+        await registerUser({ user: registerValues, child: childData });
         setLoading(false);
         setVerificationModal(true);
         // router.push('/');
@@ -95,13 +107,16 @@ export default function Register() {
   }, [errors]);
 
   const [hoverBack, setHoverBack] = useState<boolean>(false);
-  const changeStep=(e:MouseEvent<HTMLButtonElement>)=>{
-      const {name}=e.currentTarget;
-      if(name==='next'){
-       return setStep({stepOne:false,stepTwo:true})
-      }
-      return setStep({stepOne:true,stepTwo:false})
-  }
+  const changeStep = (e: MouseEvent<HTMLButtonElement>) => {
+    const { errors, anyError } = registerErrorUser(registerValues);
+    setErrors(errors);
+    const { name } = e.currentTarget;
+    if (!anyError && name === "next") {
+      return setStep({ stepOne: false, stepTwo: true });
+    }
+    if ( name === "back")
+      return setStep({ stepOne: true, stepTwo: false });
+  };
   return (
     <div className={styles.container}>
       {verificationModal && (
@@ -148,14 +163,22 @@ export default function Register() {
         </section>
         <section className={styles.sectionInputs}>
           {/* {Registro padres} */}
-         { step.stepOne && <StepOne errors={errors} handleInputChange={handleInputChange} />}
-         { step.stepTwo && <StepTwo errors={errors} handleInputChange={handleInputChange} />}
+          {step.stepOne && (
+            <StepOne errors={errors} handleInputChange={handleInputChange} />
+          )}
+          {step.stepTwo && (
+            <StepTwo errorsChild={errorsChild} handleInputChange={handleInputChange} setChildData={setChildData}  childData={childData}/>
+          )}
         </section>
 
         <section className={styles.sectionButtons}>
           {step.stepOne && (
             <>
-              <button className={styles.normalBtn} type="button" name="next" onClick={changeStep} >
+              <button
+                className={styles.normalBtn}
+                type="button"
+                name="next"
+                onClick={changeStep}>
                 Siguiente paso
               </button>
 
@@ -165,14 +188,24 @@ export default function Register() {
               </button>
             </>
           )}
-          {step.stepTwo &&  <>
-              <button className={styles.normalBtn} type="button" name="next" onClick={changeStep} >
+          {step.stepTwo && (
+            <>
+              <button
+                className={styles.normalBtn}
+                type="submit"
+                name="next"
+                >
                 Completar el registro
               </button>
-              <button className={styles.normalBtn} type="button" name="back" onClick={changeStep} >
+              <button
+                className={styles.normalBtn}
+                type="button"
+                name="back"
+                onClick={changeStep}>
                 volver
               </button>
-            </>}
+            </>
+          )}
         </section>
       </form>
     </div>

@@ -1,19 +1,19 @@
-'use client';
-import styles from '../../styles/login.module.css';
-import Image from 'next/image';
-import img1 from '../../../public/img/login/Ellipse 15.png';
-import img2 from '../../../public/img/login/Ellipse 17.png';
-import img3 from '../../../public/img/login/Ellipse 18.png';
-import img4 from '../../../public/img/login/Ellipse 19.png';
-import { FcGoogle } from 'react-icons/fc';
-import { GoAlert } from 'react-icons/go';
-import { FaArrowLeft } from 'react-icons/fa';
-import { RotatingLines } from 'react-loader-spinner';
-import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
-import { loginError } from '@/utils/FormsErrors';
-import { loginUser } from '@/libs/functions';
-import { useRouter } from 'next/navigation';
-import Link from 'next/link';
+"use client";
+import styles from "../../styles/login.module.css";
+import Image from "next/image";
+import img1 from "../../../public/img/login/Ellipse 15.png";
+import img2 from "../../../public/img/login/Ellipse 17.png";
+import img3 from "../../../public/img/login/Ellipse 18.png";
+import img4 from "../../../public/img/login/Ellipse 19.png";
+import { FcGoogle } from "react-icons/fc";
+import { GoAlert } from "react-icons/go";
+import { FaArrowLeft } from "react-icons/fa";
+import { RotatingLines } from "react-loader-spinner";
+import { ChangeEvent, FormEvent, useEffect, useState } from "react";
+import { loginError } from "@/utils/FormsErrors";
+import { loginUser } from "@/libs/functions";
+import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 interface ILogin {
   email: string;
@@ -30,8 +30,8 @@ export default function Login() {
   const [errors, setErrors] = useState<ILoginErrors>({});
 
   const [loginValues, setLoginValues] = useState<ILogin>({
-    email: '',
-    password: '',
+    email: "",
+    password: "",
   });
 
   const [loading, setLoading] = useState(false);
@@ -45,23 +45,20 @@ export default function Login() {
     event: FormEvent<HTMLFormElement>
   ): Promise<void> => {
     event.preventDefault();
-    setErrors(loginError(loginValues));
+    const { errors, anyError } = loginError(loginValues);
+    setErrors(errors);
 
-    if (
-      !Object.keys(loginError(loginValues)).length &&
-      loginValues.email.length &&
-      loginValues.password.length
-    ) {
+    if (!anyError) {
       try {
         setLoading(true);
         await loginUser(loginValues);
         setLoading(false);
-        router.push('/');
+        router.push("/");
       } catch (error: any) {
         setErrors({
           ...errors,
-          email: '',
-          password: '',
+          email: "",
+          password: "",
           global: error.message,
         });
         setLoading(false);
@@ -79,17 +76,16 @@ export default function Login() {
   const [hoverBack, setHoverBack] = useState<boolean>(false);
   return (
     <div className={styles.container}>
-      <Image className={styles.img1} src={img1} alt='decoration1' />
-      <Image className={styles.img2} src={img2} alt='decoration2' />
-      <Image className={styles.img3} src={img3} alt='decoration3' />
-      <Image className={styles.img4} src={img4} alt='decoration4' />
+      <Image className={styles.img1} src={img1} alt="decoration1" />
+      <Image className={styles.img2} src={img2} alt="decoration2" />
+      <Image className={styles.img3} src={img3} alt="decoration3" />
+      <Image className={styles.img4} src={img4} alt="decoration4" />
       <div className={styles.tittleContainer}>
         <div
           className={`${styles.backContainer} ${hoverBack && styles.hovered}`}
-          onClick={() => router.push('/')}
+          onClick={() => router.push("/")}
           onMouseOver={() => setHoverBack(true)}
-          onMouseLeave={() => setHoverBack(false)}
-        >
+          onMouseLeave={() => setHoverBack(false)}>
           <FaArrowLeft />
         </div>
         <h2 className={styles.tittle}>Inicio de sesion</h2>
@@ -106,29 +102,29 @@ export default function Login() {
           {loading && (
             <div className={styles.spinnerContainer}>
               <RotatingLines
-                strokeColor='#ff3d00'
-                strokeWidth='5'
-                animationDuration='0.75'
-                width='30'
+                strokeColor="#ff3d00"
+                strokeWidth="5"
+                animationDuration="0.75"
+                width="30"
                 visible={true}
-              />{' '}
+              />{" "}
               Verificando cuenta...
             </div>
           )}
         </section>
         <section className={styles.sectionInputs}>
           <div className={styles.inputsContainer}>
-            <label htmlFor='email'>Usuario/correo electronico</label>
+            <label htmlFor="email">Usuario/correo electronico</label>
             <input
               onChange={handleInputChange}
               className={`${styles.inputs} ${
                 errors.email && styles.inputError
               }`}
-              type='text'
-              id='email'
-              name='email'
-              placeholder='Escribe aquí...'
-              autoComplete='on'
+              type="text"
+              id="email"
+              name="email"
+              placeholder="Escribe aquí..."
+              autoComplete="on"
             />
             <div className={styles.errorInputsContainer}>
               {errors.email && (
@@ -137,17 +133,17 @@ export default function Login() {
             </div>
           </div>
           <div className={styles.inputsContainer}>
-            <label htmlFor='password'>Contraseña</label>
+            <label htmlFor="password">Contraseña</label>
             <input
               onChange={handleInputChange}
               className={`${styles.inputs} ${styles.inputPassword} ${
                 errors.password && styles.inputError
               }`}
-              type='password'
-              id='password'
-              name='password'
-              placeholder='Introduce tu contraseña...'
-              autoComplete='on'
+              type="password"
+              id="password"
+              name="password"
+              placeholder="Introduce tu contraseña..."
+              autoComplete="on"
             />
             <div className={styles.errorInputsContainer}>
               {errors.password && (
@@ -158,13 +154,13 @@ export default function Login() {
         </section>
         <section className={styles.sectionRememberme}>
           <div className={styles.checkRememberme}>
-            <input className={styles.check} type='checkbox' id='remember' />
-            <label htmlFor='remember'>Recordarme</label>
+            <input className={styles.check} type="checkbox" id="remember" />
+            <label htmlFor="remember">Recordarme</label>
           </div>
           <span>¿Olvidaste tu contraseña?</span>
         </section>
         <section className={styles.sectionButtons}>
-          <button className={styles.normalBtn} type='submit'>
+          <button className={styles.normalBtn} type="submit">
             Iniciar
           </button>
           <button className={styles.googleBtn}>
@@ -172,9 +168,9 @@ export default function Login() {
             Iniciar con Google
           </button>
         </section>
-        <section className=' flex justify-center text-blue pt-4'>
-          <Link href={'/register'}>
-          <h1>no tienes cuenta?</h1>
+        <section className=" flex justify-center text-blue pt-4">
+          <Link href={"/register"}>
+            <h1>no tienes cuenta?</h1>
           </Link>
         </section>
       </form>
