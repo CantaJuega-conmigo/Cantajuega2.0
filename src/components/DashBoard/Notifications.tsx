@@ -16,6 +16,7 @@ export default function Notifications() {
     refetchOnMountOrArgChange: 60000, ///cada 1 minuto revalidaremos  (si es que se abren las notis)
   });
 
+  //customHook para marcar como vista la notificasión
   const [updateNotification] = useUpdateNotificationMutation();
 
   const [show, setShow] = useState<boolean>(false);
