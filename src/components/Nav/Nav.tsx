@@ -11,8 +11,8 @@ import { HiOutlineMenu } from "react-icons/hi";
 import { useAppSelector } from "@/store/hooks";
 
 const Navbar = () => {
-  const user=useAppSelector(state=>state.userReducer.user)
-  const auth = user
+  const user = useAppSelector((state) => state.userReducer.user);
+  const auth = user;
   const items = [
     { name: "Nosotros", href: "/#Nosotros" },
     { name: "Metodología", href: "/#metodologia" },
@@ -80,20 +80,18 @@ const Navbar = () => {
     <nav
       id="NavMenu"
       className={`${styles.Container}  w-full h-[8rem]
-       lg:h-[9rem] flex flex-col  `}
-    >
+       lg:h-[9rem] flex flex-col  `}>
       <div
         className="w-full h-2/6 flex flex-col z-50
       min-[940px]:h-2/6 min-[940px]:flex min-[940px]:flex-col
-      landscape:min-[500px]:z-0"
-      >
+      landscape:min-[500px]:z-0">
         <Topnav />
       </div>
 
-      <div id="menucontainer"
+      <div
+        id="menucontainer"
         className="flex w-full h-4/6 items-center relative
-         min-[940px]:hidden  "
-      >
+         min-[940px]:hidden  ">
         <svg
           stroke="currentColor"
           fill="none"
@@ -105,16 +103,13 @@ const Navbar = () => {
           onClick={openMenu}
           height="1em"
           width="1em"
-          xmlns="http://www.w3.org/2000/svg"
-        >
+          xmlns="http://www.w3.org/2000/svg">
           {/*tuve que usar este modo xq el path interferia en el onclick al momento de usar el menu*/}
           <path
             id="menupath"
             strokeLinecap="round"
-             strokeLinejoin="round"
-          
-            d="M4 6h16M4 12h16M4 18h16"
-          ></path>
+            strokeLinejoin="round"
+            d="M4 6h16M4 12h16M4 18h16"></path>
         </svg>
 
         <Image
@@ -132,12 +127,10 @@ const Navbar = () => {
        min-[940px]:relative min-[940px]:left-0 min-[940px]:flex min-[940px]:justify-end min-[940px]:w-full min-[940px]:h-4/6 min-[940px]:bg-white
        md:w-6/12
        sm:w-6/12
-       text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl  2xl:text-3xl`}
-      >
+       text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl  2xl:text-3xl`}>
         <button
           onClick={openMenu}
-          className="absolute right-5  text-white text-4xl top-[10%] min-[940px]:hidden"
-        >
+          className="absolute right-5  text-white text-4xl top-[10%] min-[940px]:hidden">
           &lt;
         </button>
         <Link href={"/"}>
@@ -155,15 +148,13 @@ const Navbar = () => {
         <section
           id="MenuOptions"
           className=" flex flex-col justify-end items-center  h-full  
-          min-[940px]:w-full min-[940px]:flex min-[940px]:justify-end min-[940px]:flex-row"
-        >
+          min-[940px]:w-full min-[940px]:flex min-[940px]:justify-end min-[940px]:flex-row">
           <div
             className="  h-5/6  w-4/6 flex flex-col items-center justify-evenly 
              landscape:min-[500px]:h-full
              min-[940px]:w-[76%] min-[940px]:h-full min-[940px]:flex min-[940px]:flex-row 
              min-[940px]:items-center min-[940px]:justify-between
-             xl:w-[70%] 2xl:w-[73%] min-[1930px]:w-[70%]"
-          >
+             xl:w-[70%] 2xl:w-[73%] min-[1930px]:w-[70%]">
             {itemsauth.map((i, key) => (
               <article
                 key={key}
@@ -172,39 +163,20 @@ const Navbar = () => {
              ${
                auth && `min-[940px]:last:bg-orangeicons`
              }  min-[940px]:last:p-2 min-[940px]:last:rounded-xl 
-                max-[940px]  `}
-              >
+                max-[940px]  `}>
                 <button
                   className="border  relative font-fredoka font-semibold border-orangeicons w-4/5 max-w-[12rem] max-h-[4rem] flex
                 max-[940px]:bg-white 
                 min-[940px]:border-0 min-[940px]:w-auto min-[940px]:bg-auto
                 landscape:min-[500px]:h-5/6
-                "
-                >
+                ">
                   <Link
                     href={i.href}
                     onClick={closeMenu}
-                    className="  w-full h-full flex items-center justify-center"
-                  >
+                    className="  w-full h-full flex items-center justify-center">
                     {i.name}
                   </Link>
-                  {i.subhref && (
-                    <TiArrowDown className="absolute right-[40%] top-[100%] hidden min-[940px]:block " />
-                  )}
                 </button>
-                {i.subhref && (
-                  <button
-                    className="absolute  bg-white h-fit border rounded-lg hidden 
-                  min-[940px]:group-hover:block min-[940px]:h-full min-[940px]:top-[70%] "
-                  >
-                    <Link
-                      href={i.subhref}
-                      className="border border-orangeicons rounded-lg p-1"
-                    >
-                      Cuestionario
-                    </Link>
-                  </button>
-                )}
               </article>
             ))}
           </div>

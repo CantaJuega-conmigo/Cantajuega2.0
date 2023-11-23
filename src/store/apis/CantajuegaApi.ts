@@ -12,6 +12,7 @@ import {
   progressResquest,
   progressResquestMutation,
   responses,
+  Notification,
 } from "@/types";
 import { stage, stageWithChilds } from "@/types/Models/Stage.type";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
@@ -36,7 +37,7 @@ export const CantajuegaService = createApi({
       return fetch(input, { ...init, credentials: "include" }); ///esto incluira las cookies del servidor en cada respuesta y peticion.
     },
   }),
-  tagTypes: ['Progress', 'User', 'Child', 'Reports'],
+  tagTypes: ["Progress", "User", "Child", "Reports"],
 
   endpoints: (builder) => ({
     //aqui creamos funciones para comunicarse con los endpoints del back
@@ -45,13 +46,16 @@ export const CantajuegaService = createApi({
       query: ({ childs }) => (childs ? "stage?childs=yes" : "stage"), ///ruta /stage del back
       keepUnusedDataFor: 600, ///configuramos cada cuanto se elimina la cache
     }),
-    getStageById: builder.query<stage,  { childs?: boolean | null , id: string}>({
-      query: ({ childs, id }) => (childs ? `stage/${id}?childs=yes` : `stage/${id}`), ///ruta /stage del back
-      keepUnusedDataFor: 600, ///configuramos cada cuanto se elimina la cache
-      transformResponse: (response: responses<stage>, meta, arg) => {
-        return response.data![0];
-      },
-    }),
+    getStageById: builder.query<stage, { childs?: boolean | null; id: string }>(
+      {
+        query: ({ childs, id }) =>
+          childs ? `stage/${id}?childs=yes` : `stage/${id}`, ///ruta /stage del back
+        keepUnusedDataFor: 600, ///configuramos cada cuanto se elimina la cache
+        transformResponse: (response: responses<stage>, meta, arg) => {
+          return response.data![0];
+        },
+      }
+    ),
     //----------------------------------------------------------------------------------
     ///membresias
     getMembership: builder.query<responses<Membership>, null>({
@@ -100,12 +104,27 @@ export const CantajuegaService = createApi({
         try {
           const data = (await queryFulfilled).data.data; //en data viene informacion del usuario y el token
           const { user } = data![0];
-          const { id, firstName, lastName, email, Reports, MembershipId } =
-            user;
+          const {
+            id,
+            firstName,
+            lastName,
+            email,
+            Reports,
+            MembershipId,
+            is_Admin,
+          } = user;
           const UserChild = user.Children[0] ?? null;
           ///actualizamos nuestros estados globales
           dispatch(
-            setUser({ id, firstName, lastName, email, Reports, MembershipId })
+            setUser({
+              id,
+              firstName,
+              lastName,
+              email,
+              Reports,
+              MembershipId,
+              is_Admin,
+            })
           );
           dispatch(setChild(UserChild));
         } catch (err) {
@@ -118,17 +137,17 @@ export const CantajuegaService = createApi({
     getUsersWithReports: builder.query<responses<IUser>, string | null>({
       query: (id) => (id ? `/user/reports?id=${id}` : "/user/reports"),
       keepUnusedDataFor: 600,
-      providesTags: ['Reports'],
+      providesTags: ["Reports"],
     }),
 
     //Editar reportes
     editReport: builder.mutation({
       query: ({ id, Response }: { id: string; Response: string }) => ({
         url: `reports/${id}`,
-        method: 'PUT',
+        method: "PUT",
         body: { Response },
       }),
-      invalidatesTags: ['Reports'],
+      invalidatesTags: ["Reports"],
     }),
 
     //-----------------------------------------------
@@ -152,8 +171,8 @@ export const CantajuegaService = createApi({
       query: () => "child",
       keepUnusedDataFor: 600,
       transformResponse: (response: responses<Child>, meta) => {
-        return response.data!
-      }
+        return response.data!;
+      },
     }),
     //----------------------------
     ////obtener child por id
@@ -164,7 +183,7 @@ export const CantajuegaService = createApi({
         const { data } = (await queryFulfilled).data;
         const [child] = data!;
         dispatch(setChild(child));
-      }
+      },
     }),
     ///---------------------
     //obtener progresos del chic@
@@ -229,6 +248,13 @@ export const CantajuegaService = createApi({
       query: () => "/reports",
       keepUnusedDataFor: 600,
     }),
+    getNotifications: builder.query<Notification[], null>({
+      query: () => "/notifications",
+      keepUnusedDataFor: 600,
+      transformResponse: (response: responses<Notification>, meta) => {
+        return response.data!;
+      },
+    }),
   }),
 });
 
@@ -250,4 +276,5 @@ export const {
   useGetUsersWithReportsQuery,
   useGetUserbyIdQuery,
   useEditReportMutation,
+  useGetNotificationsQuery,
 } = CantajuegaService;
