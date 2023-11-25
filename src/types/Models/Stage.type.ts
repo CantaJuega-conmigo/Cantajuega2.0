@@ -39,3 +39,16 @@ export interface stage {
 export interface stageWithChilds extends stage{
   Children:Child[]
 }
+
+export interface stageEditMutation{
+  id:string,
+  name?: string,
+  description?: string,
+  minAge?: number,
+  maxAge?: number,
+  content?:content
+}
+export interface stageContentMutation {
+    id:string,
+    content:videos | music
+}
