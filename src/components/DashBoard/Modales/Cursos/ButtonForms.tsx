@@ -5,6 +5,7 @@ export default function ButtonForms({
 }: {
   openEditModal: (e: MouseEvent<HTMLButtonElement>) => void;
   startEdit: boolean;
+  onSubmit: (e : MouseEvent<HTMLFormElement>) => void;
 }) {
   return (
     <section className="flex gap-4 justify-center">
@@ -15,12 +16,12 @@ export default function ButtonForms({
         Cancelar
       </button>
       <button
-        type="button"
+        type="submit"
         disabled={!startEdit}
         className={` bg-green p-2 grow text-black font-bold rounded-xl hover:bg-orange hover:text-white ${
           !startEdit && "opacity-50 cursor-not-allowed"
         }`}
-        onClick={openEditModal}>
+       >
         Confirmar cambios
       </button>
     </section>

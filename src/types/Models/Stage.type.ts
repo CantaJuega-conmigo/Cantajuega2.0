@@ -48,7 +48,14 @@ export interface stageEditMutation{
   maxAge?: number,
   content?:content
 }
+export interface videosEditMutation extends videos{
+  id:string
+}
 export interface stageContentMutation {
     id:string,
-    content:videos | music
+    body:videos,
+    querys:{
+      content:'videos'|'musics',
+      order:videostypes
+    }
 }

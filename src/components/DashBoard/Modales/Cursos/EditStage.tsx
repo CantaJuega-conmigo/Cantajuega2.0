@@ -3,6 +3,7 @@ import BoxInfoLayout from "../../BoxInfoLayout";
 import LayoutModal from "../LayoutModal";
 import { MouseEvent, useState } from "react";
 import ButtonForms from "./ButtonForms";
+import { useUpdateStageMutation } from "@/store/apis/CantajuegaApi";
 export default function EditStage({
   openEditModal,
   stage,
@@ -13,6 +14,7 @@ export default function EditStage({
   const [data, setData] = useState<stage>(stage);
   const [dataCache, setDataCache] = useState<stage>(stage);
   const [startEdit, setStartEdit] = useState<boolean>(false);
+  const [updateStage, { isLoading }] = useUpdateStageMutation();
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     !startEdit && setStartEdit(true); // set startEdit to true if it's false
@@ -26,16 +28,26 @@ export default function EditStage({
       [name]: value,
     };
     setData((prev) => ({ ...prev, [name]: value }));
-    if (JSON.stringify(data) == JSON.stringify(dataCache)) {
+    if (JSON.stringify(newValue) == JSON.stringify(dataCache)) {
       // compare if the new value is the same as the old value
       setStartEdit(false);
     }
+  };
+  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    updateStage(data)
+      .unwrap()
+      .then(() => openEditModal(e as unknown as MouseEvent<HTMLButtonElement>))
+      .catch((err) =>
+        alert("Error al editar la etapa. Intenta de nuevo o contacta a joa :)")
+      );
   };
   return (
     <LayoutModal>
       <form
         action=""
-        className="w-5/12 bg-blue p-8 flex flex-col gap-4 rounded-xl shadow-lg  shadow-black ">
+        className="w-5/12 bg-blue p-8 flex flex-col gap-4 rounded-xl shadow-lg  shadow-black "
+        onSubmit={onSubmit}>
         <BoxInfoLayout title="Editar etapa" className="text-center">
           <article className=" grow flex flex-col ">
             <label htmlFor="">Edad minima</label>
@@ -69,7 +81,11 @@ export default function EditStage({
           </article>
         </BoxInfoLayout>
 
-        <ButtonForms startEdit={startEdit} openEditModal={openEditModal} />
+        <ButtonForms
+          startEdit={startEdit}
+          openEditModal={openEditModal}
+          onSubmit={onSubmit}
+        />
       </form>
     </LayoutModal>
   );
