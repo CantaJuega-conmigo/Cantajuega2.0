@@ -8,8 +8,7 @@ import YoutubePlayer from "@/components/YoutubePlayer/YoutubePlayer";
 import { useGetStageByIdQuery } from "@/store/apis/CantajuegaApi";
 import { videos } from "@/types/Models/Stage.type";
 import Link from "next/link";
-import { MouseEvent, useState } from "react";
-import { BiArrowToTop } from "react-icons/bi";
+import { MouseEvent, useState, FormEvent } from "react";
 import { BsArrowUp } from "react-icons/bs";
 
 export default function Page({ params }: { params: { id: string } }) {
@@ -24,7 +23,12 @@ export default function Page({ params }: { params: { id: string } }) {
   const [seeModal, setSeeModal] = useState<boolean>(false);
   const [editStage, setEditStage] = useState<boolean>(false);
   const [editContent, setEditContent] = useState<boolean>(false);
-  const openEditModal = (e: MouseEvent<HTMLButtonElement>) => {
+  const [typeOfContent, setTypeOfContent] = useState<"videos" | "musics">(
+    "videos"
+  );
+  const openEditModal = (
+    e: MouseEvent<HTMLButtonElement> | FormEvent<HTMLFormElement>
+  ) => {
     e.preventDefault();
     setEditStage(!editStage);
   };
@@ -43,17 +47,22 @@ export default function Page({ params }: { params: { id: string } }) {
     openForm(e);
     setActualVideo(data!);
   };
-  const openEditContent = (e: MouseEvent<HTMLButtonElement>,video?:videos) => {
+  const openEditContent = (
+    e: MouseEvent<HTMLButtonElement>,
+    video?: videos
+  ) => {
+    const value = e.currentTarget?.value ?? null;
     e.preventDefault();
     setEditContent(!editContent);
     setActualContent(video);
-  }
+    value && setTypeOfContent(value as "videos" | "musics");
+  };
   return (
     <>
       <BoxInfoLayout title={stage?.name!} className="w-8/12">
         <Boxinfo title="Descripcion" info={stage?.description} />
-        <Boxinfo title="Edad mínima" info={stage?.minAge.toString()} />
-        <Boxinfo title="Edad máxima" info={stage?.maxAge.toString()} />
+        <Boxinfo title="Edad mínima" info={stage?.minAge?.toString()} />
+        <Boxinfo title="Edad máxima" info={stage?.maxAge?.toString()} />
       </BoxInfoLayout>
       <button
         className=" flex items-center bg-blue text-white px-3 p-2 rounded-xl border  border-black text-sm"
@@ -73,7 +82,8 @@ export default function Page({ params }: { params: { id: string } }) {
                 </button>
                 <button
                   className=" bg-blue p-1 w-[5rem] rounded-2xl text-sm text-white"
-                  onClick={(e) => openEditContent(e,video)}>
+                  onClick={(e) => openEditContent(e, video)}
+                  value={"videos"}>
                   Editar
                 </button>
               </section>
@@ -81,7 +91,7 @@ export default function Page({ params }: { params: { id: string } }) {
           );
         })}
       </BoxInfoLayout>
-    
+
       <BoxInfoLayout title={"Alumnos"} className="w-8/12">
         <Boxinfo title="Total" info={stage?.Children?.length.toString()} />
         <Boxinfo title="Nombres">
@@ -103,7 +113,14 @@ export default function Page({ params }: { params: { id: string } }) {
       </BoxInfoLayout>
       {seeModal && <Modal actualVideo={actualVideo} openForm={openForm} />}
       {editStage && <EditStage openEditModal={openEditModal} stage={stage!} />}
-      {editContent && <EditContent  dataContent={actualContent!} openEditModal={openEditContent}/>}
+      {editContent && (
+        <EditContent
+          id={stage?.id!}
+          dataContent={actualContent!}
+          openEditModal={openEditContent}
+          typeOfContent={typeOfContent}
+        />
+      )}
     </>
   );
 }
