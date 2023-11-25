@@ -19,6 +19,8 @@ import {
   stage,
   stageEditMutation,
   stageWithChilds,
+  videos,
+  videosEditMutation,
 } from "@/types/Models/Stage.type";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { setUser } from "../userSlice";
@@ -42,7 +44,7 @@ export const CantajuegaService = createApi({
       return fetch(input, { ...init, credentials: "include" }); ///esto incluira las cookies del servidor en cada respuesta y peticion.
     },
   }),
-  tagTypes: ["Progress", "User", "Child", "Reports", "Notifications"],
+  tagTypes: ["Progress", "User", "Child", "Reports", "Notifications", "Stage"],
 
   endpoints: (builder) => ({
     //aqui creamos funciones para comunicarse con los endpoints del back
@@ -50,7 +52,9 @@ export const CantajuegaService = createApi({
     getStage: builder.query<responses<stage>, { childs?: boolean | null }>({
       query: ({ childs }) => (childs ? "stage?childs=yes" : "stage"), ///ruta /stage del back
       keepUnusedDataFor: 600, ///configuramos cada cuanto se elimina la cache
+      providesTags: ["Stage"],
     }),
+
     getStageById: builder.query<stage, { childs?: boolean | null; id: string }>(
       {
         query: ({ childs, id }) =>
@@ -59,6 +63,7 @@ export const CantajuegaService = createApi({
         transformResponse: (response: responses<stage>, meta, arg) => {
           return response.data![0];
         },
+        providesTags: ["Stage"],
       }
     ),
     //----------------------------------------------------------------------------------
@@ -273,6 +278,19 @@ export const CantajuegaService = createApi({
         const { id, ...body } = data;
         return { url: `stage/${id}`, method: "PUT", body };
       },
+      invalidatesTags: ["Stage"],
+    }),
+    updateContentStage: builder.mutation<stage, stageContentMutation>({
+      query: (data) => {
+        const { id,querys,body } = data;
+        const {content,order}=querys
+        return {
+          url: `stage/${id}?content=${content}&order=${order}`,
+          method: "PUT",
+          body,
+        };
+      },
+      invalidatesTags: ["Stage"],
     }),
   }),
 });
@@ -297,4 +315,6 @@ export const {
   useEditReportMutation,
   useGetNotificationsQuery,
   useUpdateNotificationMutation,
+  useUpdateStageMutation,
+  useUpdateContentStageMutation,
 } = CantajuegaService;
