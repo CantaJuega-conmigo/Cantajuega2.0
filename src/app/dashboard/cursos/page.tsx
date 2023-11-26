@@ -1,9 +1,6 @@
 "use client";
-import DashboardGrid from "@/components/DashBoard/DashBoardGrid";
-import Modal from "@/components/DashBoard/Modal";
-import RowColumn from "@/components/DashBoard/RowColumnDashboard";
 import { useGetStageQuery } from "@/store/apis/CantajuegaApi";
-import { stageWithChilds } from "@/types/Models/Stage.type";
+import Link from "next/link";
 import { MouseEvent, useState } from "react";
 
 export default function Page() {
@@ -38,37 +35,45 @@ export default function Page() {
   return (
     <>
       <h1>Cursoos</h1>
-      <RowColumn
-        className={" font-bold w-[94%] border-b border-black "}
-        numberOfColumns={"6"}
-        column1={{ text: "nombre" }}
-        column2={{ text: "Descripcion" }}
-        column3={{ text: "Edad min" }}
-        column4={{ text: "Edad max" }}
-        column5={{ text: "Total Alumnos" }}
-        column6={{ text: "  " }}
-      />
-      <section className="flex flex-col w-full gap-8 overflow-y-scroll   ">
-        {stages?.data?.map((stage,key:number) => (
-          <RowColumn
-            key={key}
-            numberOfColumns={"6"}
-            column1={{ text: stage.name }}
-            column2={{ text: stage.description }}
-            column3={{ text: stage.minAge.toString() }}
-            column4={{ text: stage.maxAge.toString() }}
-            column5={{text: stage.Children?.length.toString()!}}
-            linkColumn={{text:'mas informacion',linkto:`/dashboard/cursos/${stage.id}`}}
-            />
-        ))}
-      </section>     
+      <table className="text-center w-11/12 border border-black">
+        <thead className="bg-blue text-white border-b border-black">
+          <tr>
+            <th className="p-2">Nombre</th>
+            <th className="p-2">Descripción</th>
+            <th className="p-2">Edad Minima</th>
+            <th className="p-2">Edad Maxima</th>
+            <th className="p-2">Total alumnos</th>
+            <th className="p-2"></th>
+          </tr>
+        </thead>
+
+        <tbody>
+          {stages?.data?.map((stage, key: number) => (
+            <tr key={key}>
+              <td className="border border-blue p-2">{stage.name}</td>
+              <td className="border border-blue p-2">{stage.description}</td>
+              <td className="border border-blue p-2">{stage.minAge}</td>
+              <td className="border border-blue p-2">{stage.maxAge}</td>
+              <td className="border border-blue p-2">
+                {stage.Children?.length}
+              </td>
+              <td className="border border-blue p-2">
+                <Link href={`/dashboard/cursos/${stage.id}`}>
+                  <button className="bg-blue text-white p-1 text-sm rounded-xl">
+                    Ver mas
+                  </button>
+                </Link>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+
       <section className="w-full flex justify-center">
         <button className="bg-blue text-white p-2" onClick={openForm}>
           Crear una nueva etapa.
         </button>
       </section>
-     
-      
     </>
   );
 }

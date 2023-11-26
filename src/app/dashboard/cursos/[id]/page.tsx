@@ -4,6 +4,7 @@ import BoxInfoLayout from "@/components/DashBoard/BoxInfoLayout";
 import Modal from "@/components/DashBoard/Modal";
 import EditContent from "@/components/DashBoard/Modales/Cursos/EditContent";
 import EditStage from "@/components/DashBoard/Modales/Cursos/EditStage";
+import TableChilds from "@/components/DashBoard/Modales/Cursos/TableChilds";
 import YoutubePlayer from "@/components/YoutubePlayer/YoutubePlayer";
 import { useGetStageByIdQuery } from "@/store/apis/CantajuegaApi";
 import { videos } from "@/types/Models/Stage.type";
@@ -26,6 +27,7 @@ export default function Page({ params }: { params: { id: string } }) {
   const [typeOfContent, setTypeOfContent] = useState<"videos" | "musics">(
     "videos"
   );
+  const [seeChilds, setSeeChilds] = useState<boolean>(false);
   const openEditModal = (
     e: MouseEvent<HTMLButtonElement> | FormEvent<HTMLFormElement>
   ) => {
@@ -56,6 +58,10 @@ export default function Page({ params }: { params: { id: string } }) {
     setEditContent(!editContent);
     setActualContent(video);
     value && setTypeOfContent(value as "videos" | "musics");
+  };
+  const openChildModal = (e: MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    setSeeChilds(!seeChilds);
   };
   return (
     <>
@@ -95,22 +101,21 @@ export default function Page({ params }: { params: { id: string } }) {
       <BoxInfoLayout title={"Alumnos"} className="w-8/12">
         <Boxinfo title="Total" info={stage?.Children?.length.toString()} />
         <Boxinfo title="Nombres">
-          {stage?.Children?.map((child, key) => {
-            return (
-              <article key={key} className="flex  justify-center gap-2">
-                <p>
-                  {child?.firstName} {child?.lastName}{" "}
-                </p>
-                <Link href={`/dashboard/childs/${child?.id}`}>
-                  <button className=" bg-cream px-3 rounded-xl border  border-black text-sm">
-                    ver mas
-                  </button>
-                </Link>
-              </article>
-            );
-          })}
+          <section className="flex justify-around">
+            <button
+              className=" bg-blue p-1 w-[8rem] rounded-2xl text-sm text-white"
+              onClick={() => setSeeChilds(!seeChilds)}>
+              Ver Alumnos
+            </button>
+            <button className=" bg-blue p-1 w-[8rem] rounded-2xl text-sm text-white">
+              Agregar alumno.
+            </button>
+          </section>
         </Boxinfo>
       </BoxInfoLayout>
+      {seeChilds && (
+        <TableChilds childrens={stage?.Children!} closeModal={openChildModal} />
+      )}
       {seeModal && <Modal actualVideo={actualVideo} openForm={openForm} />}
       {editStage && <EditStage openEditModal={openEditModal} stage={stage!} />}
       {editContent && (
