@@ -87,7 +87,7 @@ export default function EditContent({
               <span>Actual url:</span>
               <i>
                 <a
-                  href={`https://www.youtube.com/watch?v=${contentCache.content}`}
+                  href={contentCache.content}
                   target="_blank"
                   className="underline text-violet">
                   ir al video
