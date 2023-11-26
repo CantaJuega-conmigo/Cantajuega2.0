@@ -23,7 +23,7 @@ export default function Page (){
       </thead>
       <tbody>
         { memberships?.data?.map((membership) =>  (
-          <tr>
+          <tr key={membership.id}>
             <td className="border border-blue p-2">{membership.name}</td>
             <td className="border border-blue p-2">{membership.description}</td>
             <td className="border border-blue p-2">{membership.recurrenteId}</td>

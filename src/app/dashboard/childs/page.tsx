@@ -20,7 +20,7 @@ export default function Page() {
         </thead>
         <tbody>
           {childs?.map((child) => (
-            <tr>
+            <tr key={child.id}>
               <td className="border border-blue p-2">{child.firstName}</td>
               <td className="border border-blue p-2">{child.gender}</td>
               <td className="border border-blue p-2">{child.lastName}</td>
