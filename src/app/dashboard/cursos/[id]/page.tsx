@@ -2,13 +2,13 @@
 import Boxinfo from "@/components/DashBoard/BoxInfo";
 import BoxInfoLayout from "@/components/DashBoard/BoxInfoLayout";
 import Modal from "@/components/DashBoard/Modal";
+import AddChildsModal from "@/components/DashBoard/Modales/Cursos/AddChildsModal";
 import EditContent from "@/components/DashBoard/Modales/Cursos/EditContent";
 import EditStage from "@/components/DashBoard/Modales/Cursos/EditStage";
 import TableChilds from "@/components/DashBoard/Modales/Cursos/TableChilds";
-import YoutubePlayer from "@/components/YoutubePlayer/YoutubePlayer";
+import LayoutModal from "@/components/DashBoard/Modales/LayoutModal";
 import { useGetStageByIdQuery } from "@/store/apis/CantajuegaApi";
 import { videos } from "@/types/Models/Stage.type";
-import Link from "next/link";
 import { MouseEvent, useState, FormEvent } from "react";
 import { BsArrowUp } from "react-icons/bs";
 
@@ -28,6 +28,7 @@ export default function Page({ params }: { params: { id: string } }) {
     "videos"
   );
   const [seeChilds, setSeeChilds] = useState<boolean>(false);
+  const [addChildModal, setAddChildModal] = useState<boolean>(false);
   const openEditModal = (
     e: MouseEvent<HTMLButtonElement> | FormEvent<HTMLFormElement>
   ) => {
@@ -62,6 +63,10 @@ export default function Page({ params }: { params: { id: string } }) {
   const openChildModal = (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     setSeeChilds(!seeChilds);
+  };
+  const openAddChildModal = (e: MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    setAddChildModal(!addChildModal);
   };
   return (
     <>
@@ -107,17 +112,30 @@ export default function Page({ params }: { params: { id: string } }) {
               onClick={() => setSeeChilds(!seeChilds)}>
               Ver Alumnos
             </button>
-            <button className=" bg-blue p-1 w-[8rem] rounded-2xl text-sm text-white">
+            <button
+              className=" bg-blue p-1 w-[8rem] rounded-2xl text-sm text-white"
+              onClick={openAddChildModal}>
               Agregar alumno.
             </button>
           </section>
         </Boxinfo>
       </BoxInfoLayout>
       {seeChilds && (
-        <TableChilds childrens={stage?.Children!} closeModal={openChildModal} />
+        <LayoutModal>
+          <TableChilds
+            childrens={stage?.Children!}
+            closeModal={openChildModal}
+          />
+        </LayoutModal>
       )}
       {seeModal && <Modal actualVideo={actualVideo} openForm={openForm} />}
       {editStage && <EditStage openEditModal={openEditModal} stage={stage!} />}
+      {addChildModal && (
+        <AddChildsModal
+          openAddChildModal={openAddChildModal}
+          stageId={stage?.id!}
+        />
+      )}
       {editContent && (
         <EditContent
           id={stage?.id!}

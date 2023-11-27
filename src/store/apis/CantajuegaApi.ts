@@ -177,12 +177,13 @@ export const CantajuegaService = createApi({
     }),
     //-----------------------------
     ///obtener todos los childs
-    getChild: builder.query<Child[], null>({
-      query: () => "child",
+    getChild: builder.query<Child[], null | { name: string; value: string }>({
+      query: (query) => (query ? `child?${query.name}=stages` : "child"),
       keepUnusedDataFor: 600,
       transformResponse: (response: responses<Child>, meta) => {
         return response.data!;
       },
+      providesTags: ["Child"],
     }),
     //----------------------------
     ////obtener child por id
@@ -282,8 +283,8 @@ export const CantajuegaService = createApi({
     }),
     updateContentStage: builder.mutation<stage, stageContentMutation>({
       query: (data) => {
-        const { id,querys,body } = data;
-        const {content,order}=querys
+        const { id, querys, body } = data;
+        const { content, order } = querys;
         return {
           url: `stage/${id}?content=${content}&order=${order}`,
           method: "PUT",
@@ -291,6 +292,16 @@ export const CantajuegaService = createApi({
         };
       },
       invalidatesTags: ["Stage"],
+    }),
+    addChildInStage: builder.mutation<
+      stage,
+      { id: string; body: { childId: string } }
+    >({
+      query: (data) => {
+        const { id, body } = data;
+        return { url: `stage/${id}?action=addChild`, method: "PATCH", body };
+      },
+      invalidatesTags: ["Stage", "Child"],
     }),
   }),
 });
@@ -317,4 +328,5 @@ export const {
   useUpdateNotificationMutation,
   useUpdateStageMutation,
   useUpdateContentStageMutation,
+  useAddChildInStageMutation
 } = CantajuegaService;
