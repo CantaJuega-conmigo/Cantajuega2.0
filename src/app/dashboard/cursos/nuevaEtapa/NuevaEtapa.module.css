@@ -1,0 +1,29 @@
+.inputContainer {
+  display: flex;
+  flex-direction: column;
+}
+
+.sectionAge {
+  display: flex;
+  column-gap: 10px;
+}
+
+.addNewSong {
+  padding: 10px;
+  border-radius: 10px;
+  background-color: rgb(113, 136, 178);
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  -ms-border-radius: 10px;
+  -o-border-radius: 10px;
+}
+
+.btnSubmit {
+  padding: 10px;
+  background-color: #26798e;
+  border-radius: 10px;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  -ms-border-radius: 10px;
+  -o-border-radius: 10px;
+}
