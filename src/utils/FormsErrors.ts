@@ -38,13 +38,8 @@ interface BodyStage {
   maxAge: number;
   content: {
     pdf?: { name: string; content: string };
-    videos: [
-      { order: 'First_Video'; title: string; content: string },
-      { order: 'Second_Video'; title: string; content: string },
-      { order: 'Third_Video'; title: string; content: string },
-      { order: 'Fourth_Video'; title: string; content: string },
-      { order: 'Final_Video'; title: string; content: string }
-    ];
+    videos: any[];
+    musics: null[];
   };
 }
 
