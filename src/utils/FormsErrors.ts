@@ -34,8 +34,8 @@ export interface InputChilds {
 interface BodyStage {
   name: string;
   description: string;
-  minAge: number;
-  maxAge: number;
+  minAge: any;
+  maxAge: any;
   content: {
     pdf?: { name: string; content: string };
     videos: any[];
@@ -192,27 +192,34 @@ export const createStageErrors = (body: BodyStage): ErrorsStage => {
     maxAge: '',
   };
   if (
-    !body.name ||
-    !body.description ||
-    !body.minAge ||
-    !body.maxAge ||
-    body.content.videos.length < 5
+    !name ||
+    !description ||
+    !minAge ||
+    !maxAge ||
+    content.videos.length < 5
   ) {
     errors.global = 'Todos los campos son obligatorios menos los de pdf';
   }
 
+  if (!name.length) errors.stageName = 'No puede estar vacio';
   if (name.length < 3) errors.stageName = 'Minimo 3 caracteres';
   if (name.length > 25) errors.stageName = 'Maximo 25 caracteres';
 
+  if (!description.length) errors.stageDescription = 'No puede estar vacio';
   if (description.length < 3) errors.stageDescription = 'Minimo 3 caracteres';
   if (description.length > 25) errors.stageDescription = 'Maximo 25 caracteres';
 
-  if (minAge === maxAge) {
-    errors.minAge = 'No pueden ser iguales';
-    errors.maxAge = 'No pueden ser iguales';
+  if (!minAge) errors.minAge = 'No puede estar vacio';
+  if (parseInt(minAge) > parseInt(maxAge))
+    errors.minAge = 'No puede ser mayor que la máxima';
+
+  if (!maxAge) errors.maxAge = 'No puede estar vacio';
+  if (parseInt(maxAge) < parseInt(minAge))
+    errors.maxAge = 'No puede ser menor que la minima';
+  if (minAge && maxAge && parseInt(minAge) === parseInt(maxAge)) {
+    errors.minAge = 'No puede ser igual a la minima';
+    errors.maxAge = 'No puede ser igual a la minima';
   }
-  if (minAge > maxAge) errors.minAge = 'No puede ser mayor que la máxima';
-  if (maxAge < minAge) errors.maxAge = 'No puede ser menor que la minima';
 
   return errors;
 };
