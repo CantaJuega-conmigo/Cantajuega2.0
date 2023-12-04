@@ -1,29 +1,141 @@
+.createContainer {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  height: calc(100% - 10px);
+  overflow: auto;
+  padding: 10px;
+}
+
+.form {
+  max-width: 600px;
+  width: 100%;
+  height: fit-content;
+  padding: 10px 20px;
+  border-radius: 15px;
+  background-color: rgb(151, 179, 228);
+  -webkit-border-radius: 15px;
+  -moz-border-radius: 15px;
+  -ms-border-radius: 15px;
+  -o-border-radius: 15px;
+}
+
+.firstSection {
+  border-radius: 10px;
+  padding: 5px;
+  background-color: #c6e0f5;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  -ms-border-radius: 10px;
+  -o-border-radius: 10px;
+  margin-bottom: 10px;
+}
+
 .inputContainer {
   display: flex;
   flex-direction: column;
+  align-items: center;
+}
+
+.inputContainer input {
+  max-width: 400px;
+  width: 100%;
+  padding: 10px;
+  border-radius: 10px;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  -ms-border-radius: 10px;
+  -o-border-radius: 10px;
+  font-size: 15px;
+}
+
+.sectionPdf {
+  border-radius: 10px;
+  padding: 10px;
+  padding-bottom: 20px;
+  background-color: #c6e0f5;
 }
 
 .sectionAge {
   display: flex;
-  column-gap: 10px;
+  column-gap: 20px;
+  justify-content: center;
+  text-align: center;
+}
+.sectionAge input {
+  min-width: 80px;
+  max-width: 150px;
+  width: 100%;
+  text-align: center;
 }
 
-.addNewSong {
+.musicsContainer {
+  margin-top: 10px;
   padding: 10px;
   border-radius: 10px;
-  background-color: rgb(113, 136, 178);
+  background-color: #c6e0f5;
   -webkit-border-radius: 10px;
   -moz-border-radius: 10px;
   -ms-border-radius: 10px;
   -o-border-radius: 10px;
+}
+
+.errorsContainer {
+  min-height: 20px;
+}
+.globalError {
+  position: relative;
+  margin-left: 10px;
+  font-size: 16px;
+  color: #bbee99;
+}
+.globalError svg {
+  font-size: 24px;
+  color: inherit;
+}
+.error {
+  font-size: 14px;
+  color: #f00;
+}
+
+.btnContainer {
+  display: flex;
+  justify-content: center;
+  width: 100%;
 }
 
 .btnSubmit {
+  position: relative;
+  margin-top: 10px;
+  min-width: 150px;
+  width: 150px;
+  height: 50px;
   padding: 10px;
-  background-color: #26798e;
-  border-radius: 10px;
-  -webkit-border-radius: 10px;
-  -moz-border-radius: 10px;
-  -ms-border-radius: 10px;
-  -o-border-radius: 10px;
+  text-align: center;
+  text-decoration: none;
+  outline: none;
+  background-color: #f1d245;
+  color: #000;
+  border: none;
+  border-radius: 15px;
+  box-shadow: 0 4px #999;
+}
+
+.btnSubmit svg {
+  position: absolute;
+  left: 58px;
+  bottom: 5px;
+}
+
+.btnSubmit:hover {
+  background-color: #87fb3a;
+}
+.btnSubmit:active {
+  background-color: #87fb3a;
+  box-shadow: 0 2px #999;
+  transform: translateY(2px);
+  -webkit-transform: translateY(2px);
+  -moz-transform: translateY(2px);
+  -ms-transform: translateY(2px);
+  -o-transform: translateY(2px);
 }
