@@ -8,29 +8,15 @@ import styles from '../../../styles/Cancionero.module.css'
 import { IoMdDownload } from "react-icons/io";
 import MusicsPlayers from "../../../components/MusicPlayer/MusicsPlayers";
 import { useAppSelector } from "@/store/hooks";
+import { useGetPlayListQuery } from "@/store/apis/CantajuegaApi";
 
 
 
 export default function Cancionero(){
     const user=useAppSelector(state=>state.userReducer.user)
+    const {isLoading,data:playList,isError}=useGetPlayListQuery(null)
     const isAuth= user
 
-
-    const fakeaudios=[
-        {cancion:'1',url:'https://res.cloudinary.com/daekdf1sh/video/upload/v1684967568/Wiz_Khalifa_Black_And_Yellow_GMix_ft_Snoop_Dogg_Juicy_J_TPain_ocicnm.mp3'},
-        {cancion:'2',url:'https://res.cloudinary.com/daekdf1sh/video/upload/v1684982450/Drake_GODS_PLAN_rekoav.mp3'},
-        {cancion:'3',url:'https://res.cloudinary.com/daekdf1sh/video/upload/v1684982471/Eminem_Lose_Yourself_jvueah.mp3'},
-        {cancion:'4',url:'https://res.cloudinary.com/daekdf1sh/video/upload/v1684982550/Foster_The_People_Pumped_Up_Kicks_tcdrup.mp3'},
-        {cancion:'5',url:'https://res.cloudinary.com/daekdf1sh/video/upload/v1684982590/Jack_Stauber_Buttercup_ndqobo.mp3'},
-        {cancion:'6',url:'https://res.cloudinary.com/daekdf1sh/video/upload/v1684982550/Foster_The_People_Pumped_Up_Kicks_tcdrup.mp3'},
-        {cancion:'7',url:'https://res.cloudinary.com/daekdf1sh/video/upload/v1684982590/Jack_Stauber_Buttercup_ndqobo.mp3'},
-        {cancion:'8',url:'https://res.cloudinary.com/daekdf1sh/video/upload/v1684982550/Foster_The_People_Pumped_Up_Kicks_tcdrup.mp3'},
-        {cancion:'9',url:'https://res.cloudinary.com/daekdf1sh/video/upload/v1684982590/Jack_Stauber_Buttercup_ndqobo.mp3'}
-    ]
-  // const seeUser=()=>{
-  //   console.log(actualuser);
-    
-  // }
     return (
         <div id="CancioneroPage" className={` relative bg-white ${styles.Container}`} >
           
@@ -53,7 +39,7 @@ export default function Cancionero(){
 
                 { isAuth&&
               <section className=" w-full h-[20rem] sm:h-[30rem] md:w-6/12  md:h-auto">
-                  <MusicsPlayers Musics={fakeaudios}/>
+                  <MusicsPlayers Musics={playList?.Music!}/>
               </section>}
 
              <section className={`${isAuth?` flex flex-col w-full md:w-6/12 `:
@@ -125,8 +111,6 @@ export default function Cancionero(){
                  </article>
                     }
           </div>
-          {/* <button onClick={loginfalso}>Vista de logueado</button>
-          <button onClick={seeUser}>ver usuario actual</button> */}
         </div>
     )
 }
