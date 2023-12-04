@@ -21,3 +21,5 @@ export type { IReport, IUser } from "./Reports";
 export type { ColumnGrid, column, dataOfTotalColumn } from "./dashboard";
 export type { Notification } from "./Models/Notification.type";
 export type { stageContentMutation ,stageEditMutation} from "./Models/Stage.type";
+export type {Music} from './Models/Music.type';
+export type {PlayList} from './Models/PlayList.type';
