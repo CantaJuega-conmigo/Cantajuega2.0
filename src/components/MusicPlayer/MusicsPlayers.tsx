@@ -128,11 +128,11 @@ export default function MusicsPlayers({ Musics }: { Musics: Music[] }) {
   return (
     <div
       className={`${styles.LoggedContainer} border  w-full h-full overflow-x-auto flex justify-center  `}>
-      <ul className=" flex flex-col  w-full items-center ">
+      <ul className=" flex flex-col  w-full items-center gap-8 ">
         {Musics?.map((i: Music, key) => (
           <div
             key={key}
-            className=" bg-[#FFFFFF] flex max-w-[28rem] w-full sm:w-11/12 h-[4rem]  items-center relative  mt-8 mb-8">
+            className=" bg-[#FFFFFF] flex max-w-[28rem] w-full sm:w-11/12 h-[4rem]  items-center relative  ">
             <section
               className="h-[4rem] p-1 w-4/12 flex items-center rounded-xl justify-center"
               style={{ backgroundColor: [...colors, ...colors][key] }}>
