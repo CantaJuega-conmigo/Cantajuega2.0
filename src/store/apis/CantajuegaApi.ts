@@ -14,26 +14,27 @@ import {
   responses,
   stageContentMutation,
   Notification,
-} from '@/types';
+  PlayList,
+} from "@/types";
 import {
   stage,
   stageEditMutation,
   stageWithChilds,
   videos,
   videosEditMutation,
-} from '@/types/Models/Stage.type';
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { setUser } from '../userSlice';
-import { setChild } from '../childSlice';
-import { setProgress, setActualProgress } from '../child_progress_slice';
-import { Membership } from '@/types/Models/Membership.type';
+} from "@/types/Models/Stage.type";
+import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { setUser } from "../userSlice";
+import { setChild } from "../childSlice";
+import { setProgress, setActualProgress } from "../child_progress_slice";
+import { Membership } from "@/types/Models/Membership.type";
 
 interface id {
   id: number;
 }
 
 export const CantajuegaService = createApi({
-  reducerPath: 'Cantajuegapi', //nombre del estado/cache
+  reducerPath: "Cantajuegapi", //nombre del estado/cache
 
   baseQuery: fetchBaseQuery({
     baseUrl: process.env.NEXT_PUBLIC_API_URL, ///url a donde se hacen las peticiones
@@ -41,18 +42,26 @@ export const CantajuegaService = createApi({
       return headers;
     },
     fetchFn: (input, init) => {
-      return fetch(input, { ...init, credentials: 'include' }); ///esto incluira las cookies del servidor en cada respuesta y peticion.
+      return fetch(input, { ...init, credentials: "include" }); ///esto incluira las cookies del servidor en cada respuesta y peticion.
     },
   }),
-  tagTypes: ['Progress', 'User', 'Child', 'Reports', 'Notifications', 'Stage'],
+  tagTypes: [
+    "Progress",
+    "User",
+    "Child",
+    "Reports",
+    "Notifications",
+    "Stage",
+    "PlayList",
+  ],
 
   endpoints: (builder) => ({
     //aqui creamos funciones para comunicarse con los endpoints del back
     ///etapas/cursos
     getStage: builder.query<responses<stage>, { childs?: boolean | null }>({
-      query: ({ childs }) => (childs ? 'stage?childs=yes' : 'stage'), ///ruta /stage del back
+      query: ({ childs }) => (childs ? "stage?childs=yes" : "stage"), ///ruta /stage del back
       keepUnusedDataFor: 600, ///configuramos cada cuanto se elimina la cache
-      providesTags: ['Stage'],
+      providesTags: ["Stage"],
     }),
 
     getStageById: builder.query<stage, { childs?: boolean | null; id: string }>(
@@ -63,32 +72,32 @@ export const CantajuegaService = createApi({
         transformResponse: (response: responses<stage>, meta, arg) => {
           return response.data![0];
         },
-        providesTags: ['Stage'],
+        providesTags: ["Stage"],
       }
     ),
     createStage: builder.mutation({
       query: (body) => ({
         url: `stage`,
-        method: 'POST',
+        method: "POST",
         body,
       }),
-      invalidatesTags: ['Stage'],
+      invalidatesTags: ["Stage"],
     }),
     //----------------------------------------------------------------------------------
     ///membresias
     getMembership: builder.query<responses<Membership>, null>({
-      query: () => 'membership', ///ruta /membership del back
+      query: () => "membership", ///ruta /membership del back
       keepUnusedDataFor: 600, ///configuramos cada cuanto se elimina la cache
     }),
     getAllUsers: builder.query<responses<User>, null>({
-      query: () => 'user',
+      query: () => "user",
       keepUnusedDataFor: 600, ///configuramos cada cuanto se elimina la cache
       transformResponse: (response: responses<User>, meta) => {
         response.data?.forEach(
           (i) =>
             (i.email_verified = i.email_verified
-              ? 'verificado'
-              : 'no verificado')
+              ? "verificado"
+              : "no verificado")
         );
         return response!;
       },
@@ -99,8 +108,8 @@ export const CantajuegaService = createApi({
       transformResponse: (response: responses<User>, meta) => {
         ///achicamos la respuesta de la api
         response.data![0].email_verified = response.data![0].email_verified
-          ? 'verificado'
-          : 'no verificado';
+          ? "verificado"
+          : "no verificado";
         return response.data![0];
       },
     }),
@@ -115,7 +124,7 @@ export const CantajuegaService = createApi({
     //----------------------------------------------------------------------------------
     //authenticacion
     auth: builder.query<responses<authUser>, null>({
-      query: () => '/user/auth',
+      query: () => "/user/auth",
       keepUnusedDataFor: 600,
       async onQueryStarted(id, { dispatch, queryFulfilled }) {
         //es lo que hara con la respuesta
@@ -153,27 +162,27 @@ export const CantajuegaService = createApi({
     }),
     //Obtener solo los users que tienen reportes
     getUsersWithReports: builder.query<responses<IUser>, string | null>({
-      query: (id) => (id ? `/user/reports?id=${id}` : '/user/reports'),
+      query: (id) => (id ? `/user/reports?id=${id}` : "/user/reports"),
       keepUnusedDataFor: 600,
-      providesTags: ['Reports'],
+      providesTags: ["Reports"],
     }),
 
     //Editar reportes
     editReport: builder.mutation({
       query: ({ id, Response }: { id: string; Response: string }) => ({
         url: `reports/${id}`,
-        method: 'PUT',
+        method: "PUT",
         body: { Response },
       }),
-      invalidatesTags: ['Reports'],
+      invalidatesTags: ["Reports"],
     }),
 
     //-----------------------------------------------
     //deslogueo
     logOut: builder.mutation({
       query: ({}) => ({
-        url: 'user/logout',
-        method: 'POST',
+        url: "user/logout",
+        method: "POST",
         body: {},
       }),
       async onQueryStarted(none, { dispatch, queryFulfilled }) {
@@ -181,17 +190,17 @@ export const CantajuegaService = createApi({
         const response: responses<null> = (await queryFulfilled).data;
         alert(response.message);
       },
-      invalidatesTags: ['Child', 'Progress', 'User'],
+      invalidatesTags: ["Child", "Progress", "User"],
     }),
     //-----------------------------
     ///obtener todos los childs
     getChild: builder.query<Child[], null | { name: string; value: string }>({
-      query: (query) => (query ? `child?${query.name}=stages` : 'child'),
+      query: (query) => (query ? `child?${query.name}=stages` : "child"),
       keepUnusedDataFor: 600,
       transformResponse: (response: responses<Child>, meta) => {
         return response.data!;
       },
-      providesTags: ['Child'],
+      providesTags: ["Child"],
     }),
     //----------------------------
     ////obtener child por id
@@ -209,7 +218,7 @@ export const CantajuegaService = createApi({
     getProgressChild: builder.query<responses<progress>, progressResquest>({
       query: ({ ProgressId }) => `progress/${ProgressId}`,
       keepUnusedDataFor: 600,
-      providesTags: ['Progress'],
+      providesTags: ["Progress"],
       async onQueryStarted(any, { dispatch, queryFulfilled }) {
         const { data } = (await queryFulfilled).data;
         const [progress] = data!;
@@ -225,10 +234,10 @@ export const CantajuegaService = createApi({
       query: ({ ProgressId, select }) =>
         `progress/${ProgressId}?select=${select}`,
       keepUnusedDataFor: 600,
-      providesTags: ['Progress'],
+      providesTags: ["Progress"],
       async onQueryStarted(none, { dispatch, queryFulfilled }) {
         try {
-          console.log('en try front');
+          console.log("en try front");
           const { data } = (await queryFulfilled).data;
           const [progress] = data!;
           dispatch(setActualProgress(progress));
@@ -246,31 +255,31 @@ export const CantajuegaService = createApi({
         newprogress,
       }: progressResquestMutation) => ({
         url: `progress/${ProgressId}?select=${select}`,
-        method: 'PUT',
+        method: "PUT",
         body: newprogress,
       }),
-      invalidatesTags: ['Progress'],
+      invalidatesTags: ["Progress"],
     }),
     //------------------------------------------------
     //actualizar el progreso del pdf(para cuando se mire el pdf)
     updatePdfProgressStatus: builder.mutation({
       query: ({ ProgressId, Pdf_Viewed }: progressPdfUpdateMutation) => ({
         url: `progress/${ProgressId}`,
-        method: 'PUT',
+        method: "PUT",
         body: Pdf_Viewed,
       }),
-      invalidatesTags: ['Progress'],
+      invalidatesTags: ["Progress"],
     }),
     /*---------------------------------------------------------*/
     //Obtener todos los reportes
     getReports: builder.query<responses<IReport>, null>({
-      query: () => '/reports',
+      query: () => "/reports",
       keepUnusedDataFor: 600,
     }),
     getNotifications: builder.query<Notification[], null>({
-      query: () => '/notifications',
+      query: () => "/notifications",
       keepUnusedDataFor: 600,
-      providesTags: ['Notifications'],
+      providesTags: ["Notifications"],
       transformResponse: (response: responses<Notification>, meta) => {
         return response.data!;
       },
@@ -278,16 +287,16 @@ export const CantajuegaService = createApi({
     updateNotification: builder.mutation({
       query: (id: string) => ({
         url: `notifications/${id}`,
-        method: 'PATCH',
+        method: "PATCH",
       }),
-      invalidatesTags: ['Notifications'],
+      invalidatesTags: ["Notifications"],
     }),
     updateStage: builder.mutation<stage, stageEditMutation>({
       query: (data) => {
         const { id, ...body } = data;
-        return { url: `stage/${id}`, method: 'PUT', body };
+        return { url: `stage/${id}`, method: "PUT", body };
       },
-      invalidatesTags: ['Stage'],
+      invalidatesTags: ["Stage"],
     }),
     updateContentStage: builder.mutation<stage, stageContentMutation>({
       query: (data) => {
@@ -295,11 +304,11 @@ export const CantajuegaService = createApi({
         const { content, order } = querys;
         return {
           url: `stage/${id}?content=${content}&order=${order}`,
-          method: 'PUT',
+          method: "PUT",
           body,
         };
       },
-      invalidatesTags: ['Stage'],
+      invalidatesTags: ["Stage"],
     }),
     addChildInStage: builder.mutation<
       stage,
@@ -307,9 +316,33 @@ export const CantajuegaService = createApi({
     >({
       query: (data) => {
         const { id, body } = data;
-        return { url: `stage/${id}?action=addChild`, method: 'PATCH', body };
+        return { url: `stage/${id}?action=addChild`, method: "PATCH", body };
       },
-      invalidatesTags: ['Stage', 'Child'],
+      invalidatesTags: ["Stage", "Child"],
+    }),
+    getPlayList: builder.query<PlayList, null>({
+      query: () => "music/playlist",
+      keepUnusedDataFor: 600,
+      transformResponse: (response: responses<PlayList>, meta) => {
+        return response.data![0];
+      },
+      providesTags: ["PlayList"],
+    }),
+    createPlayList: builder.mutation<PlayList, { name: string }>({
+      query: (data) => ({
+        url: "music/playlist",
+        method: "POST",
+        body: data,
+      }),
+      invalidatesTags: ["PlayList"],
+    }),
+    addMusicInPlayList: builder.mutation<{ message: string }, FormData>({
+      query: (data) => ({
+        url: `music`,
+        method: "POST",
+        body: data,
+      }),
+      invalidatesTags: ["PlayList"],
     }),
   }),
 });
@@ -338,4 +371,7 @@ export const {
   useUpdateContentStageMutation,
   useAddChildInStageMutation,
   useCreateStageMutation,
+  useGetPlayListQuery,
+  useCreatePlayListMutation,
+  useAddMusicInPlayListMutation,
 } = CantajuegaService;
