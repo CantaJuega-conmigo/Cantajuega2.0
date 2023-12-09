@@ -14,6 +14,7 @@ import {
   responses,
   stageContentMutation,
   Notification,
+  PlayList,
 } from "@/types";
 import {
   stage,
@@ -44,7 +45,15 @@ export const CantajuegaService = createApi({
       return fetch(input, { ...init, credentials: "include" }); ///esto incluira las cookies del servidor en cada respuesta y peticion.
     },
   }),
-  tagTypes: ["Progress", "User", "Child", "Reports", "Notifications", "Stage"],
+  tagTypes: [
+    "Progress",
+    "User",
+    "Child",
+    "Reports",
+    "Notifications",
+    "Stage",
+    "PlayList",
+  ],
 
   endpoints: (builder) => ({
     //aqui creamos funciones para comunicarse con los endpoints del back
@@ -66,6 +75,14 @@ export const CantajuegaService = createApi({
         providesTags: ["Stage"],
       }
     ),
+    createStage: builder.mutation({
+      query: (body) => ({
+        url: `stage`,
+        method: "POST",
+        body,
+      }),
+      invalidatesTags: ["Stage"],
+    }),
     //----------------------------------------------------------------------------------
     ///membresias
     getMembership: builder.query<responses<Membership>, null>({
@@ -303,6 +320,30 @@ export const CantajuegaService = createApi({
       },
       invalidatesTags: ["Stage", "Child"],
     }),
+    getPlayList: builder.query<PlayList, null>({
+      query: () => "music/playlist",
+      keepUnusedDataFor: 600,
+      transformResponse: (response: responses<PlayList>, meta) => {
+        return response.data![0];
+      },
+      providesTags: ["PlayList"],
+    }),
+    createPlayList: builder.mutation<PlayList, { name: string }>({
+      query: (data) => ({
+        url: "music/playlist",
+        method: "POST",
+        body: data,
+      }),
+      invalidatesTags: ["PlayList"],
+    }),
+    addMusicInPlayList: builder.mutation<{ message: string }, FormData>({
+      query: (data) => ({
+        url: `music`,
+        method: "POST",
+        body: data,
+      }),
+      invalidatesTags: ["PlayList"],
+    }),
   }),
 });
 
@@ -328,5 +369,9 @@ export const {
   useUpdateNotificationMutation,
   useUpdateStageMutation,
   useUpdateContentStageMutation,
-  useAddChildInStageMutation
+  useAddChildInStageMutation,
+  useCreateStageMutation,
+  useGetPlayListQuery,
+  useCreatePlayListMutation,
+  useAddMusicInPlayListMutation,
 } = CantajuegaService;
