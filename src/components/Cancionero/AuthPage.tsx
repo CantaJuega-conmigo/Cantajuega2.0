@@ -1,13 +1,14 @@
 import { useGetPlayListQuery } from "@/store/apis/CantajuegaApi";
 import MusicsPlayers from "../MusicPlayer/MusicsPlayers";
-import NormalPage from "./NormalPage";
 import bg from "../../../public/img/Untitled_Artwork-3-1.png";
-
 import Image from "next/image";
 import { IoMdDownload } from "react-icons/io";
-
-export default function AuthPage() {
-  const { isLoading, data: playList, isError } = useGetPlayListQuery(null);
+import { Music } from "@/types";
+export default function AuthPage({
+  playList,
+}: {
+  playList: { Music: Music[] };
+}) {
   return (
     <div className="flex md:flex-row flex-col h-screen  ">
       <section className=" w-full md:w-6/12 max-h-[20rem] md:max-h-full flex flex-col ">

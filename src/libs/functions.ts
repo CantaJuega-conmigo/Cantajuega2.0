@@ -77,6 +77,18 @@ export async function loginUser(body: loginbody): Promise<void> {
     throw new Error("Ya hay una sesion activa");
   }
 }
+export async function googleLogin(): Promise<void> {
+  const isAnySession = Cookies.get("accesscookie");
+  if (!isAnySession) {
+    try {
+      window.location.href = `${process.env.NEXT_PUBLIC_API_URL}/auth/google`;
+    } catch (error) {
+      console.log(error);
+    }
+  } else {
+    throw new Error("Ya hay una sesion activa");
+  }
+}
 
 export async function logoutUser() {
   try {

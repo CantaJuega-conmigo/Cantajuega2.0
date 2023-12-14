@@ -1,22 +1,19 @@
 "use client";
 import Image from "next/image";
-import { BsArrowLeft } from "react-icons/bs";
 import image1 from "../../../../public/img/image 12.png";
 import image2 from "../../../../public/img/Star 9.png";
 import image3 from "../../../../public/img/Untitled_Artwork-3-1.png";
 import styles from "../../../styles/Cancionero.module.css";
-import { IoMdDownload } from "react-icons/io";
-import MusicsPlayers from "../../../components/MusicPlayer/MusicsPlayers";
 import { useAppSelector } from "@/store/hooks";
 import { useGetPlayListQuery } from "@/store/apis/CantajuegaApi";
 import NormalPage from "@/components/Cancionero/NormalPage";
 import AuthPage from "@/components/Cancionero/AuthPage";
 
 export default function Cancionero() {
-  const user = useAppSelector((state) => state.userReducer.user);
   const { isLoading, data: playList, isError } = useGetPlayListQuery(null);
-
+  const user = useAppSelector((state) => state.userReducer.user);
   const isAuth = user;
+
   return (
     <div
       id="CancioneroPage"
@@ -40,8 +37,8 @@ export default function Cancionero() {
         </h1>
       </header>
       <div className="  max-h-screen h-auto  relative">
-        {!isAuth && <NormalPage />}
-        {isAuth && <AuthPage  />}
+        {!isAuth || isLoading || (isError && <NormalPage />)}
+        {isAuth && !isError && <AuthPage playList={playList!} />}
       </div>
     </div>
   );
