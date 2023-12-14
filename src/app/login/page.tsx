@@ -11,7 +11,7 @@ import { FaArrowLeft } from "react-icons/fa";
 import { RotatingLines } from "react-loader-spinner";
 import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import { loginError } from "@/utils/FormsErrors";
-import { loginUser } from "@/libs/functions";
+import { googleLogin, loginUser } from "@/libs/functions";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 
@@ -74,6 +74,9 @@ export default function Login() {
   }, [errors]);
 
   const [hoverBack, setHoverBack] = useState<boolean>(false);
+  const handleGoogleLogin=()=>{
+   googleLogin();
+  }
   return (
     <div className={styles.container}>
       <Image className={styles.img1} src={img1} alt="decoration1" />
@@ -163,7 +166,7 @@ export default function Login() {
           <button className={styles.normalBtn} type="submit">
             Iniciar
           </button>
-          <button className={styles.googleBtn}>
+          <button className={styles.googleBtn} type="button" onClick={handleGoogleLogin}>
             <FcGoogle />
             Iniciar con Google
           </button>
