@@ -81,6 +81,7 @@ export default function YoutubePlayerCourses({
       ...data!,
       Total: data?.Total! + 1,
     };
+    console.log(newProgres,'newprogres')
     const resquest: progressResquestMutation = {
       ProgressId: Progress?.id!,
       select: select,
@@ -89,7 +90,7 @@ export default function YoutubePlayerCourses({
     update(resquest)
       .unwrap()
       .then((resp) =>
-        data?.Total === 1
+        data?.Total === 3
           ? alert("Felicidades ya puedes acceder al proximo video")
           : null
       )
