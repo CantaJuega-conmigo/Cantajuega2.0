@@ -190,13 +190,13 @@ export default function Register() {
           )}
           {step.stepTwo && (
             <>
-              <button
+              {/* <button
                 className={styles.normalBtn}
                 type="submit"
                 name="next"
                 >
                 Completar el registro
-              </button>
+              </button> */}
               <button
                 className={styles.normalBtn}
                 type="button"
