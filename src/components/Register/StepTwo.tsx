@@ -1,18 +1,11 @@
-import { ChangeEvent, useState } from 'react';
-import styles from '../../styles/Register.module.css';
-import DatePicker, { registerLocale } from 'react-datepicker';
-import es from 'date-fns/locale/es';
-import 'react-datepicker/dist/react-datepicker.css';
-import { InputChilds, inputErrorChilds } from '@/utils/FormsErrors';
+import { ChangeEvent, useState } from "react";
+import styles from "../../styles/register.module.css";
+import DatePicker, { registerLocale } from "react-datepicker";
+import es from "date-fns/locale/es";
+import "react-datepicker/dist/react-datepicker.css";
+import { InputChilds, inputErrorChilds } from "@/utils/FormsErrors";
 
-interface IRegisterErrors {
-  firstName?: string;
-  lastName?: string;
-  email?: string;
-  password?: string;
-  global?: string;
-}
-registerLocale('es', es);
+registerLocale("es", es);
 export default function StepTwo({
   handleInputChange,
   errorsChild,
@@ -21,7 +14,7 @@ export default function StepTwo({
 }: {
   handleInputChange: (
     event: ChangeEvent<HTMLInputElement | HTMLSelectElement>,
-    type: 'user' | 'child'
+    type: "user" | "child"
   ) => void;
   errorsChild: inputErrorChilds;
   setChildData: React.Dispatch<React.SetStateAction<InputChilds>>;
@@ -31,7 +24,7 @@ export default function StepTwo({
 
   const handleDateChange = (date: Date | null) => {
     const formatDate =
-      date?.toISOString().split('T')[0].split('-').reverse().join('/') ?? '';
+      date?.toISOString().split("T")[0].split("-").reverse().join("/") ?? "";
     setChildData({
       ...childData,
       birthDate: formatDate,
@@ -41,18 +34,18 @@ export default function StepTwo({
 
   return (
     <>
-      <h1 className={'text-center text-xl'}>Datos del niño/a</h1>
+      <h1 className="text-center text-xl">Para completar el registro, ingrese los datos de su hijo/a</h1>
       <div className={styles.inputsContainer}>
-        <label htmlFor='firstName'>Nombre</label>
+        <label htmlFor="firstName">Nombre</label>
         <input
           className={`${styles.inputs} ${
             errorsChild.firstName && styles.inputError
           }`}
-          onChange={(event) => handleInputChange(event, 'child')}
-          type='text'
-          name='firstName'
-          id='firstName'
-          placeholder='Nombre del niño/a...'
+          onChange={(event) => handleInputChange(event, "child")}
+          type="text"
+          name="firstName"
+          id="firstName"
+          placeholder="Nombre del niño/a..."
         />
         <div className={styles.errorInputsContainer}>
           {errorsChild.firstName && (
@@ -62,16 +55,16 @@ export default function StepTwo({
       </div>
 
       <div className={styles.inputsContainer}>
-        <label htmlFor='lastName'>Apellido</label>
+        <label htmlFor="lastName">Apellido</label>
         <input
           className={`${styles.inputs} ${
             errorsChild.lastName && styles.inputError
           }`}
-          onChange={(event) => handleInputChange(event, 'child')}
-          type='text'
-          name='lastName'
-          id='lastName'
-          placeholder='Apellido del niño/a...'
+          onChange={(event) => handleInputChange(event, "child")}
+          type="text"
+          name="lastName"
+          id="lastName"
+          placeholder="Apellido del niño/a..."
         />
         <div className={styles.errorInputsContainer}>
           {errorsChild.lastName && (
@@ -81,16 +74,15 @@ export default function StepTwo({
       </div>
 
       <div className={styles.inputsContainer}>
-        <label htmlFor='gender'>Genero</label>
-        <article className='flex w-full'>
+        <label htmlFor="gender">Genero</label>
+        <article className="flex w-full">
           <select
-            name=''
-            id='gender'
-            className='  text-center bg-gray-200 w-2/6 p-2'
-            onChange={(event) => handleInputChange(event, 'child')}
-          >
-            <option value=''>Niño</option>
-            <option value=''>Niña</option>
+            name=""
+            id="gender"
+            className="  text-center bg-gray-200 w-2/6 p-2"
+            onChange={(event) => handleInputChange(event, "child")}>
+            <option value="">Niño</option>
+            <option value="">Niña</option>
           </select>
         </article>
         <div className={styles.errorInputsContainer}>
@@ -100,17 +92,17 @@ export default function StepTwo({
         </div>
       </div>
 
-      <div className={' flex flex-col gap-2'}>
-        <label htmlFor='birthDate'>Fecha de nacimiento:</label>
+      <div className={" flex flex-col gap-2"}>
+        <label htmlFor="birthDate">Fecha de nacimiento:</label>
         <DatePicker
           selected={selectedDate}
           onChange={handleDateChange}
-          dateFormat={'dd/MM/yyyy'}
-          locale={'es'}
-          id='birthDate'
-          className='border border-black rounded-lg'
-          placeholderText='dd/mm/yyyy'
-          name='birthDate'
+          dateFormat={"dd/MM/yyyy"}
+          locale={"es"}
+          id="birthDate"
+          className="border border-black rounded-lg"
+          placeholderText="dd/mm/yyyy"
+          name="birthDate"
         />
         <div className={styles.errorInputsContainer}>
           {errorsChild.birthDate && (
@@ -119,7 +111,7 @@ export default function StepTwo({
         </div>
       </div>
       <section className={styles.sectionButtons}>
-        <button className={styles.normalBtn} type='submit' name='next'>
+        <button className={styles.normalBtn} type="submit" name="next">
           Completar el registro
         </button>
       </section>

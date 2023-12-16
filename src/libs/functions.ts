@@ -4,6 +4,7 @@ import { store } from "@/store/store";
 import Cookies from "js-cookie";
 import { loginResponse, loginbody, registerBody, responses } from "@/types";
 import { log } from "console";
+import { registerChild } from "@/types/Register";
 
 export async function acountConfirmation(
   email: string,
@@ -95,6 +96,14 @@ export async function logoutUser() {
     const resquest = await axios.post("/user/logout");
     store.dispatch(setUser(null));
     alert(resquest.data?.message);
+  } catch (error) {
+    console.log(error);
+  }
+}
+export async function CompleteChildRegister(child: registerChild) {
+  try {
+    const resquest = await axios.post("/child/create", { child: child });
+    alert("Has completado el registro con google correctamente");
   } catch (error) {
     console.log(error);
   }
