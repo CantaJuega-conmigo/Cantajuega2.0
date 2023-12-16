@@ -1,7 +1,7 @@
 "use client";
 import { useAppSelector } from "@/store/hooks";
 import { videos, videostypes } from "@/types/Models/Stage.type";
-import { useState, MouseEvent } from "react";
+import { useState, MouseEvent, useEffect } from "react";
 import YoutubePlayerCourses from "./YoutubePlayerCourses";
 import { miscursosprops } from "@/types";
 import {
@@ -27,6 +27,14 @@ export default function MisCursosContent({
     content: "",
     title: "",
   });
+  useEffect(() => {
+    setActualVideo({
+      //when the page was charged, set the first video
+      ...actualVideo,
+      content: Stage?.content.videos[0].content!,
+      title: Stage?.content.videos[0].title!,
+    });
+  }, [Stage]);
   const [indexOfActualvideo, setIndexOfActualVideo] = useState(1);
   const ActualProgress = useAppSelector(
     (state) => state.progressReducer.actualprogress
@@ -40,7 +48,6 @@ export default function MisCursosContent({
     videostypes.Final_Video,
   ];
   const selectVideo = (event: MouseEvent<HTMLButtonElement>) => {
- 
     const value = event.currentTarget.value as videostypes;
     const videoselected = Stage?.content.videos.filter(
       ///selecciona el video a ver
@@ -50,7 +57,11 @@ export default function MisCursosContent({
     /////validaciones
     ///para los videos que no sean el primero
     if (value !== "First_Video") {
-      const lastVideoCompleted = ValidateOthersVideo(GeneralProgress![value]);
+      const nameOfLastVideo = allvideostypes[allvideostypes.indexOf(value) - 1]; //to verify if one day passed
+      const lastVideoCompleted = ValidateOthersVideo(
+        GeneralProgress![value],
+        GeneralProgress![nameOfLastVideo]
+      ); //verify here
       if (lastVideoCompleted) {
         setIndexOfActualVideo(allvideostypes.indexOf(value));
         return setActualVideo(videoselected);
@@ -58,17 +69,9 @@ export default function MisCursosContent({
     }
     ////para el primer video
     if (value == "First_Video") {
-      const PdfCompleted = ValidateFirstVideo(
-        GeneralProgress![videostypes[value]]
-      );
-      
-      if (PdfCompleted) {
-        setIndexOfActualVideo(allvideostypes.indexOf(value));
-        return setActualVideo(videoselected);
-      }
+      setIndexOfActualVideo(allvideostypes.indexOf(value));
+      return setActualVideo(videoselected);
     }
-   
-    
   };
 
   const seestate = () => {
@@ -83,14 +86,6 @@ export default function MisCursosContent({
     }
     return [];
   };
-  const openPdf = () => {
-    if (!GeneralProgress?.Pdf_Viewed) {
-      seePdf({ ProgressId: ProgressId!, Pdf_Viewed: { Pdf_Viewed: true } })
-        .unwrap()
-        .then((resp) => console.log(resp))
-        .catch((err) => console.log(err));
-    }
-  };
   return (
     <>
       <section className="flex flex-col gap-2 w-2/12 items-center border-r-2 border-orangeicons border-dashed">
@@ -99,11 +94,6 @@ export default function MisCursosContent({
           <h2 className="text-2xl">{Stage?.name}</h2>
         </article>
         <article className="flex flex-col gap-2  text-xl items-start">
-          <button
-            onClick={openPdf}
-            className={GeneralProgress?.Pdf_Viewed ? "text-green" : "text-red"}>
-            1- {Stage?.content.pdf.name}
-          </button>
           {GeneralProgress &&
             Stage?.content.videos.map((i, key) => (
               <button
@@ -112,13 +102,15 @@ export default function MisCursosContent({
                   ${
                     invalidTitles().includes(i.order)
                       ? " text-gray-500 hover:bg-[#fc3434] cursor-not-allowed"
-                      : `${i.title === actualVideo.title && "bg-orange "}  hover:bg-orange`
+                      : `${
+                          i.title === actualVideo.title && "bg-orange "
+                        }  hover:bg-orange`
                   }
             `}
                 key={key}
                 value={i.order}
                 onClick={selectVideo}>
-                {`${key + 2}- ${i.title}`}
+                {`${key + 1}- ${i.title}`}
               </button>
             ))}
         </article>
@@ -127,27 +119,21 @@ export default function MisCursosContent({
       <section className="w-10/12 flex flex-col items-center gap-4 ">
         <h1 className="text-3xl">{actualVideo.title}</h1>
         <article className="flex flex-col w-9/12 max-w-[70rem]  h-full gap-6">
-          {actualVideo.content ? (
-            <>
-              <YoutubePlayerCourses
-                styles="h-5/6 max-h-[30rem]"
-                videoId={actualVideo.content}
-                ChildExists={ChildExists}
-                Progress={GeneralProgress}
-                select={actualVideo.order}
-                ActualProgress={ActualProgress!}
-              />
-              <ButtonsBox
-                videos={allvideostypes}
-                lastvideo={allvideostypes[indexOfActualvideo - 1]}
-                nextvideo={allvideostypes[indexOfActualvideo + 1]}
-                selectvideo={selectVideo}
-                ActualProgress={ActualProgress!}
-              />
-            </>
-          ) : (
-            <h1>Elija un video</h1>
-          )}
+          <YoutubePlayerCourses
+            styles="h-5/6 max-h-[30rem]"
+            videoId={actualVideo.content}
+            ChildExists={ChildExists}
+            Progress={GeneralProgress}
+            select={actualVideo.order}
+            ActualProgress={ActualProgress!}
+          />
+          <ButtonsBox
+            videos={allvideostypes}
+            lastvideo={allvideostypes[indexOfActualvideo - 1]}
+            nextvideo={allvideostypes[indexOfActualvideo + 1]}
+            selectvideo={selectVideo}
+            ActualProgress={ActualProgress!}
+          />
         </article>
       </section>
     </>

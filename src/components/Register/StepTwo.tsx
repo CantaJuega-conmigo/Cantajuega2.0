@@ -5,19 +5,12 @@ import es from "date-fns/locale/es";
 import "react-datepicker/dist/react-datepicker.css";
 import { InputChilds, inputErrorChilds } from "@/utils/FormsErrors";
 
-interface IRegisterErrors {
-  firstName?: string;
-  lastName?: string;
-  email?: string;
-  password?: string;
-  global?: string;
-}
 registerLocale("es", es);
 export default function StepTwo({
   handleInputChange,
   errorsChild,
   setChildData,
-  childData
+  childData,
 }: {
   handleInputChange: (
     event: ChangeEvent<HTMLInputElement | HTMLSelectElement>,
@@ -30,18 +23,18 @@ export default function StepTwo({
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
 
   const handleDateChange = (date: Date | null) => {
-   
-    const formatDate=date?.toISOString().split('T')[0].split('-').reverse().join('/')??''
+    const formatDate =
+      date?.toISOString().split("T")[0].split("-").reverse().join("/") ?? "";
     setChildData({
       ...childData,
       birthDate: formatDate,
-    })
+    });
     setSelectedDate(date);
   };
 
   return (
     <>
-      <h1 className={"text-center text-xl"}>Datos del niño/a</h1>
+      <h1 className="text-center text-xl">Para completar el registro, ingrese los datos de su hijo/a</h1>
       <div className={styles.inputsContainer}>
         <label htmlFor="firstName">Nombre</label>
         <input
@@ -117,6 +110,11 @@ export default function StepTwo({
           )}
         </div>
       </div>
+      <section className={styles.sectionButtons}>
+        <button className={styles.normalBtn} type="submit" name="next">
+          Completar el registro
+        </button>
+      </section>
     </>
   );
 }

@@ -29,6 +29,7 @@ export interface InputChilds {
   lastName: string;
   birthDate: string;
   gender: 'male' | 'female';
+  UserId?:string|null
 }
 
 interface BodyStage {
