@@ -139,6 +139,7 @@ export const CantajuegaService = createApi({
             Reports,
             MembershipId,
             is_Admin,
+            Membership
           } = user;
           const UserChild = user.Children[0] ?? null;
           ///actualizamos nuestros estados globales
@@ -151,6 +152,7 @@ export const CantajuegaService = createApi({
               Reports,
               MembershipId,
               is_Admin,
+              Membership,
             })
           );
           dispatch(setChild(UserChild));
