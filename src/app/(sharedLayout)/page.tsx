@@ -6,7 +6,7 @@ import Metodologias from "@/components/home/metodologia/Metodologias";
 export default function Home() {
 
   return (
-    <main id="mainhome" className="flex min-h-screen flex-col ">
+    <main id="mainhome" className="flex min-h-screen flex-col overflow-x-hidden ">
       <Hero />
       <Metodologias/>
       <AboutUs/>

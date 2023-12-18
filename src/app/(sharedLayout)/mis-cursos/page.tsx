@@ -41,17 +41,17 @@ export default function Miscursos() {
     <div
       id="MisCursosPage"
       className={`${styles.Container} flex justify-between bg-white min-h-screen `}>
-      {User?.Membership && (
+      {User?.Membership && User.MembershipStatus === "active" && (
         <MisCursosContent
           Stage={stage}
           ChildExists={ChildExist}
           ProgressId={Child?.ProgressId}
         />
       )}
-      {!User?.Membership && (
+      {(!User?.Membership || User.MembershipStatus !== "active") && (
         <div className="flex flex-col  items-center w-full gap-24">
           <h1 className="text-4xl">
-            Actualmente no tienes ninguna membresia adquirida
+            Actualmente no tienes ninguna membresia adquirida o activa
           </h1>
           <Link href={"/membresias"}>
             <button className="bg-blue text-white text-xl rounded-xl p-3 px-6 hover:bg-orange hover:text-black">
