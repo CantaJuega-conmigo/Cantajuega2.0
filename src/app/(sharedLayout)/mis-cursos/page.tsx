@@ -36,7 +36,7 @@ export default function Miscursos() {
       refetchOnFocus: true,
     }
   );
-  console.log(User);
+  console.log(data);
   return (
     <div
       id="MisCursosPage"

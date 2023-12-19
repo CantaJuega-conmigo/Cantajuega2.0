@@ -12,7 +12,6 @@ const userSlice = createSlice({
   initialState,
   reducers: {
     setUser(state, action:PayloadAction<any> ) {
-      console.log('guardo a user en el estado global',action)
       state.user = action.payload;
     },
   },

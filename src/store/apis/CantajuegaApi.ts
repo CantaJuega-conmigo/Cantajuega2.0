@@ -125,7 +125,7 @@ export const CantajuegaService = createApi({
     //authenticacion
     auth: builder.query<responses<authUser>, null>({
       query: () => "/user/auth",
-      keepUnusedDataFor: 600,
+      keepUnusedDataFor: 10,
       async onQueryStarted(id, { dispatch, queryFulfilled }) {
         //es lo que hara con la respuesta
         try {
@@ -145,6 +145,7 @@ export const CantajuegaService = createApi({
           } = user;
           const UserChild = user.Children[0] ?? null;
           ///actualizamos nuestros estados globales
+          console.log('actualizo el estado global de user',user)
           dispatch(
             setUser({
               id,
