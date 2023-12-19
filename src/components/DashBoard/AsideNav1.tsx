@@ -56,7 +56,7 @@ export default function AsideNav1() {
       </Link>
       <Link
         className={`${actualpage(
-          "cursos",
+          "cancionero",
           "bg-slate-400"
         )} flex w-full justify-center gap-4 `}
         href={"/dashboard/cancionero"}>
