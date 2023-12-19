@@ -9,6 +9,7 @@ import {
 
 import MisCursosContent from "@/components/MisCursos/MisCursosContent";
 import { useAppSelector } from "@/store/hooks";
+import Link from "next/link";
 
 export default function Miscursos() {
   const { data, isLoading, isError, isSuccess } = useAuthQuery(null, {
@@ -35,22 +36,30 @@ export default function Miscursos() {
       refetchOnFocus: true,
     }
   );
-
+  console.log(data);
   return (
     <div
       id="MisCursosPage"
       className={`${styles.Container} flex justify-between bg-white min-h-screen `}>
-      {User?.Membership && (
+      {User?.Membership && User.MembershipStatus === "active" && (
         <MisCursosContent
           Stage={stage}
           ChildExists={ChildExist}
           ProgressId={Child?.ProgressId}
         />
       )}
-      {!User?.Membership && <div className="flex justify-center items-center">
-        
-         <h1 className= "text-3xl">Actualmente no tienes ninguna membresia adquirida</h1>
-         </div>}
+      {(!User?.Membership || User.MembershipStatus !== "active") && (
+        <div className="flex flex-col  items-center w-full gap-24">
+          <h1 className="text-4xl">
+            Actualmente no tienes ninguna membresia adquirida o activa
+          </h1>
+          <Link href={"/membresias"}>
+            <button className="bg-blue text-white text-xl rounded-xl p-3 px-6 hover:bg-orange hover:text-black">
+              Ver membresias
+            </button>
+          </Link>
+        </div>
+      )}
     </div>
   );
 }
