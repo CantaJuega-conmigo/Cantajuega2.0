@@ -5,9 +5,11 @@ import secondbackground from "../../../../public/img/Untitled_Artwork 5.png";
 // import { Membership } from "@/types/membership.type";
 import { useGetMembershipQuery } from "@/store/apis/CantajuegaApi";
 import Loading from "../../loading";
+import { useAppSelector } from "@/store/hooks";
 
 export default function Membresias() {
   const { data: memberships, isLoading } = useGetMembershipQuery(null);
+  const User=useAppSelector(state=>state.userReducer.user)
   const color: string[] = ["#f08d0d", "#39a1bb", "#5e139c", "#eb2f06"];
   const image: any[] = [
     firstbackground,
@@ -51,6 +53,8 @@ export default function Membresias() {
               membership={i}
               image={image[key]}
               color={color[key]}
+              userHasMembership={User?.Membership!==null}
+              userIsLogged={User!==null}
             />
           </article>
         ))}
