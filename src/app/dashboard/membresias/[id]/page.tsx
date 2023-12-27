@@ -9,7 +9,7 @@ export default function Page( { params }: { params: { id: string } } ) {
         <>
             <h1>Membresia {membership?.name}</h1>
             <section className="flex justify-center w-full ">
-                <MembershipCard image={null} membership={membership} color={color[0]} Admin={true}/>
+                <MembershipCard image={null} membership={membership!} color={color[0]} Admin={true}/>
             </section>
         </>
     )
