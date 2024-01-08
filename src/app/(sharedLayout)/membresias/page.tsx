@@ -53,7 +53,7 @@ export default function Membresias() {
               membership={i}
               image={image[key]}
               color={color[key]}
-              userHasMembership={User?.Membership!==null}
+              userHasMembership={User?.MembershipStatus!=='inactive'}
               userIsLogged={User!==null}
             />
           </article>
