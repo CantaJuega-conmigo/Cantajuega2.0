@@ -1,7 +1,14 @@
-export default function NotFoundPage(){
-    return(
-        <div className=" min-h-screen bg-slate-500 flex justify-center items-center">
-            <h1 className="text-4xl">Pagina no encontrada.Saludos</h1>
-        </div>
-    )
+import Footer from "@/components/Footer/Footer";
+import Navbar from "@/components/Nav/Nav";
+
+export default function NotFoundPage() {
+  return (
+    <>
+      <Navbar />
+      <div className=" min-h-screen flex justify-center items-center">
+        <h1 className="text-4xl">Error 404 - Pagina no encontrada</h1>
+      </div>
+      <Footer />
+    </>
+  );
 }

@@ -142,10 +142,11 @@ export const CantajuegaService = createApi({
             Membership,
             MembershipStatus,
             recurrenteId,
+            email_verified,
           } = user;
           const UserChild = user.Children[0] ?? null;
           ///actualizamos nuestros estados globales
-          console.log('actualizo el estado global de user',user)
+          console.log("actualizo el estado global de user", user);
           dispatch(
             setUser({
               id,
@@ -158,6 +159,7 @@ export const CantajuegaService = createApi({
               Membership,
               MembershipStatus,
               recurrenteId,
+              email_verified,
             })
           );
           dispatch(setChild(UserChild));
@@ -282,6 +284,15 @@ export const CantajuegaService = createApi({
     getReports: builder.query<responses<IReport>, null>({
       query: () => "/reports",
       keepUnusedDataFor: 600,
+      providesTags: ["Reports"],
+    }),
+    createReport: builder.mutation({
+      query: (body: { UserId: string; Description: string }) => ({
+        url: "/reports",
+        method: "POST",
+        body,
+      }),
+      invalidatesTags: ["Reports"],
     }),
     getNotifications: builder.query<Notification[], null>({
       query: () => "/notifications",
@@ -381,4 +392,5 @@ export const {
   useGetPlayListQuery,
   useCreatePlayListMutation,
   useAddMusicInPlayListMutation,
+  useCreateReportMutation
 } = CantajuegaService;

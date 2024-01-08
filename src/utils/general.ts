@@ -7,3 +7,17 @@ export const transformDate = (date: string): string => {
 
   return `${day}/${month}/${year}`;
 };
+export const getAge = (ageInMonth: number) => {
+  let year = Math.floor(ageInMonth / 12);
+  let months = ageInMonth % 12;
+
+  if (year === 0) {
+    return `${months} ${months > 1 ? "meses" : "mes"}`;
+  } else if (months === 0) {
+    return ` ${year} ${year > 1 ? "años" : "año"}`;
+  } else {
+    return ` ${year} ${year > 1 ? "años" : "año"} y ${months} ${
+      months > 1 ? "meses" : "mes"
+    }`;
+  }
+};
